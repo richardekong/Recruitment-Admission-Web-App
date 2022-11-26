@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+            crossorigin="anonymous"></script>
+    <!--The links above are needed to make bootstrap work-->
+</head>
+
+<!--Using bootstrap the page has been divided into 3 rows and each row has
+2 columns. The column on the left contains the text we need. While the column on
+the right has all the buttons-->
+<body>
+<div class="container p-5">
+    <div class="row">
+        <div class="row">
+            <div class="col-sx-6 col-sm-6 col-md-6 col-lg-6" style="height: 200px;">
+                Upload past application data:
+            </div>
+            <div class="col-sx-6 col-sm-6 col-md-6 col-lg-6" style="height: 200px;">
+                <button type="button" class="btn btn-primary btn-lg upload">Upload File</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sx-6 col-sm-6 col-md-6 col-lg-6" style="height: 200px;">
+                Upload current application data:
+            </div>
+            <div class="col-sx-6 col-sm-6 col-md-6 col-lg-6" style="height: 200px;">
+                <button type="button" class="btn btn-primary btn-lg upload">Upload File</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sx-6 col-sm-6 col-md-6 col-lg-6">
+                <label for = "places">Enter the number of places offered this year:</label>
+            </div>
+            <div class="col-sx-6 col-sm-6 col-md-6 col-lg-2">
+                <input id = "places" type="number" class="form-control" placeholder="Enter number">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--This javascript code below searches for all items in the class 'upload' and adds
+ensures that whenever a user clicks on the button, they can browse a file. By
+simply adding the 'input' tag above, the site would not look as nice as it would mess
+with the sizing and write "Browse...No File Selected".-->
+<script>
+    const uploadButtons = document.querySelectorAll(".upload");
+    uploadButtons.forEach(button => {
+        button.addEventListener("click", _evt => {
+            let invisibleInput = document.createElement("input");
+            invisibleInput.type = "file";
+            invisibleInput.click();
+        });
+    })
+</script>
+<!--The code searches for items in the 'upload' class. It then says that whenever
+one clicks one these items. The element 'input' with the type of input being a file.
+This is how one can browse files from their desktop, while also maintaining the
+website's aesthetic.-->
+</body>
+
+</html>
