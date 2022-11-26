@@ -19,40 +19,36 @@
 </head>
 <style>
     .login {
-        color: brown;
+        color: #bd4850;
     }
-
-    img {
-        height: 250px;
-        width: 250px;
+    #title{
+        color: #707070;
     }
 </style>
 <body class="p-3 m-0 border-0 bd-example bd-example-row">
 <div class="container w-50">
     <div>
         <div class="unilogo">
-            <img alt="unilogo" src="https://logosave.com/images/large/11/Cardiff-University-logo.gif">
+            <img class="w-25 h-25" alt="unilogo" src="https://logosave.com/images/large/11/Cardiff-University-logo.gif">
         </div>
     </div>
     <div>
-        <div class="title"><h2 class="project">Cardiff Midwifery Application manager</h2></div>
+        <div id="title"><h6 class="display-6">Cardiff Midwifery <br> Application manager</h6></div>
     </div>
     <form id="login-form" class="" action="">
         <div class="mb-3">
             <div class="login"><h2>Login</h2></div>
         </div>
         <div class="row input-group mb-3">
-            <label class="col-xs-12 col-sm-12 col-md-12 col-lg-2" for="username">Username:</label>
-            <input id="username" type="text" class="form-control col-xs-12 col-sm-12 col-md-12 col-lg-10"
-                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            <label class="col-xs-12 col-sm-12 col-md-12 col-lg-3" for="username">Username:</label>
+            <input id="username" type="text" class="form-control col-xs-12 col-sm-12 col-md-12 col-lg-9" aria-describedby="inputGroup-sizing-default" placeholder="Username" required aria-required="true">
         </div>
         <div class="row input-group mb-3">
-            <label for="password" class="col-xs-12 col-sm-12 col-md-12 col-lg-2">Password:</label>
-            <input id="password" type="password" class="form-control col-xs-12 col-sm-12 col-md-12 col-lg-10"
-                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            <label for="password" class="col-xs-12 col-sm-12 col-md-12 col-lg-3">Password:</label>
+            <input id="password" type="password" class="form-control col-xs-12 col-sm-12 col-md-12 col-lg-9" aria-describedby="inputGroup-sizing-default" placeholder="Password" required aria-required="true">
         </div>
         <div>
-            <button class="btn btn-primary">Log in</button>
+            <button class="btn btn-primary" style="background-color: #214ea3">Log in</button>
         </div>
     </form>
 
