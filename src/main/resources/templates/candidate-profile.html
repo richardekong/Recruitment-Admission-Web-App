@@ -8,15 +8,20 @@
     <title>Candidate Profile</title>
 
     <!-- Bottstrap Document -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+            integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+            crossorigin="anonymous"></script>
     <!-- Bottstrap Document -->
 </head>
 <body>
-
-
 <!-- This section made by Faisal 24/11/2022 -->
 <!-- This is the whole container div which contain all elements in candidate profile page #Faisal# -->
 <div class="container" style="background-color: #f6f6f6">
@@ -31,74 +36,58 @@
         <div class="col-2 ">
             <!--First rwo contain stiudent icon #Faisal# -->
             <div class="row">
-                <img th:src="@{images/student-icon.svg}" src="/static/images/student-icon.svg" alt="" style="height: 150px; width: 150px;">
+                <img th:src="@{images/student-icon.svg}" src="/static/images/student-icon.svg" alt=""
+                     style="height: 150px; width: 150px;">
             </div>
             <!--Second row contain student name #Faisal# -->
             <div class="row">
-                <label for="studentName">Student Name</label>
-                <label for="studentId">ID: c21121249</label>
-
+                <span>Student Name</span>
+                <span>C21121249</span>
             </div>
         </div>
         <!-- Second column which has 3 rows and contain full name , status and offer type So it will be three rows #Faisal# -->
         <div class="col-4">
             <!-- First row in second column , which contain full name lable and student full name as input text readonly for view not change the value #Faisal#  -->
-            <div class="row">
-                <label for="student full name">Full name:</label>
-                <input class="form-control" type="text" placeholder="Student full name" readonly>
-            </div>
-            <br>
             <!-- Second row in second column , which contain status lable and stusts as input text readonly for view not change the value #Faisal#  -->
             <div class="row">
-                <label for="student status">Status:</label>
-                <input class="form-control" type="text" placeholder="Student status" readonly>
+                <label for="status">Status:</label>
+                <input id="status" class="form-control" type="text" placeholder="Student status" readonly>
             </div>
             <br>
             <!-- Third row in second column , which contain offer type lable and list of offers that user can chose one of them #Faisal#  -->
             <div class="row">
-                <label for="Offer type">Offer type:</label>
-                <select class="form-control" id="studentOfferType">
+                <label for="offer-type">Offer type:</label>
+                <select id="offer-type" class="form-control">
                     <option>Conditional</option>
-                    <option>Unconditional </option>
+                    <option>Unconditional</option>
                 </select>
             </div>
         </div>
         <!-- Third column which has 3 rows and contain ID , Final outcome and Interview marks So it will be three rows #Faisal# -->
         <div class="col-4 ">
             <!-- First row in third column , which contain Id lable and ID as input text readonly for view not change the value #Faisal#  -->
-            <div class="row">
-                <label for="student id">ID:</label>
-                <input class="form-control" type="text" placeholder="ID" readonly>
-            </div>
-            <br>
             <!-- Second row in third column , which final outcome lable and outcome as input text readonly for view not change the value #Faisal#  -->
             <div class="row">
-                <label for="student final outcome">Final outcome:</label>
-                <input class="form-control" type="text" placeholder="Outcome" readonly>
+                <label for="final-outcome">Final outcome:</label>
+                <input id="final-outcome" class="form-control" type="text" placeholder="Outcome" readonly>
             </div>
             <br>
             <!-- Third row in third column , which contain interview marks lable and input filed to give student interview marks #Faisal#  -->
             <div class="row">
-                <label for="Interview marks">Interview marks:</label>
-                <input class="form-control" type="text" placeholder="marks" >
+                <label for="interview-marks">Interview marks:</label>
+                <input id="interview-marks" class="form-control" type="text" placeholder="marks">
 
             </div>
         </div>
-
-
-
-
-
-
-
-
     </div>
     <br>
     <!--Third row which vontain Edit button-->
     <div class="row ">
         <div class="class= col-1 "></div>
         <div class="class= col-2 "></div>
-        <div class="class= col-8 btn "><button type="button" class="btn" style="background-color:#214ea3; color: white;">Edit</button></div>
+        <div class="class= col-8 btn ">
+            <button type="button" class="btn" style="background-color:#214ea3; color: white;">Edit</button>
+        </div>
     </div>
 </div>
 <!-- END of Faisal section -->
