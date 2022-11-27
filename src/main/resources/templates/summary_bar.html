@@ -14,14 +14,22 @@
             integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
             crossorigin="anonymous"></script>
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{css/css.css}">
 </head>
-<div class="w-25 p-3"
-     style="border:1px solid #000000;position:absolute; right:200px;">
+<body>
+<aside id="aside" th:fragment="summary_bar" class="w-25 p-3">
     <p class="text-center">Place filled</p>
-    <div class="alert alert-success" role="alert" style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white";>90/100</div>
+    <div class="alert alert-success" role="alert"
+         style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white" ;>90/100
+    </div>
     <p class="text-center">Offer recommended</p>
-    <div class="alert alert-success" role="alert" style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white">100</div>
+    <div class="alert alert-success" role="alert"
+         style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white">100
+    </div>
     <p class="text-center">Offer sent</p>
-    <div class="alert alert-success" role="alert" style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white">90</div>
-</div>
+    <div class="alert alert-success" role="alert"
+         style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white">90
+    </div>
+</aside>
+</body>
 </html>

@@ -18,39 +18,54 @@
             integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
             crossorigin="anonymous"></script>
     <!--The links above are needed to make bootstrap work-->
+
+    <link rel="stylesheet" th:href="@{css/css.css}">
+
 </head>
 
 <!--Using bootstrap the page has been divided into 3 rows and each row has
 2 columns. The column on the left contains the text we need. While the column on
 the right has all the buttons-->
 <body>
-<div class="container p-5">
-    <div class="row">
+<!-- Add header to the top of this page -->
+<header th:insert="header::header"></header>
+<div class="row">
+    <div class="main-content p-5">
         <div class="row">
-            <div class="col-sx-6 col-sm-6 col-md-6 col-lg-6" style="height: 200px;">
-                Upload past application data:
+            <div class="row p-3">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    Upload past Application data
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <button type="button" class="btn btn-primary browse" title="Browse Files">Browse</button>
+                </div>
             </div>
-            <div class="col-sx-6 col-sm-6 col-md-6 col-lg-6" style="height: 200px;">
-                <button type="button" class="btn btn-primary btn-lg upload">Upload File</button>
+            <div class="row p-3">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    Upload current Application data
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <button type="button" class="btn btn-primary browse" title="Browse Files">Browse</button>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sx-6 col-sm-6 col-md-6 col-lg-6" style="height: 200px;">
-                Upload current application data:
+            <div class="row p-3">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <label for = "places">Enter the number of places offered this year:</label>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2">
+                    <input id = "places" type="number" class="form-control p-1">
+                </div>
             </div>
-            <div class="col-sx-6 col-sm-6 col-md-6 col-lg-6" style="height: 200px;">
-                <button type="button" class="btn btn-primary btn-lg upload">Upload File</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sx-6 col-sm-6 col-md-6 col-lg-6">
-                <label for = "places">Enter the number of places offered this year:</label>
-            </div>
-            <div class="col-sx-6 col-sm-6 col-md-6 col-lg-2">
-                <input id = "places" type="number" class="form-control" placeholder="Enter number">
+
+            <div class="row p-5">
+                <div id="empty" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2">
+                    <button class="btn btn-primary" title="Configure your settings">Configure</button>
+                </div>
             </div>
         </div>
     </div>
+    <aside class="col-lg-4" th:insert="summary_bar::summary_bar"></aside>
 </div>
 
 
@@ -59,8 +74,8 @@ ensures that whenever a user clicks on the button, they can browse a file. By
 simply adding the 'input' tag above, the site would not look as nice as it would mess
 with the sizing and write "Browse...No File Selected".-->
 <script>
-    const uploadButtons = document.querySelectorAll(".upload");
-    uploadButtons.forEach(button => {
+    const browseButtons = document.querySelectorAll(".browse");
+    browseButtons.forEach(button => {
         button.addEventListener("click", _evt => {
             let invisibleInput = document.createElement("input");
             invisibleInput.type = "file";
@@ -72,6 +87,7 @@ with the sizing and write "Browse...No File Selected".-->
 one clicks one these items. The element 'input' with the type of input being a file.
 This is how one can browse files from their desktop, while also maintaining the
 website's aesthetic.-->
+<footer th:insert="footer :: footer"></footer>
 </body>
 
 </html>
