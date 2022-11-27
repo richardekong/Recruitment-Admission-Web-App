@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
@@ -17,10 +17,10 @@
             integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
             crossorigin="anonymous"></script>
     <title></title>
-
+<link rel="stylesheet" th:href="@{css/css.html}"/>
 </head>
 <body>
-  <footer th:fragment="footer" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-justify" style="color:#fff;background-color: #2b364c;position: absolute; bottom: 0; width: 100%;">
+  <footer id="footer" th:fragment="footer" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-justify">
       <p class="container p-2" style="font-size: 15px;">Cardiff Group 11 MSc Software Engineering</p>
   </footer>
 </body>
