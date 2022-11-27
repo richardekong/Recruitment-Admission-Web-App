@@ -18,7 +18,7 @@
             crossorigin="anonymous"></script>
 
     <title>Candidates</title>
-
+    <link rel="stylesheet" th:href="@{css/css.css}">
     <style>
         .vp {
             color: #fff;
@@ -47,98 +47,107 @@
     </style>
 </head>
 <body>
-<main class="container p-5">
-    <div class="container row">
-        <div id="search-bar" class="input-group mb-3" >
-            <div class="input-group-prepend">
+<!-- Add header to the top of this page -->
+<header th:insert="header::header"></header>
+<main class="main-content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9  p-5">
+            <div class="container row">
+                <div id="search-bar" class="input-group mb-3" >
+                    <div class="input-group-prepend">
                 <span class="input-group-text" style="border-radius: 5px 0 0 5px; cursor: pointer;">
                    <label for="search-input" style="cursor: pointer;">Search</label>
                 </span>
-            </div>
-            <input id="search-input" class="form-control" type="text" style="border-radius: 0;">
-        </div>
-        <div id="sort-bar" class="input-group mb-3">
-            <div class="input-group-prepend">
+                    </div>
+                    <input id="search-input" class="form-control" type="text" style="border-radius: 0;">
+                </div>
+                <div id="sort-bar" class="input-group mb-3">
+                    <div class="input-group-prepend">
                 <span class="input-group-text" style="border-radius: 5px 0 0 5px; cursor: pointer;">
                     <label for="sort-input" style="cursor: pointer;">Sort by</label>
                 </span>
+                    </div>
+                    <select id="sort-input" class="form-select" style="border-radius: 0;">
+                        <option selected>choose...</option>
+                        <option value="Id/ref">Id/ref</option>
+                        <option value="Full Name">Full Name</option>
+                        <option value="Status">Status</option>
+                        <option value="Final Outcome">Final Outcome</option>
+                    </select>
+                </div>
             </div>
-            <select id="sort-input" class="form-select" style="border-radius: 0;">
-                <option selected>choose...</option>
-                <option value="Id/ref">Id/ref</option>
-                <option value="Full Name">Full Name</option>
-                <option value="Status">Status</option>
-                <option value="Final Outcome">Final Outcome</option>
-            </select>
+            <div class="responsive-table-sm responsive-table-md responsive-table-lg responsive-table-xl">
+                <table class="table table-hover">
+                    <caption>List of Candidates</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col">ID/Ref</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Offer Type</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Final Outcome</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Yinzuo Tao</td>
+                        <td>Conditional</td>
+                        <td>awaiting</td>
+                        <td>offered Place</td>
+                        <td class="text-justify">
+                            <button class="vp"><a th:href="@{/profile}">View Profile</a></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Nishaychay Bhatt</td>
+                        <td>Conditional</td>
+                        <td>awaiting</td>
+                        <td>offered Place</td>
+                        <td class="text-justify">
+                            <button class="vp"><a th:href="@{/profile}">View Profile</a></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Faisal Sulaiman</td>
+                        <td>Conditional</td>
+                        <td>awaiting</td>
+                        <td>offered Place</td>
+                        <td class="text-justify">
+                            <button class="vp"><a th:href="@{/profile}">View Profile</a></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>Yibo Wang</td>
+                        <td>Conditional</td>
+                        <td>awaiting</td>
+                        <td>offered Place</td>
+                        <td class="text-justify">
+                            <button class="vp"><a th:href="@{/profile}">View Profile</a></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td>Richard Ekong</td>
+                        <td>Conditional</td>
+                        <td>awaiting</td>
+                        <td>offered Place</td>
+                        <td class="text-justify">
+                            <button class="vp"><a th:href="@{/profile}">View Profile</a></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <div class="responsive-table-sm responsive-table-md responsive-table-lg responsive-table-xl">
-        <table class="table table-hover">
-            <caption>List of Candidates</caption>
-            <thead>
-            <tr>
-                <th scope="col">ID/Ref</th>
-                <th scope="col">Full Name</th>
-                <th scope="col">Offer Type</th>
-                <th scope="col">Status</th>
-                <th scope="col">Final Outcome</th>
-                <th scope="col">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Yinzuo Tao</td>
-                <td>Conditional</td>
-                <td>awaiting</td>
-                <td>offered Place</td>
-                <td class="text-justify">
-                    <button class="vp"><a th:href="@{/profile}">View Profile</a></button>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Nishaychay Bhatt</td>
-                <td>Conditional</td>
-                <td>awaiting</td>
-                <td>offered Place</td>
-                <td class="text-justify">
-                    <button class="vp"><a th:href="@{/profile}">View Profile</a></button>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Faisal Sulaiman</td>
-                <td>Conditional</td>
-                <td>awaiting</td>
-                <td>offered Place</td>
-                <td class="text-justify">
-                    <button class="vp"><a th:href="@{/profile}">View Profile</a></button>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">4</th>
-                <td>Yibo Wang</td>
-                <td>Conditional</td>
-                <td>awaiting</td>
-                <td>offered Place</td>
-                <td class="text-justify">
-                    <button class="vp"><a th:href="@{/profile}">View Profile</a></button>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">5</th>
-                <td>Richard Ekong</td>
-                <td>Conditional</td>
-                <td>awaiting</td>
-                <td>offered Place</td>
-                <td class="text-justify">
-                    <button class="vp"><a th:href="@{/profile}">View Profile</a></button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <aside class="col-lg-4" th:insert="summary_bar::summary_bar"></aside>
     </div>
 </main>
+<!-- add a reusable footer -->
+<footer th:insert="footer :: footer"></footer>
 </body>
 </html>
