@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap libraries -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" th:href="@{css/css.css}"/>
+
+</head>
+<body>
+<header id="header" th:fragment = "header" >
+    <div class="container p-1">
+        <div class="row">
+            <div id="uni-logo" class="col-xs-12 col-sm-12 col-md-12 col-lg-1">
+                <img th:src="@{images/cardiff-uni-log.png}"  src="/static/images/cardiff-uni-log.png" style="margin-left:5px;" alt="uni-logo"/>
+            </div>
+            <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-10">
+                <div class="row" id="header-title">
+                    <span style="color:#fff;font-size: 20px; margin-left: 10px;">Cardiff Midwifery Application Manager</span>
+                </div>
+                <nav class="navbar navbar-expand-lg">
+                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                         <li class="nav-item" style="margin-left: 20px;">
+                             <a th:href="@{/candidates}" class="nav-link active" style="color: #fff;">Candidates</a>
+                         </li>
+                         <li class="nav-item" style="margin-left: 20px;">
+                             <a th:href="@{/settings}" class="nav-link" style="color: #fff;">Settings</a>
+                         </li>
+                         <li class="nav-item" style="margin-left: 20px;">
+                             <a th:href="@{/login}" class="nav-link" style="color: #fff;">Log out</a>
+                         </li>
+                     </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+</body>
+</html>
