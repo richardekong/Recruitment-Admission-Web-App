@@ -11,6 +11,6 @@ public interface FileUploadService {
 
     Path uploadFiles(LinkedHashMap<String, MultipartFile> files);
 
-    LinkedList<InputStream> uploadFileInputStreams(LinkedHashMap<String, MultipartFile> files);
+    LinkedHashMap<String,InputStream> uploadFileInputStreams(LinkedHashMap<String, MultipartFile> files);
 
 }

@@ -12,10 +12,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class FilesServiceImpl implements FileUploadService {
@@ -52,9 +49,21 @@ public class FilesServiceImpl implements FileUploadService {
         return path;
     }
 
-
     @Override
-    public LinkedList<InputStream> uploadFileInputStreams(LinkedHashMap<String, MultipartFile> files) {
-        return null;
+    public LinkedHashMap<String, InputStream> uploadFileInputStreams(LinkedHashMap<String, MultipartFile> files) {
+        LinkedHashMap<String, InputStream> inputStreams = new LinkedHashMap<>();
+        if (files.isEmpty()){
+            throw new CustomException("Trying to upload an invalid or empty files", HttpStatus.FORBIDDEN);
+        }
+        try {
+            for(Map.Entry<String, MultipartFile> entry : files.entrySet()){
+                MultipartFile file = entry.getValue();
+                inputStreams.putIfAbsent(entry.getKey(), file.getInputStream());
+            }
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
+        return inputStreams;
     }
 }
+
