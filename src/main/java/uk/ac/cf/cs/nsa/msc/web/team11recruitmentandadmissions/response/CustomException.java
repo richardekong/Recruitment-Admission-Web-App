@@ -1,14 +1,12 @@
 package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response;
 
 import com.sun.istack.NotNull;
-import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 
-@Data
 public class CustomException extends RuntimeException{
 
-    private final HttpStatus status;
+    private HttpStatus status;
 
     public CustomException(String message, @NotNull HttpStatus status){
         super(message);
@@ -18,6 +16,13 @@ public class CustomException extends RuntimeException{
     public CustomException(@NotNull HttpStatus status){
         super(status.getReasonPhrase());
         this.status = status;
+    }
+
+    public void setStatus(HttpStatus status){
+        this.status = status;
+    }
+    public HttpStatus getStatus() {
+        return status;
     }
 }
 
