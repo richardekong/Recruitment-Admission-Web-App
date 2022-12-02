@@ -12,7 +12,9 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class FilesServiceImpl implements FileUploadService {
@@ -26,7 +28,8 @@ public class FilesServiceImpl implements FileUploadService {
     @Override
     public Path uploadFiles(LinkedHashMap<String, MultipartFile> files) {
         Path path = null;
-        if (files.isEmpty()) {
+        boolean anyFileIsEmpty = isAnyFileEmpty(files);
+        if (anyFileIsEmpty) {
             throw new CustomException("Trying to upload an invalid file", HttpStatus.FORBIDDEN);
         }
         try {
@@ -52,18 +55,23 @@ public class FilesServiceImpl implements FileUploadService {
     @Override
     public LinkedHashMap<String, InputStream> uploadFileInputStreams(LinkedHashMap<String, MultipartFile> files) {
         LinkedHashMap<String, InputStream> inputStreams = new LinkedHashMap<>();
-        if (files.isEmpty()){
-            throw new CustomException("Trying to upload an invalid or empty files", HttpStatus.FORBIDDEN);
+        boolean anyFileIsEmpty = isAnyFileEmpty(files);
+        if (anyFileIsEmpty) {
+            throw new CustomException("Trying to upload an invalid or empty file", HttpStatus.FORBIDDEN);
         }
         try {
-            for(Map.Entry<String, MultipartFile> entry : files.entrySet()){
+            for (Map.Entry<String, MultipartFile> entry : files.entrySet()) {
                 MultipartFile file = entry.getValue();
                 inputStreams.putIfAbsent(entry.getKey(), file.getInputStream());
             }
-        }catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return inputStreams;
+    }
+
+    private static boolean isAnyFileEmpty(LinkedHashMap<String, MultipartFile> files) {
+        return files.values().parallelStream().anyMatch(MultipartFile::isEmpty);
     }
 }
 
