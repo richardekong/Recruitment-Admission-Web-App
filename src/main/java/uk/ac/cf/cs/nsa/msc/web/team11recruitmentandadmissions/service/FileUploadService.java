@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
-public interface FileService {
+public interface FileUploadService {
 
     Path uploadFile(MultipartFile file);
 
