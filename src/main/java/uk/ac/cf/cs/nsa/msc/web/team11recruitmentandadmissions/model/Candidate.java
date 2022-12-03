@@ -14,16 +14,16 @@ import java.time.temporal.Temporal;
 public class Candidate {
     private final String UCASCardiffCourseCode = "B720";
     private final String CardiffCourseCode = "UFBWMIDA";
-    private LocalDate RecordFirstCreated;
+    private String RecordFirstCreated;
     private LocalDate EntryYear;
     @Id
     private String studentNo;
     private String PersonalID;
-    private ApplicationStatusCode code;
+    private ApplicationStatusCode applicationStatusCode;
     private String LatestDecisionCode;
     private String FirstName;
     private String Surname;
-    private LocalDate DateOfBirth;
+    private String DateOfBirth;
     private Gender gender;
     private FeeStatus feeStatus;
     private boolean CorrespondenceLangWelsh;
@@ -31,7 +31,7 @@ public class Candidate {
     private String CountryOfDomicile; //Potential Enum (too complicated)
     private String Nationality;
     private String HomeEmail;
-    private LocalDate DateReceived;
+    private String DateReceived;
     private boolean ContextualFlag;
     private String ApplicationStatusHCare; //Does this change?
     private String ApplicationStatusComments;
@@ -41,7 +41,7 @@ public class Candidate {
     private boolean KeepingWarmEmailSent;
     private int TotalPersonalStatementScore;
     private boolean InviteInterview;
-    private LocalDate InterviewDate;
+    private String InterviewDate;
     private String InterviewInviteComments;
     private String TotalInterviewScore;
     private boolean FTPChecked;
@@ -50,7 +50,7 @@ public class Candidate {
     private String GradesAchievedAfter; //Grades achieved after application sent
     private String ConfirmationComments;
     private boolean OfferEmailSent;
-    private LocalDate IssueDate;
+    private String IssueDate;
     private String DBSCertNumber;
     private String FAStatus;
     private String UpdateService;
