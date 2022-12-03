@@ -1,8 +1,8 @@
 package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model;
 
 public enum FeeStatus {
-    Home("H"),
-    International("I");
+    HOME("H"),
+    INTERNATIONAL("I");
 
     private final String feeStatus;
 

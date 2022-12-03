@@ -6,54 +6,53 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
-import java.time.temporal.Temporal;
 
 @Data
 @NoArgsConstructor
 @Entity
 public class Candidate {
     private final String UCASCardiffCourseCode = "B720";
-    private final String CardiffCourseCode = "UFBWMIDA";
-    private String RecordFirstCreated;
+    private final String cardiffCourseCode = "UFBWMIDA";
+    private String recordFirstCreated;
     private LocalDate EntryYear;
     @Id
     private String studentNo;
-    private String PersonalID;
+    private String personalID;
     private ApplicationStatusCode applicationStatusCode;
-    private String LatestDecisionCode;
+    private String latestDecisionCode;
     private String FirstName;
     private String Surname;
-    private String DateOfBirth;
+    private String dateOfBirth;
     private Gender gender;
     private FeeStatus feeStatus;
-    private boolean CorrespondenceLangWelsh;
+    private boolean correspondenceLangWelsh;
     private WelshSpeaker welshSpeaker;
-    private String CountryOfDomicile; //Potential Enum (too complicated)
-    private String Nationality;
-    private String HomeEmail;
-    private String DateReceived;
-    private boolean ContextualFlag;
-    private String ApplicationStatusHCare; //Does this change?
-    private String ApplicationStatusComments;
-    private String FeeStatusComments;
-    private String HighestLevelQualification; //Potential Enum if they improve their spreadsheet
-    private String GradesAchieved;
-    private boolean KeepingWarmEmailSent;
-    private int TotalPersonalStatementScore;
-    private boolean InviteInterview;
-    private String InterviewDate;
-    private String InterviewInviteComments;
-    private String TotalInterviewScore;
+    private String countryOfDomicile; //Potential Enum (too complicated)
+    private String nationality;
+    private String homeEmail;
+    private String dateReceived;
+    private boolean contextualFlag;
+    private String applicationStatusHCare; //Does this change?
+    private String applicationStatusComments;
+    private String feeStatusComments;
+    private String highestLevelQualification; //Potential Enum if they improve their spreadsheet
+    private String gradesAchieved;
+    private boolean keepingWarmEmailSent;
+    private int totalPersonalStatementScore;
+    private boolean inviteInterview;
+    private String interviewDate;
+    private String interviewInviteComments;
+    private String totalInterviewScore;
     private boolean FTPChecked;
-    private String OfferConditions;
-    private boolean NonStandardQualificationsChaserEmail;
-    private String GradesAchievedAfter; //Grades achieved after application sent
-    private String ConfirmationComments;
-    private boolean OfferEmailSent;
-    private String IssueDate;
+    private String offerConditions;
+    private boolean nonStandardQualificationsChaserEmail;
+    private String gradesAchievedAfter; //Grades achieved after application sent
+    private String confirmationComments;
+    private boolean offerEmailSent;
+    private String issueDate;
     private String DBSCertNumber;
     private String FAStatus;
-    private String UpdateService;
-    private String EssentialToDos;
-    private String EnrolmentCriteriaComments;
+    private String updateService;
+    private String essentialToDos;
+    private String enrolmentCriteriaComments;
 }
