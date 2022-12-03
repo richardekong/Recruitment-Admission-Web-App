@@ -3,13 +3,16 @@ package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model;
 public enum ApplicationStatusCode {
     Applicant("A");
 
-    private final String code;
+    private String code;
 
     ApplicationStatusCode (String code){
         this.code = code;
     }
 
-    public String getApplicationStatusCode() {
+    public void setCode(String code){
+        this.code = code;
+    }
+    public String getCode() {
         return code;
     }
 }
