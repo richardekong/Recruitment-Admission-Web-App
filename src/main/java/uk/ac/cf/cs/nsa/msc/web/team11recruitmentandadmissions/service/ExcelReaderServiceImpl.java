@@ -34,6 +34,7 @@ public class ExcelReaderServiceImpl implements ExcelReaderService {
                     readFromCurrentCell(cellIndex, candidate, cell);
                     cellIndex++;
                 }
+
                 candidates.add(candidate);
             }
         }catch (IOException e){
