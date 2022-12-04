@@ -1,14 +1,14 @@
 package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model;
 
 public enum WelshSpeaker {
-    Yes("Y"),
-    No("N"),
+    YES("Y"),
+    NO("N"),
     NA("N/A");
 
-    private final String welshSpeaker;
+    private final String response;
 
-    WelshSpeaker (String welshSpeaker) { this.welshSpeaker = welshSpeaker;}
-    public String getWelshSpeaker() {return welshSpeaker;}
+    WelshSpeaker (String response) { this.response = response;}
+    public String getResponse() {return response;}
 
 
 }

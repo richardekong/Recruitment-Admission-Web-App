@@ -2,8 +2,8 @@ package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model;
 
 
 public enum Gender {
-    Male("M"),
-    Female("F");
+    MALE("M"),
+    FEMALE("F");
     private final String gender;
     Gender (String gender){
         this.gender = gender;
