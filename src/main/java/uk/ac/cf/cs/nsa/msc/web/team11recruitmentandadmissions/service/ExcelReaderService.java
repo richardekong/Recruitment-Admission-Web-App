@@ -1,6 +1,7 @@
 package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.*;
 
 import java.io.InputStream;
@@ -8,133 +9,242 @@ import java.util.LinkedList;
 
 public interface ExcelReaderService {
     LinkedList<Candidate> readCandidatesFromExcelSheet(InputStream inputStream);
-    default void readFromCurrentCell(int cellIndex, Candidate candidate, Cell cell) {
+
+    default void readFromCurrentCell(
+            int cellIndex,
+            Candidate candidate,
+            Cell cell,
+            DataFormatter cellFormatter) {
+
         switch (cellIndex) {
-            case 2:
-                candidate.setRecordFirstCreated((cell.getStringCellValue()));
+            case 0:
+                candidate.setUCASCardiffCourseCode(cellFormatter.formatCellValue(cell));
                 break;
-            case 3:
-                candidate.setEntryYear(cell.getStringCellValue());
+            case 1:
+                candidate.setCardiffCourseCode(cellFormatter.formatCellValue(cell));
                 break;
-            case 4:
-                candidate.setStudentNo(cell.getStringCellValue());
+            case 2: {
+                candidate.setRecordFirstCreated((cell.getDateCellValue()));
                 break;
-            case 5:
-                candidate.setPersonalID(cell.getStringCellValue());
+            }
+            case 3: {
+                candidate.setEntryYear(cellFormatter.formatCellValue(cell));
                 break;
-            case 6:
-                candidate.setApplicationStatusCode(ApplicationStatusCode.valueOf(cell.getStringCellValue()));
+            }
+            case 4: {
+                candidate.setStudentNo(cellFormatter.formatCellValue(cell));
                 break;
-            case 7:
-                candidate.setLatestDecisionCode(cell.getStringCellValue());
+            }
+            case 5: {
+                candidate.setPersonalID(cellFormatter.formatCellValue(cell));
                 break;
-            case 8:
-                candidate.setFirstName(cell.getStringCellValue());
+            }
+            case 6: {
+                if (cell.getStringCellValue().equals("A")) {
+                    candidate.setApplicationStatusCode(ApplicationStatusCode.APPLICATION);
+                }
                 break;
-            case 9:
-                candidate.setSurname(cell.getStringCellValue());
+            }
+            case 7: {
+                candidate.setLatestDecisionCode(cellFormatter.formatCellValue(cell));
                 break;
-            case 10:
-                candidate.setDateOfBirth(cell.getStringCellValue());
+            }
+            case 8: {
+                candidate.setFirstName(cellFormatter.formatCellValue(cell));
                 break;
-            case 11:
-                candidate.setGender(Gender.valueOf(cell.getStringCellValue()));
+            }
+            case 9: {
+                candidate.setSurname(cellFormatter.formatCellValue(cell));
                 break;
-            case 12:
-                candidate.setFeeStatus(FeeStatus.valueOf(cell.getStringCellValue()));
+            }
+            case 10: {
+                candidate.setDateOfBirth(cell.getDateCellValue());
                 break;
-            case 13:
-                candidate.setCorrespondenceLangWelsh(cell.getBooleanCellValue());
+            }
+            case 11: {
+                if (cell.getStringCellValue().equals(Gender.MALE.getGender())) {
+                    candidate.setGender(Gender.MALE);
+                }
+                if (cell.getStringCellValue().equals(Gender.FEMALE.getGender())) {
+                    candidate.setGender(Gender.FEMALE);
+                }
                 break;
-            case 14:
-                candidate.setWelshSpeaker(WelshSpeaker.valueOf(cell.getStringCellValue()));
+            }
+            case 12: {
+                if (cell.getStringCellValue().equals(FeeStatus.HOME.getFeeStatus())) {
+                    candidate.setFeeStatus(FeeStatus.HOME);
+                }
+                if (cell.getStringCellValue().equals(FeeStatus.INTERNATIONAL.getFeeStatus())) {
+                    candidate.setFeeStatus(FeeStatus.INTERNATIONAL);
+                }
                 break;
-            case 15:
-                candidate.setCountryOfDomicile(cell.getStringCellValue());
+            }
+            case 13: {
+                if (cell.getStringCellValue().equals(YesOrNoOption.YES.getOption())) {
+                    candidate.setCorrespondenceLangWelsh(YesOrNoOption.YES);
+                }
+                if (cell.getStringCellValue().equals(YesOrNoOption.NO.getOption())) {
+                    candidate.setCorrespondenceLangWelsh(YesOrNoOption.NO);
+                }
                 break;
-            case 16:
-                candidate.setNationality(cell.getStringCellValue());
+
+            }
+            case 14: {
+                if (cell.getStringCellValue().equals(WelshSpeaker.YES.getResponse())) {
+                    candidate.setWelshSpeaker(WelshSpeaker.YES);
+                }
+                if (cell.getStringCellValue().equals(WelshSpeaker.NO.getResponse())) {
+                    candidate.setWelshSpeaker(WelshSpeaker.NO);
+                }
+                if (cell.getStringCellValue().equals(WelshSpeaker.NA.getResponse())) {
+                    candidate.setWelshSpeaker(WelshSpeaker.NA);
+                }
                 break;
-            case 17:
-                candidate.setHomeEmail(cell.getStringCellValue());
+            }
+            case 15: {
+                candidate.setCountryOfDomicile(cellFormatter.formatCellValue(cell));
                 break;
-            case 18:
-                candidate.setDateReceived(cell.getStringCellValue());
+            }
+            case 16: {
+                candidate.setNationality(cellFormatter.formatCellValue(cell));
                 break;
-            case 19:
-                candidate.setContextualFlag(cell.getBooleanCellValue());
+            }
+            case 17: {
+                candidate.setHomeEmail(cellFormatter.formatCellValue(cell));
                 break;
-            case 20:
-                candidate.setApplicationStatusHCare(cell.getStringCellValue());
+            }
+            case 18: {
+                candidate.setDateReceived(cellFormatter.formatCellValue(cell));
                 break;
-            case 21:
-                candidate.setApplicationStatusComments(cell.getStringCellValue());
+            }
+            case 19: {
+                if (cell.getStringCellValue().equals(YesOrNoOption.NO.getOption())) {
+                    candidate.setContextualFlag(YesOrNoOption.NO);
+                }
+                if (cell.getStringCellValue().equals(YesOrNoOption.YES.getOption())) {
+                    candidate.setContextualFlag(YesOrNoOption.YES);
+                }
                 break;
-            case 22:
-                candidate.setFeeStatusComments(cell.getStringCellValue());
+            }
+            case 20: {
+                candidate.setApplicationStatusHCare(cellFormatter.formatCellValue(cell));
                 break;
-            case 23:
-                candidate.setHighestLevelQualification(cell.getStringCellValue());
+            }
+            case 21: {
+                candidate.setApplicationStatusComments(cellFormatter.formatCellValue(cell));
                 break;
-            case 24:
-                candidate.setGradesAchieved(cell.getStringCellValue());
+            }
+            case 22: {
+                candidate.setFeeStatusComments(cellFormatter.formatCellValue(cell));
                 break;
-            case 25:
-                candidate.setKeepingWarmEmailSent(cell.getBooleanCellValue());
+            }
+            case 23: {
+                candidate.setHighestLevelQualification(cellFormatter.formatCellValue(cell));
                 break;
-            case 26:
-                candidate.setTotalPersonalStatementScore((int) cell.getNumericCellValue());
+            }
+            case 24: {
+                candidate.setGradesAchieved(cellFormatter.formatCellValue(cell));
                 break;
-            case 27:
-                candidate.setInviteInterview(cell.getBooleanCellValue());
+            }
+            case 25: {
+                if (cellFormatter.formatCellValue(cell).equals(YesOrNoOption.YES.getOption())) {
+                    candidate.setKeepingWarmEmailSent(YesOrNoOption.YES);
+                }
+                if (cellFormatter.formatCellValue(cell).equals(YesOrNoOption.NO.getOption())) {
+                    candidate.setKeepingWarmEmailSent(YesOrNoOption.NO);
+                }
                 break;
-            case 28:
-                candidate.setInterviewDate(cell.getStringCellValue());
+            }
+            case 26: {
+                candidate.setTotalPersonalStatementScore(Integer.parseInt(cellFormatter.formatCellValue(cell)));
                 break;
-            case 29:
-                candidate.setInterviewInviteComments(cell.getStringCellValue());
+            }
+            case 27: {
+                if (cellFormatter.formatCellValue(cell).equals(YesOrNoOption.YES.getOption())) {
+                    candidate.setInviteInterview(YesOrNoOption.YES);
+                }
+                if (cellFormatter.formatCellValue(cell).equals(YesOrNoOption.NO.getOption())) {
+                    candidate.setInviteInterview(YesOrNoOption.NO);
+                }
                 break;
-            case 30:
-                candidate.setTotalInterviewScore((int) cell.getNumericCellValue());
+            }
+            case 28: {
+                candidate.setInterviewDate(cell.getDateCellValue());
                 break;
-            case 31:
-                candidate.setFTPChecked(cell.getBooleanCellValue());
+            }
+            case 29: {
+                candidate.setInterviewInviteComments(cellFormatter.formatCellValue(cell));
                 break;
-            case 32:
-                candidate.setOfferConditions(cell.getStringCellValue());
+            }
+            case 30: {
+                candidate.setTotalInterviewScore(Integer.parseInt(cellFormatter.formatCellValue(cell)));
                 break;
-            case 33:
-                candidate.setNonStandardQualificationsChaserEmail(cell.getBooleanCellValue());
+            }
+            case 31: {
+                if (cellFormatter.formatCellValue(cell).equals(YesOrNoOption.YES.getOption())) {
+                    candidate.setFTPChecked(YesOrNoOption.YES);
+                }
+                if (cellFormatter.formatCellValue(cell).equals(YesOrNoOption.NO.getOption())) {
+                    candidate.setFTPChecked(YesOrNoOption.NO);
+                }
                 break;
-            case 34:
-                candidate.setGradesAchievedAfter(cell.getStringCellValue());
+            }
+            case 32: {
+                candidate.setOfferConditions(cellFormatter.formatCellValue(cell));
                 break;
+            }
+            case 33: {
+                if (cellFormatter.formatCellValue(cell).equals(YesOrNoOption.YES.getOption())) {
+                    candidate.setNonStandardQualificationsChaserEmail(YesOrNoOption.YES);
+                }
+                if (cellFormatter.formatCellValue(cell).equals(YesOrNoOption.NO.getOption())) {
+                    candidate.setNonStandardQualificationsChaserEmail(YesOrNoOption.NO);
+                }
+                break;
+            }
+            case 34: {
+                candidate.setGradesAchievedAfter(cellFormatter.formatCellValue(cell));
+                break;
+            }
             case 35:
-                candidate.setConfirmationComments(cell.getStringCellValue());
+                candidate.setConfirmationComments(cellFormatter.formatCellValue(cell));
                 break;
-            case 36:
-                candidate.setOfferEmailSent(cell.getBooleanCellValue());
+            case 36: {
+                if (cellFormatter.formatCellValue(cell).equals(YesOrNoOption.YES.getOption())) {
+                    candidate.setOfferEmailSent(YesOrNoOption.YES);
+                }
+                if (cellFormatter.formatCellValue(cell).equals(YesOrNoOption.NO.getOption())) {
+                    candidate.setOfferEmailSent(YesOrNoOption.NO);
+                }
                 break;
-            case 37:
-                candidate.setIssueDate(cell.getStringCellValue());
+            }
+            case 37: {
+                candidate.setIssueDate(cellFormatter.formatCellValue(cell));
                 break;
-            case 38:
-                candidate.setDBSCertNumber(cell.getStringCellValue());
+            }
+            case 38: {
+                candidate.setDBSCertNumber(cellFormatter.formatCellValue(cell));
                 break;
-            case 39:
-                candidate.setFAStatus(cell.getStringCellValue());
+            }
+            case 39: {
+                candidate.setFAStatus(cellFormatter.formatCellValue(cell));
                 break;
-            case 40:
-                candidate.setUpdateService(cell.getStringCellValue());
+            }
+            case 40: {
+                candidate.setUpdateService(cellFormatter.formatCellValue(cell));
                 break;
-            case 41:
-                candidate.setEssentialToDos(cell.getStringCellValue());
+            }
+            case 41: {
+                candidate.setEssentialToDos(cellFormatter.formatCellValue(cell));
                 break;
-            case 42:
-                candidate.setEnrolmentCriteriaComments(cell.getStringCellValue());
+            }
+            case 42: {
+                candidate.setEnrolmentCriteriaComments(cellFormatter.formatCellValue(cell));
                 break;
-            default:
+            }
+            default: {
                 break;
+            }
         }
     }
 }
