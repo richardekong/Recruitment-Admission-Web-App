@@ -4,6 +4,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.*;
 
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 public interface ExcelReaderService {
@@ -14,7 +15,7 @@ public interface ExcelReaderService {
                 candidate.setRecordFirstCreated((cell.getStringCellValue()));
                 break;
             case 3:
-                candidate.setEntryYear(cell.getStringCellValue());
+                candidate.setEntryYear(LocalDate.parse(cell.getStringCellValue()));
                 break;
             case 4:
                 candidate.setStudentNo(cell.getStringCellValue());
@@ -95,7 +96,7 @@ public interface ExcelReaderService {
                 candidate.setInterviewInviteComments(cell.getStringCellValue());
                 break;
             case 30:
-                candidate.setTotalInterviewScore((int) cell.getNumericCellValue());
+                candidate.setTotalInterviewScore(cell.getStringCellValue());
                 break;
             case 31:
                 candidate.setFTPChecked(cell.getBooleanCellValue());
