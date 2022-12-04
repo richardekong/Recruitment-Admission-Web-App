@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.util.LinkedList;
 
 public interface ExcelReaderService {
+
     LinkedList<Candidate> readCandidatesFromExcelSheet(InputStream inputStream);
 
     default void readFromCurrentCell(
