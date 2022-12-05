@@ -80,7 +80,11 @@ public class SettingsController {
                 .map(streamEntry -> excelReaderService.readCandidatesFromExcelSheet(streamEntry.getValue()))
                 .findFirst();
 
-        if (unconfirmedHistoricalCandidates.isPresent() || unconfirmedCurrentCandidates.isPresent()) {
+        if (unconfirmedHistoricalCandidates.isPresent() && unconfirmedCurrentCandidates.isPresent()) {
+            System.out.println("HISTORICAL CANDIDATE DATA");
+            System.out.println(unconfirmedHistoricalCandidates.get() + "\n\n\n\n");
+            System.out.println("CURRENT CANDIDATE DATA");
+            System.out.println(unconfirmedCurrentCandidates.get() + "\n\n\n\n");
             model.addAttribute("success", new Response(HttpStatus.OK.value(), "Upload successful",
                     System.currentTimeMillis()));
             return "redirect:/setting";
