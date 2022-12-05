@@ -30,7 +30,7 @@ public class ExcelReaderServiceImpl implements ExcelReaderService {
         LinkedList<Candidate> candidates = new LinkedList<>();
         try {
             XSSFWorkbook workBook = new XSSFWorkbook(inputStream);
-            XSSFSheet xssfSheet = workBook.getSheet(Candidate.class.getSimpleName());
+            XSSFSheet xssfSheet = workBook.getSheet(workBook.getSheetName(0));
             int rowIndex = 0;
             for (Row row : xssfSheet) {
                 if (rowIndex == 0) {
