@@ -115,7 +115,10 @@ with the sizing and write "Browse...No File Selected".-->
         evt.preventDefault();
     });
 
-    messageSpans.forEach(span => span.addEventListener("click", evt => evt.target.style.display = "none"));
+    messageSpans.forEach(span => {
+        span.style.cursor = "pointer";
+        span.addEventListener("click", evt => evt.target.style.display = "none")
+    });
 
 </script>
 </body>
