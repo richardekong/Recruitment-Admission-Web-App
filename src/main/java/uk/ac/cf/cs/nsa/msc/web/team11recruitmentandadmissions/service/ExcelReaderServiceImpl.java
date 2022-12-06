@@ -56,13 +56,14 @@ public class ExcelReaderServiceImpl implements ExcelReaderService {
         }catch (IOException e){
             e.getStackTrace();
         }
+        // here I'm going to add all readed candidates to database
+        saveCandidatesToDatabase(candidates);
         return candidates;
     }
 
 
-    public void saveCandidatesToDatabase(InputStream inputStream){
+    public void saveCandidatesToDatabase(LinkedList<Candidate> candidates){
             try {
-                LinkedList<Candidate> candidates = readCandidatesFromExcelSheet(inputStream);
                 this.candidateRepository.saveAll(candidates);
             } catch (Exception e) {
                 e.printStackTrace();
