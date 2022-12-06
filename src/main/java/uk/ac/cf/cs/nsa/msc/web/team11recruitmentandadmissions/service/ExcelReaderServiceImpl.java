@@ -19,12 +19,7 @@ import java.util.List;
 
 @Service
 public class ExcelReaderServiceImpl implements ExcelReaderService {
-
-    private CandidateRepository candidateRepository;
-
-
     private DataFormatter cellFormatter;
-
     @Autowired
     void setCellFormatter(DataFormatter cellFormatter){
         this.cellFormatter = cellFormatter;
@@ -56,17 +51,6 @@ public class ExcelReaderServiceImpl implements ExcelReaderService {
         }catch (IOException e){
             e.getStackTrace();
         }
-        // here I'm going to add all readed candidates to database
-        saveCandidatesToDatabase(candidates);
         return candidates;
-    }
-
-
-    public void saveCandidatesToDatabase(LinkedList<Candidate> candidates){
-            try {
-                this.candidateRepository.saveAll(candidates);
-            } catch (Exception e) {
-                e.printStackTrace();
-        }
     }
 }

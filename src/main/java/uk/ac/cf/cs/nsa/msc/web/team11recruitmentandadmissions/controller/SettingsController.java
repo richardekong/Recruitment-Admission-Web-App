@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.Candidate;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.CustomException;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.Response;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.CandidateService;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.ExcelReaderService;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.FileUploadService;
 
@@ -26,6 +27,8 @@ public class SettingsController {
     private FileUploadService fileUploadService;
     private ExcelReaderService excelReaderService;
 
+    private CandidateService candidateService;
+
     @Autowired
     void setFileUploadService(FileUploadService service) {
         fileUploadService = service;
@@ -34,6 +37,11 @@ public class SettingsController {
     @Autowired
     void setExcelReaderService(ExcelReaderService service) {
         excelReaderService = service;
+    }
+
+    @Autowired
+    void setCandidateService(CandidateService service){
+        this.candidateService = service;
     }
 
     @GetMapping("/settings")
@@ -88,6 +96,8 @@ public class SettingsController {
             model.addAttribute("success", new Response(HttpStatus.OK.value(), "Upload successful",
                     System.currentTimeMillis()));
             // Here add all excel sheet information which is stored in LinkedList<Candidate> INTO Database #Done by Faisal this section
+            LinkedList<Candidate> candidatesToSaveFromExcel = unconfirmedCurrentCandidates.get();
+            candidateService.saveAll(candidatesToSaveFromExcel);
 
             return "redirect:/setting";
         }
