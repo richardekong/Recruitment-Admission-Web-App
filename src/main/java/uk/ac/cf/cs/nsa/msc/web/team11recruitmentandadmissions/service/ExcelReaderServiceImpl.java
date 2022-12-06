@@ -62,7 +62,7 @@ public class ExcelReaderServiceImpl implements ExcelReaderService {
 
     public void saveCandidatesToDatabase(InputStream inputStream){
             try {
-                List<Candidate> candidates = readCandidatesFromExcelSheet(inputStream);
+                LinkedList<Candidate> candidates = readCandidatesFromExcelSheet(inputStream);
                 this.candidateRepository.saveAll(candidates);
             } catch (Exception e) {
                 e.printStackTrace();

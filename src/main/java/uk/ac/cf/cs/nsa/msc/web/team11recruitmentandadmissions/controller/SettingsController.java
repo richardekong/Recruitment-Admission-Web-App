@@ -87,6 +87,8 @@ public class SettingsController {
             System.out.println(unconfirmedCurrentCandidates.get() + "\n\n\n\n");
             model.addAttribute("success", new Response(HttpStatus.OK.value(), "Upload successful",
                     System.currentTimeMillis()));
+            // Here add all excel sheet information which is stored in LinkedList<Candidate> INTO Database #Done by Faisal this section
+
             return "redirect:/setting";
         }
 
