@@ -14,13 +14,13 @@ public class Candidate {
     private String UCASCardiffCourseCode;
     private String cardiffCourseCode;
     private Date recordFirstCreated;
-    private String EntryYear;
+    private String entryYear;
     @Id
     private String studentNo;
     private String personalID;
     private ApplicationStatusCode applicationStatusCode;
     private String latestDecisionCode;
-    private String FirstName;
+    private String firstName;
     private String Surname;
     private Date dateOfBirth;
     private Gender gender;

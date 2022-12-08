@@ -10,7 +10,7 @@
 /*main content style rules*/
 .main-content {
     background-color: #f6f6f6;
-    border:1px solid #fff;
+    border: 1px solid #fff;
     margin-top: 80px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -53,7 +53,9 @@
         display: none;
     }
 
-    #aside{
+    #aside {
         display: none;
     }
+
+
 }

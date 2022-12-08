@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
@@ -20,29 +20,89 @@
     <title>Candidates</title>
     <link rel="stylesheet" th:href="@{css/css.css}">
     <style>
+
+        :root {
+            --tFontSize: 13px;
+        }
+
         .vp {
             color: #fff;
             background-color: #27a844;
             border-radius: 5px;
-            border:1px solid #27a844;
+            border: 1px solid #27a844;
         }
 
-        .vp a{
+        .vp a {
             text-decoration: none;
             color: #fff;
         }
-        #search-bar{
+
+        #search-bar {
             width: 40%;
         }
 
-        #sort-bar{
+        #sort-bar {
             width: 40%;
             margin-left: 20%;
         }
 
         @media only screen and (orientation: portrait) {
-            #search-bar{width: 100%;}
-            #sort-bar{width: 100%; margin-left: 0;}
+            #search-bar {
+                width: 100%;
+            }
+
+            #sort-bar {
+                width: 100%; margin-left: 0;
+            }
+        }
+
+        /* candidate table style*/
+        table {
+            min-width: max-content;
+            font-size: var(--tFontSize);
+        }
+
+        tr, th, td {
+            border: 1px solid #e9ecef;
+        }
+
+        table th {
+            position: sticky;
+            position: -webkit-sticky;
+            top: 0;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        table th:last-child {
+            position: sticky;left: 100%;
+        }
+
+        /*Make the first column fixed*/
+        th:first-child, td:first-child {
+            position: sticky;
+            position: -webkit-sticky;
+            left: 0;
+            background-color: whitesmoke;
+            color: #000;
+            z-index: 1;
+            max-width: fit-content;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        thead {
+            color: #fff;font-weight: bold;
+        }
+
+        th, td {
+            font-weight: normal; color: #2b364c;
+        }
+
+        .tbl-container {
+            max-width: 100%;max-height: fit-content;
         }
     </style>
 </head>
@@ -53,7 +113,7 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9  p-5">
             <div class="container row">
-                <div id="search-bar" class="input-group mb-3" >
+                <div id="search-bar" class="input-group mb-3">
                     <div class="input-group-prepend">
                 <span class="input-group-text" style="border-radius: 5px 0 0 5px; cursor: pointer;">
                    <label for="search-input" style="cursor: pointer;">Search</label>
@@ -69,79 +129,118 @@
                     </div>
                     <select id="sort-input" class="form-select" style="border-radius: 0;">
                         <option selected>choose...</option>
-                        <option value="Id/ref">Id/ref</option>
-                        <option value="Full Name">Full Name</option>
-                        <option value="Status">Status</option>
-                        <option value="Final Outcome">Final Outcome</option>
+                        <option value="Student Number">Student Number</option>
+                        <option value="Forename">Forename</option>
+                        <option value="Application Status code">Application Status Code</option>
+                        <option value="Offer Condition">Offer Condition</option>
                     </select>
                 </div>
             </div>
-            <div class="responsive-table-sm responsive-table-md responsive-table-lg responsive-table-xl">
-                <table class="table table-hover">
-                    <caption>List of Candidates</caption>
-                    <thead>
-                    <tr>
-                        <th scope="col">ID/Ref</th>
-                        <th scope="col">Full Name</th>
-                        <th scope="col">Offer Type</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Final Outcome</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Yinzuo Tao</td>
-                        <td>Conditional</td>
-                        <td>awaiting</td>
-                        <td>offered Place</td>
-                        <td class="text-justify">
-                            <button class="vp"><a th:href="@{/profile}">View Profile</a></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Nishaychay Bhatt</td>
-                        <td>Conditional</td>
-                        <td>awaiting</td>
-                        <td>offered Place</td>
-                        <td class="text-justify">
-                            <button class="vp"><a th:href="@{/profile}">View Profile</a></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Faisal Sulaiman</td>
-                        <td>Conditional</td>
-                        <td>awaiting</td>
-                        <td>offered Place</td>
-                        <td class="text-justify">
-                            <button class="vp"><a th:href="@{/profile}">View Profile</a></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>Yibo Wang</td>
-                        <td>Conditional</td>
-                        <td>awaiting</td>
-                        <td>offered Place</td>
-                        <td class="text-justify">
-                            <button class="vp"><a th:href="@{/profile}">View Profile</a></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td>Richard Ekong</td>
-                        <td>Conditional</td>
-                        <td>awaiting</td>
-                        <td>offered Place</td>
-                        <td class="text-justify">
-                            <button class="vp"><a th:href="@{/profile}">View Profile</a></button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="container tbl-container">
+                <form>
+                    <div class="tbl-fixed table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl table-responsive-xxl">
+                        <table id="candidatesTable" class="table table-hover table-condensed">
+                            <thead>
+                            <tr>
+                                <th scope="col">UCAS CARDIFF COURSE CODE</th>
+                                <th scope="col">CARDIFF COURSE CODE</th>
+                                <th scope="col">RECORD FIRST CREATED</th>
+                                <th scope="col">ENTRY YEAR</th>
+                                <th scope="col">STUDENT NO</th>
+                                <th scope="col">PERSONAL ID</th>
+                                <th scope="col">APPLICATION STATUS CODE</th>
+                                <th scope="col">LATEST DECISION CODE (CAP)</th>
+                                <th scope="col">FORENAME</th>
+                                <th scope="col">SURNAME</th>
+                                <th scope="col">DATE OF BIRTH</th>
+                                <th scope="col">GENDER</th>
+                                <th scope="col">FEE STATUS</th>
+                                <th scope="col">CORRESPONDENCE LANG WELSH</th>
+                                <th scope="col">WELSH SPEAKER INDICATOR</th>
+                                <th scope="col">COUNTRY OF DOMICILE</th>
+                                <th scope="col">NATIONALITY</th>
+                                <th scope="col">HOME EMAIL</th>
+                                <th scope="col">DATE RECEIVED FROM ADMIN</th>
+                                <th scope="col">CONTEXTUAL FLAG?</th>
+                                <th scope="col">APPLICATION STATUS IN HCARE AO</th>
+                                <th scope="col">APPLICATION STATUS COMMENTS</th>
+                                <th scope="col">FEE STATUS COMMENTS</th>
+                                <th scope="col">HIGHEST LEVEL OF QUALIFICATION</th>
+                                <th scope="col">GRADES ACHIEVED</th>
+                                <th scope="col">KEEPING WARM EMAIL SENT?</th>
+                                <th scope="col">TOTAL PERSONAL STATEMENT SCORE</th>
+                                <th scope="col">INTERVIEW INVITE SENT?</th>
+                                <th scope="col">INTERVIEW DATE</th>
+                                <th scope="col">INTERVIEW INVITE COMMENTS</th>
+                                <th scope="col">TOTAL INTERVIEW SCORE</th>
+                                <th scope="col">FTP CHECKED?</th>
+                                <th scope="col">OFFER CONDITIONS</th>
+                                <th scope="col">NON-STANDARD QUALS CHASER EMAIL</th>
+                                <th scope="col">GRADES ACHIEVED AFTER</th>
+                                <th scope="col">CONFIRMATIONS ON COMMENTS</th>
+                                <th scope="col">OFFER EMAIL SENT?</th>
+                                <th scope="col">ISSUE DATE</th>
+                                <th scope="col">DBS CERTIFICATE NUMBER</th>
+                                <th scope="col">FA STATUS</th>
+                                <th scope="col">UPDATE SERVICE</th>
+                                <th scope="col">ESSENTIAL TODOS</th>
+                                <th scope="col">ENROLMENT CRITERIA COMMENTS</th>
+                                <th scope="col" style="width: 150px;">ACTION</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="candidate:${candidates}">
+                                <th scope="row" th:text="${candidate.UCASCardiffCourseCode}"></th>
+                                <td th:text="${candidate.cardiffCourseCode}"></td>
+                                <td th:text="${candidate.recordFirstCreated}"></td>
+                                <td th:text="${candidate.entryYear}"></td>
+                                <td th:text="${candidate.studentNo}"></td>
+                                <td th:text="${candidate.personalID}"></td>
+                                <td id="application-status-Code" th:text="${candidate.applicationStatusCode.code}"></td>
+                                <td th:text="${candidate.latestDecisionCode}"></td>
+                                <td th:text="${candidate.firstName}"></td>
+                                <td th:text="${candidate.surname}"></td>
+                                <td th:text="${candidate.dateOfBirth}"></td>
+                                <td th:text="${candidate.gender.gender}"></td>
+                                <td id="feeStatus" th:text="${candidate.feeStatus.getFeeStatus()}"></td>
+                                <td id="correspondenceLangWelsh" th:text="${candidate.correspondenceLangWelsh.getOption()}"></td>
+                                <td id="welshspeaker" th:text="${candidate.welshSpeaker.getResponse()}"></td>
+                                <td id="country-of-domicile" th:text="${candidate.countryOfDomicile}"></td>
+                                <td th:text="${candidate.nationality}"></td>
+                                <td th:text="${candidate.homeEmail}"></td>
+                                <td th:text="${candidate.dateReceived}"></td>
+                                <td id ="contextual-flag" th:text="${candidate.contextualFlag.getOption()}"></td>
+                                <td th:text="${candidate.getApplicationStatusHCare}"></td>
+                                <td th:text="${candidate.applicationStatusComments}"></td>
+                                <td th:text="${candidate.feeStatusComments}"></td>
+                                <td th:text="${candidate.highestLevelQualification}"></td>
+                                <td th:text="${candidate.gradesAchieved}"></td>
+                                <td id="keeping-warm-email-sent" th:text="${candidate.keepingWarmEmailSent.getOption()}"></td>
+                                <td th:text="${candidate.totalPersonalStatementScore}"></td>
+                                <td id="invite-interview" th:text="${candidate.inviteInterview.getOption()}"></td>
+                                <td id="interview-date" th:text="${candidate.interviewDate}"></td>
+                                <td id="interview-comments"  th:text="${candidate.interviewInviteComments}"></td>
+                                <td id="total-interview-score" th:text="${candidate.totalInterviewScore}"></td>
+                                <td id="ftp-checked" th:text="${candidate.FTPChecked.getOption()}"></td>
+                                <td th:text="${candidate.offerConditions}"></td>
+                                <td th:text="${candidate.nonStandardQualificationsChaserEmail}"></td>
+                                <td th:text="${candidate.gradesAchievedAfter}"></td>
+                                <td th:text="${candidate.confirmationComments}"></td>
+                                <td th:text="${candidate.offerEmailSent}"></td>
+                                <td th:text="${candidate.issueDate}"></td>
+                                <td th:text="${candidate.DBSCertNumber}"></td>
+                                <td th:text="${candidate.FAStatus}"></td>
+                                <td th:text="${candidate.updateService}"></td>
+                                <td th:text="${candidate.essentialToDos}"></td>
+                                <td th:text="${candidate.enrolmentCriteriaComments}"></td>
+                                <td style="width: 300px;">
+                                    <button class="vp" style="width: 100px;"><a th:href="@{/profile}">View Profile</a></button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
             </div>
         </div>
         <aside class="col-lg-4" th:insert="summary_bar::summary_bar"></aside>
