@@ -12,5 +12,8 @@ public interface CandidateService{
 
     List<Candidate> saveAll(LinkedList<Candidate> candidates);
 
+    List<Candidate> findAll();
+
     Candidate findByStudentNo(String studentNo);
+
 }

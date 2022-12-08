@@ -49,4 +49,9 @@ public class CandidateServiceImpl implements CandidateService {
             throw new CustomException("Candidate not found", HttpStatus.NOT_FOUND);
         });
     }
+
+    @Override
+    public List<Candidate> findAll() {
+        return repository.findAll();
+    }
 }
