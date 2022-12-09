@@ -66,6 +66,10 @@
             border: 1px solid #e9ecef;
         }
 
+        td{
+            padding: 0;
+        }
+
         table th {
             position: sticky;
             position: -webkit-sticky;
@@ -74,9 +78,9 @@
             font-weight: bold;
         }
 
-        table th:last-child {
-            position: sticky;left: 100%;
-        }
+        /*table th:last-child {*/
+        /*    position: sticky;left: 100%;*/
+        /*}*/
 
         /*Make the first column fixed*/
         th:first-child, td:first-child {
@@ -84,9 +88,17 @@
             position: -webkit-sticky;
             left: 0;
             background-color: whitesmoke;
-            color: #000;
+            color: #2b364c;
             z-index: 1;
             max-width: fit-content;
+        }
+
+        /*make the last column fixed*/
+        th:last-child, td:last-child{
+            position:sticky;
+            z-index:1; background-color: whitesmoke;
+            color: #2b364c;
+            left: 90%;
         }
 
         td {
@@ -104,6 +116,31 @@
         .tbl-container {
             max-width: 100%;max-height: fit-content;
         }
+
+        .table-input, .table-select{
+            background-color: transparent;
+            color:#2b364c;
+            width: 100%;
+            padding:10px;
+            border: 0;
+            box-sizing: border-box;
+            margin: -10px;
+            text-align: center;
+        }
+
+        .table-input:invalid{
+            color:#f00;
+        }
+
+        .table-input:valid{
+            color:#2b364c;
+        }
+
+        tr:hover, .table-input:hover, .table-select:hover{
+            background-color: #e4e4e4;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
@@ -138,8 +175,10 @@
             </div>
             <div class="container tbl-container">
                 <form>
-                    <div class="tbl-fixed table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl table-responsive-xxl">
-                        <table id="candidatesTable" class="table table-hover table-condensed">
+<!--                    <div class="tbl-fixed table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl table-responsive-xxl">-->
+                    <div class="tbl-fixed" style="overflow-x: auto; overflow-y: auto;">
+
+                        <table id="candidatesTable" class="table table-condensed">
                             <thead>
                             <tr>
                                 <th scope="col">UCAS CARDIFF COURSE CODE</th>
@@ -185,56 +224,221 @@
                                 <th scope="col">UPDATE SERVICE</th>
                                 <th scope="col">ESSENTIAL TODOS</th>
                                 <th scope="col">ENROLMENT CRITERIA COMMENTS</th>
-                                <th scope="col" style="width: 150px;">ACTION</th>
+                                <th scope="col" style="width: 210px;">ACTION</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="candidate:${candidates}">
                                 <th scope="row" th:text="${candidate.UCASCardiffCourseCode}"></th>
-                                <td th:text="${candidate.cardiffCourseCode}"></td>
+                                <td id="cardiff-course-code-column">
+                                    <label for="cardiff-course-code-input"></label>
+                                    <input id="cardiff-course-code-input" name="cardiff-course-code-input" class="table-input" type="text" th:value="${candidate.cardiffCourseCode}" pattern="[A-Z0-9]{1,10}">
+                                </td>
                                 <td th:text="${candidate.recordFirstCreated}"></td>
                                 <td th:text="${candidate.entryYear}"></td>
                                 <td th:text="${candidate.studentNo}"></td>
-                                <td th:text="${candidate.personalID}"></td>
-                                <td id="application-status-Code" th:text="${candidate.applicationStatusCode.code}"></td>
-                                <td th:text="${candidate.latestDecisionCode}"></td>
-                                <td th:text="${candidate.firstName}"></td>
-                                <td th:text="${candidate.surname}"></td>
+                                <td id="personal-id-column">
+                                    <label for="personal-id-input"></label>
+                                    <input id="personal-id-input" name="personal-id-input" class="table-input" type="text" th:value="${candidate.personalID}" pattern="[A-Z0-9]{1,15}">
+                                </td>
+                                <td id="application-status-Code-column">
+                                    <label for="application-status-code-options"></label>
+                                    <select class="table-select" id="application-status-code-options">
+                                        <option value="$" th:text="${candidate.applicationStatusCode.code}"></option>
+                                        <option value="val1" title="Application">A</option>
+                                        <option value="val2" title="Gather field on hold">GF</option>
+                                        <option value="val3" title="Other reason on hold">OR</option>
+                                        <option value="val4" title="Awaiting interview on hold">OH</option>
+                                        <option value="val4" title="Rejected">R</option>
+                                        <option value="val4" title="Conditional offer made">C</option>
+                                        <option value="val4" title="Conditional offer firm">CF</option>
+                                        <option value="val4" title="Conditional offer declined">CD</option>
+                                        <option value="val4" title="Unconditional offer made">U</option>
+                                        <option value="val4" title="Unconditional offer firmed">UF</option>
+                                        <option value="val4" title="Unconditional offer insured">UI</option>
+                                        <option value="val4" title="Unconditional offer declined">UD</option>
+                                        <option value="val4" title="Withdrawal">W</option>
+                                    </select>
+                                </td>
+                                <td id="latest-decision-code-column">
+                                    <label for="latest-decision-code-input"></label>
+                                    <input id="latest-decision-code-input" class="table-input" type="text" th:value="${candidate.latestDecisionCode}" pattern="^[A-Za-z0-9\s]+$"/>
+                                </td>
+                                <td id="firstname">
+                                    <label for="firstname-input"></label>
+                                    <input id="firstname-input" class="table-input" type="text" th:value="${candidate.firstName}" pattern="[A-Za-z]{2,30}">
+                                </td>
+                                <td id="surname-column">
+                                    <label for="surname-input"></label>
+                                    <input class="table-input" id="surname-input" type="text" th:value="${candidate.surname}" pattern="[A-Za-z]{2,30}">
+                                </td>
                                 <td th:text="${candidate.dateOfBirth}"></td>
-                                <td th:text="${candidate.gender.gender}"></td>
-                                <td id="feeStatus" th:text="${candidate.feeStatus.getFeeStatus()}"></td>
-                                <td id="correspondenceLangWelsh" th:text="${candidate.correspondenceLangWelsh.getOption()}"></td>
-                                <td id="welshspeaker" th:text="${candidate.welshSpeaker.getResponse()}"></td>
-                                <td id="country-of-domicile" th:text="${candidate.countryOfDomicile}"></td>
-                                <td th:text="${candidate.nationality}"></td>
-                                <td th:text="${candidate.homeEmail}"></td>
+                                <td id="gender-column">
+                                    <label for="gender-select"></label>
+                                    <select id="gender-select" class="table-select" name="gender-select">
+                                        <option value="$" th:text="${candidate.gender.gender}"></option>
+                                        <option value="val1" title="Female">F</option>
+                                        <option value="val2" title="Male">M</option>
+                                    </select>
+                                </td>
+                                <td id="feeStatus-column">
+                                    <label for="feeStatus-select"></label>
+                                    <select id="feeStatus-select" name="feeStatus-select" class="table-select">
+                                        <option value="$" th:text="${candidate.feeStatus.getFeeStatus()}"></option>
+                                        <option value="val1" title="Home">H</option>
+                                        <option value="val2" title="International">I</option>
+                                    </select>
+                                </td>
+                                <td id="correspondenceLangWelsh-column">
+                                    <label for="correspondenceLangWelsh-select"></label>
+                                    <select name="correspondenceLangWelsh-select" id="correspondenceLangWelsh-select" class="table-select">
+                                        <option value="$" th:text="${candidate.correspondenceLangWelsh.getOption()}"></option>
+                                        <option value="val1" title="Yes">Y</option>
+                                        <option value="val1" title="No">N</option>
+                                    </select>
+                                </td>
+                                <td id="welshspeaker-column">
+                                    <label for="welshspeaker-select"></label>
+                                    <select id="welshspeaker-select" name="welshspeaker-select" class="table-select">
+                                        <option value="$" th:text="${candidate.welshSpeaker.getResponse()}"></option>
+                                        <option value="val1" title="Yes">Y</option>
+                                        <option value="val2" title="No">N</option>
+                                        <option value="val3" title="Not applicable">N/A</option>
+                                    </select>
+                                </td>
+                                <td id="countryOfDomicile-column">
+                                    <label for="country-of-domicile-input"></label>
+                                    <input type="text" id="country-of-domicile-input" class="table-input" th:value="${candidate.countryOfDomicile}" pattern="[A-Za-z\s]{2,50}"/>
+                                </td>
+                                <td id="nationality-column">
+                                    <label for="nationality-input"></label>
+                                    <input id="nationality-input" name="nationality-input" class="table-input" type="text" th:value="${candidate.nationality}" pattern="[A-Za-z\s]{2,50}">
+                                </td>
+                                <td id="home-email-column">
+                                    <label for="home-email-input"></label>
+                                    <!-- Could not do email validation because the source file and database did not handle it-->
+                                    <input id="home-email-input" class="table-input" th:value="${candidate.homeEmail}">
+                                </td>
                                 <td th:text="${candidate.dateReceived}"></td>
-                                <td id ="contextual-flag" th:text="${candidate.contextualFlag.getOption()}"></td>
-                                <td th:text="${candidate.getApplicationStatusHCare}"></td>
-                                <td th:text="${candidate.applicationStatusComments}"></td>
-                                <td th:text="${candidate.feeStatusComments}"></td>
-                                <td th:text="${candidate.highestLevelQualification}"></td>
-                                <td th:text="${candidate.gradesAchieved}"></td>
-                                <td id="keeping-warm-email-sent" th:text="${candidate.keepingWarmEmailSent.getOption()}"></td>
-                                <td th:text="${candidate.totalPersonalStatementScore}"></td>
-                                <td id="invite-interview" th:text="${candidate.inviteInterview.getOption()}"></td>
-                                <td id="interview-date" th:text="${candidate.interviewDate}"></td>
-                                <td id="interview-comments"  th:text="${candidate.interviewInviteComments}"></td>
-                                <td id="total-interview-score" th:text="${candidate.totalInterviewScore}"></td>
-                                <td id="ftp-checked" th:text="${candidate.FTPChecked.getOption()}"></td>
-                                <td th:text="${candidate.offerConditions}"></td>
-                                <td th:text="${candidate.nonStandardQualificationsChaserEmail}"></td>
-                                <td th:text="${candidate.gradesAchievedAfter}"></td>
-                                <td th:text="${candidate.confirmationComments}"></td>
-                                <td th:text="${candidate.offerEmailSent}"></td>
-                                <td th:text="${candidate.issueDate}"></td>
-                                <td th:text="${candidate.DBSCertNumber}"></td>
-                                <td th:text="${candidate.FAStatus}"></td>
-                                <td th:text="${candidate.updateService}"></td>
-                                <td th:text="${candidate.essentialToDos}"></td>
-                                <td th:text="${candidate.enrolmentCriteriaComments}"></td>
+                                <td id ="contextual-flag-column">
+                                    <label for="contextual-flag-select"></label>
+                                    <select name="contextual-flag-select" id="contextual-flag-select" class="table-select">
+                                        <option value="$" th:text="${candidate.contextualFlag.getOption()}"></option>
+                                        <option value="val1" title="Yes">Y</option>
+                                        <option value="val1" title="No">N</option>
+                                    </select>
+                                </td>
+                                <td id="application-status-hcare">
+                                    <label for="application-status-hcare-input"></label>
+                                    <input id="application-status-hcare-input" name="application-status-hcare-input" class="table-input" type="text" th:value="${candidate.getApplicationStatusHCare}" pattern="^[A-Za-z0-9\s]+$">
+                                </td>
+                                <td id="application-status-comments-column">
+                                    <label for="application-status-comments-input"></label>
+                                    <input id="application-status-comments-input" name="application-status-comments-input" type="text" class="table-input" th:value="${candidate.applicationStatusComments}" pattern="^[A-Za-z0-9\s]+$">
+                                </td>
+                                <td id="fee-status-comment-column">
+                                    <label for="fee-status-comment-input"></label>
+                                    <input id="fee-status-comment-input" type="text" class="table-input" th:value="${candidate.feeStatusComments}" pattern="^[A-Za-z0-9\s]+$">
+                                </td>
+                                <td id="highest-level-qualification-column">
+                                    <label for="highest-level-qualification-input"></label>
+                                    <input id="highest-level-qualification-input" type="text"  class="table-input" th:value="${candidate.highestLevelQualification}" pattern="^[A-Za-z0-9\s]+$">
+                                </td>
+                                <td id="grade-achieved-column">
+                                    <label for="grade-achieved-input"></label>
+                                    <input id="grade-achieved-input" name="grade-achieved-input" type="text" class="table-input" th:value="${candidate.gradesAchieved}" pattern="[A-Za-z0-9]{1,}">
+                                </td>
+                                <td id="keeping-warm-email-sent-column">
+                                    <label for="keeping-warm-email-sent-select"></label>
+                                    <select name="keeping-warm-email-sent-select" id="keeping-warm-email-sent-select" class="table-select">
+                                        <option value="$" th:text="${candidate.keepingWarmEmailSent.getOption()}"></option>
+                                        <option value="val1" title="Yes">Y</option>
+                                        <option value="val1" title="No">N</option>
+                                    </select>
+                                </td>
+                                <td id="total-personal-statement-score-column">
+                                    <label for="total-personal-statement-score-input"></label>
+                                    <input id="total-personal-statement-score-input" name="total-personal-statement-score-input" type="number" max="100" min="0" class="table-input" th:value="${candidate.totalPersonalStatementScore}">
+                                </td>
+                                <td id="invite-interview-column">
+                                    <label for="invite-interview-input"></label>
+                                    <select name="invite-interview-input" id="invite-interview-input" class="table-select">
+                                        <option value="$" th:text="${candidate.inviteInterview.getOption()}"></option>
+                                        <option value="val1" title="Yes">Y</option>
+                                        <option value="val1" title="No">N</option>
+                                    </select>
+                                </td>
+                                <td id="interview-date-column">
+                                    <label for="interview-date-input"></label>
+                                    <input id="interview-date-input" name="interview-date-input" class="table-input" th:value="${candidate.interviewDate}" type="date">
+                                </td>
+                                <td id="interview-comments-column">
+                                    <label for="interview-comments-input"></label>
+                                    <input id="interview-comments-input" name="interview-comments-input" class="table-input"  th:value="${candidate.interviewInviteComments}" pattern="^[A-Za-z0-9\s]+$">
+                                </td>
+                                <td id="total-interview-score-column">
+                                    <label for="total-interview-score-input"></label>
+                                    <input id="total-interview-score-input" name="total-interview-score-input" class="table-input" type="number" max="100" min="0"   th:value="${candidate.totalInterviewScore}">
+                                </td>
+                                <td id="ftp-checked-column">
+                                    <label for="ftp-checked-input"></label>
+                                    <select name="ftp-checked-input" id="ftp-checked-input" class="table-select">
+                                        <option value="$" th:text="${candidate.FTPChecked.getOption()}"></option>
+                                        <option value="val1" title="Yes">Y</option>
+                                        <option value="val1" title="No">N</option>
+                                    </select>
+                                </td>
+                                <td id="offer-conditions-column">
+                                    <label for="offer-conditions-input"></label>
+                                    <input id="offer-conditions-input" name="offer-conditions-input" class="table-input" th:value="${candidate.offerConditions}" pattern="^[A-Za-z0-9\s]+$">
+                                </td>
+                                <td id="non-standard-qualification-chaser-email-column">
+                                    <label for="non-standard-qualification-chaser-email-input"></label>
+                                    <input id="non-standard-qualification-chaser-email-input" name="non-standard-qualification-chaser-email-input" class="table-input" th:value="${candidate.nonStandardQualificationsChaserEmail}" pattern="^[A-Za-z0-9\s]+$">
+                                </td>
+                                <td id="grades-achieved-after-column">
+                                    <label for="grades-achieved-after-input"></label>
+                                    <input id="grades-achieved-after-input" name="grades-achieved-after-input" class="table-input" th:value="${candidate.gradesAchievedAfter}" pattern="^[A-Za-z0-9\s]+$">
+                                </td>
+                                <td id="confirmation-comments-column">
+                                    <label for="confirmation-comments-input"></label>
+                                    <input id="confirmation-comments-input" name="confirmation-comments-input" class="table-input" th:value="${candidate.confirmationComments}" pattern="^[A-Za-z0-9\s]+$">
+                                </td>
+                                <td id="offer-email-sent-column">
+                                    <label for="offer-email-sent-select"></label>
+                                    <select id="offer-email-sent-select" name="offer-email-sent-select" class="table-select">
+                                        <option value="$">Y</option>
+                                        <option value="val1" title="Yes">Y</option>
+                                        <option value="val2" title="No">N</option>
+                                    </select>
+                                </td>
+                                <td id="issue-date-column">
+                                    <label for="issue-date-input"></label>
+                                    <input id="issue-date-input" name="issue-date-input" class="table-input" type="date" th:value="${candidate.issueDate}">
+                                </td>
+                                <td id="dbs-cert-number-column">
+                                    <label for="dbs-cert-number-input"></label>
+                                    <input id="dbs-cert-number-input" name="dbs-cert-number-input" class="table-input" th:value="${candidate.DBSCertNumber}" pattern="[0-9]{12}">
+                                </td>
+                                <td id="fa-status-column">
+                                    <label for="fa-status-input"></label>
+                                    <input id="fa-status-input" name="fa-status-input" class="table-input" th:value="${candidate.FAStatus}" pattern="^[A-Za-z0-9\s]+$">
+                                </td>
+                                <td id="service-update-column">
+                                    <label for="service-update-input"></label>
+                                    <input id="service-update-input" name="service-update-input" class="table-input" th:value="${candidate.updateService}" pattern="^[A-Za-z0-9\s]+$">
+                                </td>
+                                <td id="essential-todos-column">
+                                    <label for="essential-todos-input"></label>
+                                    <input id="essential-todos-input" name="essential-todos-input" class="table-input" th:value="${candidate.essentialToDos}" pattern="^[A-Za-z0-9\s]+$">
+                                </td>
+                                <td id="enrolment-criteria-comment-column">
+                                    <label for="enrolment-criteria-comment-input"></label>
+                                    <input id="enrolment-criteria-comment-input" name="enrolment-criteria-comment-input" class="table-input" th:value="${candidate.essentialToDos}" pattern="^[A-Za-z0-9\s]+$">
+                                </td>
                                 <td style="width: 300px;">
                                     <button class="vp" style="width: 100px;"><a th:href="@{/profile}">View Profile</a></button>
+                                    <button class="vp" style="width: 100px;"><a>Edit</a></button>
                                 </td>
                             </tr>
                             </tbody>
