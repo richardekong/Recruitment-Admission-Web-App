@@ -50,7 +50,7 @@
         margin-bottom: 0;
         overflow: auto;
         /*No support for mobiles now*/
-        display: none;
+        /*display: none;*/
     }
 
     #aside {
