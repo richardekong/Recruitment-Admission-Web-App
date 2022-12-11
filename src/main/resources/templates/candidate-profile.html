@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
     <meta charset="UTF-8">
@@ -21,86 +21,346 @@
             crossorigin="anonymous"></script>
     <!-- Bootstrap Document -->
 
-    <link rel="stylesheet" th:href="@{css/css.css}">
+    <link rel="stylesheet" th:href="@{/css/css.css}">
 </head>
-<body>
-<!-- This section made by Faisal 24/11/2022 -->
-<!-- Add header to the top of this page -->
-<header th:insert="header::header"></header>
-<div class="row">
-    <!-- This is the whole container div which contain all elements in candidate profile page #Faisal# -->
-    <div class="main-content col-xs-12 col-sm-12 col-md-12 col-lg-9">
-        <div>
-            <!--First Row which contain only phrase (Profile Settings) #Faisal#  -->
-            <div class="row">
-                <h1 class="display-6" style="text-align: center;">Candidate profile</h1>
-            </div>
-            <br>
-            <!-- Second Row which contain three column... #Faisal# -->
-            <div class="row gx-5 justify-content-md-center">
-                <!-- First column which has 2 row and contains student icon and student name #Faisal# -->
-                <div class="col-2 ">
-                    <!--First rwo contain stiudent icon #Faisal# -->
-                    <div class="row">
-                        <img th:src="@{images/student-icon.svg}" src="/static/images/student-icon.svg" alt=""
-                             style="height: 150px; width: 150px;">
-                    </div>
-                    <!--Second row contain student name #Faisal# -->
-                    <div class="row">
-                        <span>Student Name</span>
-                        <span>C21121249</span>
-                    </div>
-                </div>
-                <!-- Second column which has 3 rows and contain full name , status and offer type So it will be three rows #Faisal# -->
-                <div class="col-4">
-                    <!-- First row in second column , which contain full name lable and student full name as input text readonly for view not change the value #Faisal#  -->
-                    <!-- Second row in second column , which contain status lable and stusts as input text readonly for view not change the value #Faisal#  -->
-                    <div class="row">
-                        <label for="status">Status:</label>
-                        <input id="status" class="form-control" type="text" placeholder="Student status" readonly>
-                    </div>
-                    <br>
-                    <!-- Third row in second column , which contain offer type lable and list of offers that user can chose one of them #Faisal#  -->
-                    <div class="row">
-                        <label for="offer-type">Offer type:</label>
-                        <select id="offer-type" class="form-control">
-                            <option>Conditional</option>
-                            <option>Unconditional</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- Third column which has 3 rows and contain ID , Final outcome and Interview marks So it will be three rows #Faisal# -->
-                <div class="col-4 ">
-                    <!-- First row in third column , which contain Id lable and ID as input text readonly for view not change the value #Faisal#  -->
-                    <!-- Second row in third column , which final outcome lable and outcome as input text readonly for view not change the value #Faisal#  -->
-                    <div class="row">
-                        <label for="final-outcome">Final outcome:</label>
-                        <input id="final-outcome" class="form-control" type="text" placeholder="Outcome" readonly>
-                    </div>
-                    <br>
-                    <!-- Third row in third column , which contain interview marks lable and input filed to give student interview marks #Faisal#  -->
-                    <div class="row">
-                        <label for="interview-marks">Interview marks:</label>
-                        <input id="interview-marks" class="form-control" type="text" placeholder="marks">
+<body th:with="candidate=${Candidate}">
+<!-- This section made by #Faisal  -->
+<!-- This section made by #Faisal  -->
 
-                    </div>
+
+<!-- Add header to the top of this page -->
+<header th:replace="header::header"></header>
+
+    <!-- This is the whole container div which contain all elements in candidate profile page #Faisal# -->
+    <div class="main-content col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xxl-9">
+
+            <!--First Row which contain  phrase (Profile Settings) and student icon image #Faisal#  -->
+            <div class="row gx-5 justify-content-md-center">
+                <h1 class="display-6" style="text-align: center;">Candidate profile</h1>
+                <img th:src="@{/images/student-icon.svg}" src="/static/images/student-icon.svg" alt="" style="height: 150px; width: 150px;text-align: center;">
+            </div>
+            <br>
+
+            <!-- this is container for candidate information two column -->
+
+            <!-- first ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="UCAS-Cardiff-course-code">UCAS Cardiff course code:</label>
+                        <input id="UCAS-Cardiff-course-code" name="UCAS-Cardiff-course-code" class="form-control" type="text" th:value="${candidate.UCASCardiffCourseCode}" >
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                        <label for="Cardiff-course-code">Cardiff course code:</label>
+                        <input  id="Cardiff-course-code" name="Cardiff-course-code" class="form-control" type="text" th:value="${candidate.cardiffCourseCode}" >
                 </div>
             </div>
             <br>
-            <!--Third row which vontain Edit button-->
-            <div class="row ">
-                <div class="class= col-1 "></div>
-                <div class="class= col-2 "></div>
-                <div class="class= col-8 btn ">
-                    <button type="button" class="btn" style="background-color:#214ea3; color: white;">Edit</button>
+            <!-- second ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="record-first-created">Record first created:</label>
+                    <input id="record-first-created" name="record-first-created" class="form-control" type="text" th:value="${candidate.recordFirstCreated}">
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="entry-year">Entry year:</label>
+                    <input id="entry-year" name="entry-year" class="form-control" type="text" th:value="${candidate.entryYear}">
                 </div>
             </div>
-        </div>
-    </div>
-    <aside class="col-lg-4" th:insert="summary_bar::summary_bar"></aside>
-</div>
-<!-- END of Faisal section -->
+            <br>
+            <!-- third ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="student-no">Student number:</label>
+                    <input id="student-no" name="student-no" class="form-control" type="text" th:value="${candidate.studentNo}">
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="personal-id">Personal ID:</label>
+                    <input id="personal-id" name="personal-id" class="form-control" type="text" th:value="${candidate.personalID}">
+                </div>
+            </div>
+            <br>
+            <!-- fourth ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="application-status-code"> Application status code:</label>
+                    <select class="form-control" id="application-status-code">
+                        <option value="$" th:text="${candidate.applicationStatusCode.code}"></option>
+                        <option value="val1" title="Application">A</option>
+                        <option value="val2" title="Gather field on hold">GF</option>
+                        <option value="val3" title="Other reason on hold">OR</option>
+                        <option value="val4" title="Awaiting interview on hold">OH</option>
+                        <option value="val4" title="Rejected">R</option>
+                        <option value="val4" title="Conditional offer made">C</option>
+                        <option value="val4" title="Conditional offer firm">CF</option>
+                        <option value="val4" title="Conditional offer declined">CD</option>
+                        <option value="val4" title="Unconditional offer made">U</option>
+                        <option value="val4" title="Unconditional offer firmed">UF</option>
+                        <option value="val4" title="Unconditional offer insured">UI</option>
+                        <option value="val4" title="Unconditional offer declined">UD</option>
+                        <option value="val4" title="Withdrawal">W</option>
+                    </select>
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="latest-decision-code">Latest decision code (CAP):</label>
+                    <input id="latest-decision-code" name="latest-decision-code" class="form-control" type="text" th:value="${candidate.latestDecisionCode}">
+                </div>
+            </div>
+            <br>
+            <!-- fifth ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="first-name">First name:</label>
+                    <input id="first-name" name="first-name" class="form-control" type="text" th:value="${candidate.firstName}">
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="sur-name">Surname:</label>
+                    <input id="sur-name" name="sur-name" class="form-control" type="text" th:value="${candidate.surname}">
+                </div>
+            </div>
+            <br>
+            <!-- sixth ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="date-of-birth">Date of birth:</label>
+                    <input id="date-of-birth" name="date-of-birth" class="form-control" type="text" th:value="${candidate.dateOfBirth}">
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="gender-select">Gender:</label>
+                    <select id="gender-select" class="form-control" name="gender-select">
+                        <option value="$" th:text="${candidate.gender.gender}"></option>
+                        <option value="val1" title="Female">F</option>
+                        <option value="val2" title="Male">M</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <!-- seventh ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="feeStatus-select">Fee status:</label>
+                    <select id="feeStatus-select" name="feeStatus-select" class="form-control">
+                        <option value="$" th:text="${candidate.feeStatus.getFeeStatus()}"></option>
+                        <option value="val1" title="Home">H</option>
+                        <option value="val2" title="International">I</option>
+                    </select>                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="correspondenceLangWelsh-select">correspondence Lang Welsh:</label>
+                    <select name="correspondenceLangWelsh-select" id="correspondenceLangWelsh-select" class="form-control">
+                        <option value="$" th:text="${candidate.correspondenceLangWelsh.getOption()}"></option>
+                        <option value="val1" title="Yes">Y</option>
+                        <option value="val1" title="No">N</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <!-- eighth ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="welshspeaker-indicator">Welshspeaker indicator</label>
+                    <select id="welshspeaker-indicator" name="welshspeaker-indicator" class="form-control">
+                        <option value="$" th:text="${candidate.welshSpeaker.getResponse()}"></option>
+                        <option value="val1" title="Yes">Y</option>
+                        <option value="val2" title="No">N</option>
+                        <option value="val3" title="Not applicable">N/A</option>
+                    </select>
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="country-of-domicile">Country of domicile:</label>
+                    <input id="country-of-domicile" name="country-of-domicile" class="form-control" type="text" th:value="${candidate.countryOfDomicile}">
+                </div>
+            </div>
+            <br>
+            <!-- ninth ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="nationality">Nationality:</label>
+                    <input id="nationality" name="nationality" class="form-control" type="text" th:value="${candidate.nationality}">
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="home-email">Home email:</label>
+                    <input id="home-email" name="home-email" class="form-control" type="text" th:value="${candidate.homeEmail}">
+                </div>
+            </div>
+            <br>
+            <!-- tenth ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="date-received">Date received from admin:</label>
+                    <input id="date-received" name="date-received" class="form-control" type="text" th:value="${candidate.dateReceived}">
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="contextual-flag">Contextual flag</label>
+                    <select name="contextual-flag" id="contextual-flag" class="form-control">
+                        <option value="$" th:text="${candidate.contextualFlag.getOption()}"></option>
+                        <option value="val1" title="Yes">Y</option>
+                        <option value="val1" title="No">N</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <!-- eleventh ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="application-status-Hcare">Application status HCARE AO:</label>
+                    <input id="application-status-Hcare" name="application-status-Hcare" class="form-control" type="text" th:value="${candidate.getApplicationStatusHCare}">
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="application-status-comments">Application status comments :</label>
+                    <input id="application-status-comments" name="application-status-comments" class="form-control" type="text" th:value="${candidate.applicationStatusComments}">
+                </div>
+            </div>
+            <br>
+            <!-- twelve ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="fee-status-comments">Fee status comments :</label>
+                    <input id="fee-status-comments" name="fee-status-comments" class="form-control" type="text" th:value="${candidate.feeStatusComments}">
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="highest-level-qualification">Highest level qualification :</label>
+                    <input id="highest-level-qualification" name="highest-level-qualification" class="form-control" type="text" th:value="${candidate.highestLevelQualification}">
+                </div>
+            </div>
+            <br>
+            <!-- thirteenth ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="grade-achieved">Grade achieved:</label>
+                    <input id="grade-achieved" name="grade-achieved" class="form-control" type="text" th:value="${candidate.gradesAchieved}">
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="keeping-warm-email-sent">Keeping warm email sent</label>
+                    <select name="keeping-warm-email-sent" id="keeping-warm-email-sent" class="form-control">
+                        <option value="$"
+                                th:text="${candidate.keepingWarmEmailSent.getOption()}"></option>
+                        <option value="val1" title="Yes">Y</option>
+                        <option value="val1" title="No">N</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <!-- fourteenth ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="total-personal-statement-score">Total personal statement score:</label>
+                    <input id="total-personal-statement-score" name="total-personal-statement-score" class="form-control" type="text" th:value="${candidate.totalPersonalStatementScore}">
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="invite-interview-sent">Invite interview sent</label>
+                    <select name="invite-interview-sent" id="invite-interview-sent" class="form-control">
+                        <option value="$" th:text="${candidate.inviteInterview.getOption()}"></option>
+                        <option value="val1" title="Yes">Y</option>
+                        <option value="val1" title="No">N</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <!-- fifteenth ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="interview-date">Interview date:</label>
+                    <input id="interview-date" name="interview-date" class="form-control" th:value="${candidate.interviewDate}" type="date">
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="interview-invite-comments">Interview invite comments:</label>
+                    <input id="interview-invite-comments" name="interview-invite-comments" class="form-control" type="text" th:value="${candidate.interviewInviteComments}">
+                </div>
+            </div>
+            <br>
+            <!-- sixteenth ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="total-interview-score">Total interview score:</label>
+                    <input id="total-interview-score" name="total-interview-score" class="form-control" type="text" th:value="${candidate.totalInterviewScore}">
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="ftp-checked">FTP checked</label>
+                    <select name="ftp-checked" id="ftp-checked" class="form-control">
+                        <option value="$" th:text="${candidate.FTPChecked.getOption()}"></option>
+                        <option value="val1" title="Yes">Y</option>
+                        <option value="val1" title="No">N</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <!-- seventieth ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="offer-condition">Offer condition:</label>
+                    <input id="offer-condition" name="offer-condition" class="form-control" th:value="${candidate.offerConditions}" type="text">
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="non-standard-qualifications-chaser-email">Non standard qualifications chaser email:</label>
+                    <input id="non-standard-qualifications-chaser-email" name="non-standard-qualifications-chaser-email" class="form-control" type="text" th:value="${candidate.nonStandardQualificationsChaserEmail}">
+                </div>
+            </div>
+            <br>
+            <!-- eighteenth ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="grades-achieved-after">Grades achieved after:</label>
+                    <input id="grades-achieved-after" name="grades-achieved-after" class="form-control" th:value="${candidate.gradesAchievedAfter}" type="text">
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="confirmation-comments">Confirmation comments:</label>
+                    <input id="confirmation-comments" name="confirmation-comments" class="form-control" type="text" th:value="${candidate.confirmationComments}">
+                </div>
+            </div>
+            <br>
+            <!-- nineteenth ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="offer-email-sent">Offer email sent:</label>
+                    <select id="offer-email-sent" name="offer-email-sent" class="form-control">
+                        <option value="$">Y</option>
+                        <option value="val1" title="Yes">Y</option>
+                        <option value="val2" title="No">N</option>
+                    </select>
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="issue-date">Issue date</label>
+                    <input id="issue-date" name="issue-date" class="form-control" type="date" th:value="${candidate.issueDate}">
+                </div>
+            </div>
+            <br>
+            <!-- twentieth ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="dbs-cert-number">DBS certificate number:</label>
+                    <input id="dbs-cert-number" name="dbs-cert-number" class="form-control" type="text" th:value="${candidate.DBSCertNumber}">
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="fa-status">FA status</label>
+                    <input id="fa-status" name="fa-status" class="form-control" type="text" th:value="${candidate.FAStatus}">
+                </div>
+            </div>
+            <br>
+            <!-- twentieth one ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="update-service">Update service:</label>
+                    <input id="update-service" name="update-service" class="form-control" type="text" th:value="${candidate.updateService}">
+                </div>
+                <div class="col-lg-4 col-sm-8">
+                    <label for="essential-todos">Essential To Dos:</label>
+                    <input id="essential-todos" name="essential-todos" class="form-control" type="text" th:value="${candidate.essentialToDos}">
+                </div>
+            </div>
+            <br>
+            <!-- twentieth two ROW for candidate information -->
+            <div class="row gx-5 justify-content-md-center">
+                <div class="col-lg-4 col-sm-8">
+                    <label for="enrolment-criteria-comments">Enrolment criteria comments</label>
+                    <input id="enrolment-criteria-comments" name="enrolment-criteria-comments" class="form-control" type="text" th:value="${candidate.enrolmentCriteriaComments}">
+                </div>
+                <div class="col-lg-4 col-sm-8"></div>
+            </div>
+            <br>
+            <div class="row gx-5 justify-content-md-center">
+                <button type="button" class="btn" style="background-color:#214ea3; height: 50px; width: 100px;text-align: center;"><a th:href="@{/candidates}" style="color: white;">Edit</a></button>
+            </div>
+    <aside class="col-lg-4" th:insert="summary_bar::summary_bar"></aside><!-- END of Faisal section -->
 <!-- add a reusable footer -->
-<footer th:insert="footer :: footer"></footer>
+<footer th:replace="footer :: footer"></footer>
 </body>
 </html>
