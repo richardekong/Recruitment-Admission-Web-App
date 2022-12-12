@@ -2,6 +2,7 @@ package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.converter.DateConverter;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.*;
 
 import java.io.InputStream;
@@ -16,7 +17,8 @@ public interface ExcelReaderService {
             int cellIndex,
             Candidate candidate,
             Cell cell,
-            DataFormatter cellFormatter) {
+            DataFormatter cellFormatter,
+            DateConverter dateConverter) {
 
         switch (cellIndex) {
             case 0:
@@ -26,7 +28,7 @@ public interface ExcelReaderService {
                 candidate.setCardiffCourseCode(cellFormatter.formatCellValue(cell));
                 break;
             case 2: {
-                candidate.setRecordFirstCreated((cell.getDateCellValue()));
+                candidate.setRecordFirstCreated(dateConverter.convertToLocalDateViaInstant(cell.getDateCellValue()));
                 break;
             }
             case 3: {
@@ -60,7 +62,7 @@ public interface ExcelReaderService {
                 break;
             }
             case 10: {
-                candidate.setDateOfBirth(cell.getDateCellValue());
+                candidate.setDateOfBirth(dateConverter.convertToLocalDateViaInstant(cell.getDateCellValue()));
                 break;
             }
             case 11: {
@@ -171,7 +173,7 @@ public interface ExcelReaderService {
                 break;
             }
             case 28: {
-                candidate.setInterviewDate(cell.getDateCellValue());
+                candidate.setInterviewDate(dateConverter.convertToLocalDateViaInstant(cell.getDateCellValue()));
                 break;
             }
             case 29: {

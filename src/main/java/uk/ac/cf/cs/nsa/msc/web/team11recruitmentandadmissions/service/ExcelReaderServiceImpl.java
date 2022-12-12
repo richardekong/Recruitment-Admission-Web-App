@@ -8,6 +8,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.converter.DateConverter;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.*;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.repository.CandidateRepository;
 
@@ -20,9 +21,17 @@ import java.util.List;
 @Service
 public class ExcelReaderServiceImpl implements ExcelReaderService {
     private DataFormatter cellFormatter;
+
+    private DateConverter dateConverter;
+
     @Autowired
     void setCellFormatter(DataFormatter cellFormatter){
         this.cellFormatter = cellFormatter;
+    }
+
+    @Autowired
+    void setDateConverter(DateConverter converter) {
+        this.dateConverter = converter;
     }
 
     @Override
@@ -42,7 +51,7 @@ public class ExcelReaderServiceImpl implements ExcelReaderService {
                 Candidate candidate = new Candidate();
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
-                    readFromCurrentCell(cellIndex, candidate, cell, cellFormatter);
+                    readFromCurrentCell(cellIndex, candidate, cell, cellFormatter, dateConverter);
                     cellIndex++;
                 }
 
