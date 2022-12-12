@@ -22,7 +22,7 @@ public interface CandidateSortingService {
 
     Slice<Candidate> findCandidatesByPersonalID(String personalID, Pageable pageable);
 
-    Slice<Candidate> findCandidatesByDateOfBirth(String dateOfBirth, Pageable pageable);
+    Slice<Candidate> findCandidatesByDateOfBirth(LocalDate dateOfBirth, Pageable pageable);
 
     Slice<Candidate> findCandidatesByTotalPersonalStatementScore(int score, Pageable pageable);
 
