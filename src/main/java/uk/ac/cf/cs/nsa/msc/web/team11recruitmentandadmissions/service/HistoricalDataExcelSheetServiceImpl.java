@@ -9,11 +9,11 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class CreateHistoricalDataExcelSheetImpl implements CreateHistoricalDataExcelSheet{
+public class HistoricalDataExcelSheetServiceImpl implements HistoricalDataExcelSheetService {
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
 
-    public CreateHistoricalDataExcelSheetImpl() {
+    public HistoricalDataExcelSheetServiceImpl() {
         workbook = new XSSFWorkbook();
         sheet = workbook.createSheet("HistoricalDataExcelSheet");
     }
@@ -35,6 +35,7 @@ public class CreateHistoricalDataExcelSheetImpl implements CreateHistoricalDataE
         // Third cell in the header
         cell = row.createCell(2);
         cell.setCellValue("offersMade");
+
 
     }
 
