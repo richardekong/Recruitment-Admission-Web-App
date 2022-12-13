@@ -2,6 +2,7 @@ package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,20 +13,29 @@ import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.*;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.CustomException;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.Response;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.CandidateService;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.CandidateSortingService;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Controller
 public class CandidatesController {
 
     private CandidateService candidateService;
 
+    private CandidateSortingService sortingService;
+
     @Autowired
     public void setCandidateService(CandidateService service) {
         this.candidateService = service;
+    }
+
+    @Autowired
+    public void setSortingService(CandidateSortingService service) {
+        this.sortingService = service;
     }
 
     @GetMapping("/candidates")
@@ -45,6 +55,207 @@ public class CandidatesController {
         );
         model.addAttribute("candidates", unConfirmedCandidates.get());
         return "candidates";
+    }
+
+    @GetMapping("/candidates/sortBy")
+    public String sortCandidates(@RequestParam Map<String, String> requestParameters, Model model) {
+
+        AtomicReference<Pageable> pageableAtomicReference = new AtomicReference<>(PageRequest.of(0, 1));
+        String sortOrder = requestParameters.getOrDefault("order", "ASC");
+        boolean isAscending = sortOrder.equalsIgnoreCase("ASC");
+        requestParameters.entrySet().parallelStream()
+                .map(entry -> {
+                    if (entry.getKey().equalsIgnoreCase("studentNo")) {
+                        return getSliceOfCandidates(pageableAtomicReference, isAscending, entry, Sort.by("studentNo"))
+                                .getContent();
+                    }
+                    if (entry.getKey().equalsIgnoreCase("surname")) {
+                        return getSliceOfCandidates(pageableAtomicReference, isAscending, entry, Sort.by("surname"))
+                                .getContent();
+                    }
+                    if (entry.getKey().equalsIgnoreCase("applicationStatusCode")) {
+                        return getSliceOfCandidates(pageableAtomicReference, isAscending, entry, Sort.by("applicationStatusCode"))
+                                .getContent();
+                    }
+                    if (entry.getKey().equalsIgnoreCase("offerCondition")) {
+                        return getSliceOfCandidates(pageableAtomicReference, isAscending, entry, Sort.by("offerCondition"))
+                                .getContent();
+                    }
+                    if (entry.getKey().equalsIgnoreCase("recordFirstCreated")) {
+                        return getSliceOfCandidates(pageableAtomicReference, isAscending, entry, Sort.by("recordFirstCreated"))
+                                .getContent();
+                    }
+                    if (entry.getKey().equalsIgnoreCase("personalID")) {
+                        return getSliceOfCandidates(pageableAtomicReference, isAscending, entry, Sort.by("personalID"))
+                                .getContent();
+                    }
+                    if (entry.getKey().equalsIgnoreCase("dateOfBirth")) {
+                        return getSliceOfCandidates(pageableAtomicReference, isAscending, entry, Sort.by("dateOfBirth"))
+                                .getContent();
+                    }
+                    if (entry.getKey().equalsIgnoreCase("totalPersonalStatementScore")) {
+                        return getSliceOfCandidates(pageableAtomicReference, isAscending, entry, Sort.by("totalPersonalStatementScore"))
+                                .getContent();
+                    }
+                    if (entry.getKey().equalsIgnoreCase("totalInterviewScore")){
+                        return getSliceOfCandidates(pageableAtomicReference, isAscending, entry, Sort.by("totalInterviewScore"))
+                                .getContent();
+                    }
+                    if (entry.getKey().equalsIgnoreCase("offerEmailSent")){
+                        return getSliceOfCandidates(pageableAtomicReference, isAscending, entry,Sort.by("offerEmailSent"))
+                                .getContent();
+                    }
+                    if (entry.getKey().equalsIgnoreCase("inviteInterview")){
+                        return getSliceOfCandidates(pageableAtomicReference, isAscending, entry, Sort.by("inviteInterview"))
+                                .getContent();
+                    }
+                    else{
+                        return candidateService.findAll();
+                    }
+                })
+                .findFirst()
+                .ifPresentOrElse(candidates -> {
+                    System.out.println(candidates);
+                    model.addAttribute("candidates", candidates);
+                }, () -> {
+                    throw new CustomException(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND);
+                });
+        return "candidates";
+    }
+
+    private Slice<Candidate> getSliceOfCandidates(
+            AtomicReference<Pageable> pageableAtomicReference,
+            boolean isAscending,
+            Map.Entry<String, String> entry,
+            Sort sort) {
+
+        Slice<Candidate> sliceOfCandidates = null;
+        pageableAtomicReference.set(PageRequest.of(0, 10, isAscending ? sort.ascending() : sort.descending()));
+        switch (entry.getKey()){
+            case "studentNo":{
+                sliceOfCandidates =  sortingService.findCandidateByStudentNo(entry.getValue(), pageableAtomicReference.get());
+                break;
+            }
+            case "surname":{
+                sliceOfCandidates = sortingService.findCandidateBySurname(entry.getValue(), pageableAtomicReference.get());
+                break;
+            }
+            case "offerCondition":{
+                sliceOfCandidates = sortingService.findCandidatesByOfferConditions(entry.getValue(), pageableAtomicReference.get());
+                break;
+            }
+            case "recordFirstCreated":{
+                sliceOfCandidates = sortingService.findCandidatesByRecordFirstCreated(LocalDate.parse(entry.getValue()), pageableAtomicReference.get());
+                break;
+            }
+            case "personalID":{
+                sliceOfCandidates = sortingService.findCandidatesByPersonalID(entry.getValue(), pageableAtomicReference.get());
+                break;
+            }
+            case "dateOfBirth":{
+                sliceOfCandidates = sortingService.findCandidatesByDateOfBirth(LocalDate.parse(entry.getValue()), pageableAtomicReference.get());
+                break;
+            }
+            case "totalPersonalStatementScore":{
+                sliceOfCandidates = sortingService.findCandidatesByTotalPersonalStatementScore(Integer.parseInt(entry.getValue()), pageableAtomicReference.get());
+                break;
+            }
+            case "totalInterviewScore":{
+                sliceOfCandidates = sortingService.findCandidatesByTotalInterviewScore(Integer.parseInt(entry.getValue()), pageableAtomicReference.get());
+                break;
+            }
+            case "inviteInterview":{
+                switch (entry.getValue()) {
+                    case "Y": {
+                        sliceOfCandidates = sortingService.findCandidatesByInviteInterview(YesOrNoOption.YES, pageableAtomicReference.get());
+                        break;
+                    }
+                    case "N":{
+                        sliceOfCandidates = sortingService.findCandidatesByInviteInterview(YesOrNoOption.NO, pageableAtomicReference.get());
+                        break;
+                    }
+                }
+                break;
+            }
+            case "offerEmailSent":{
+                switch (entry.getValue()) {
+                    case "Y": {
+                        sliceOfCandidates = sortingService.findCandidatesByOfferEmailSent(YesOrNoOption.YES, pageableAtomicReference.get());
+                        break;
+                    }
+                    case "N":{
+                        sliceOfCandidates = sortingService.findCandidatesByOfferEmailSent(YesOrNoOption.NO, pageableAtomicReference.get());
+                        break;
+                    }
+                }
+                break;
+            }
+            case "applicationCode":{
+                switch (entry.getValue()){
+                    case "A":{
+                        sliceOfCandidates = sortingService.findCandidatesByApplicationStatusCode(ApplicationStatusCode.APPLICATION, pageableAtomicReference.get());
+                        break;
+                    }
+                    case "GF":{
+                        sliceOfCandidates = sortingService.findCandidatesByApplicationStatusCode(ApplicationStatusCode.GATHERED_FIELD_ON_HOLD, pageableAtomicReference.get());
+                        break;
+                    }
+                    case "OR":{
+                        sliceOfCandidates = sortingService.findCandidatesByApplicationStatusCode(ApplicationStatusCode.OTHER_REASON_ON_HOLD, pageableAtomicReference.get());
+                        break;
+                    }
+                    case "OH":{
+                        sliceOfCandidates = sortingService.findCandidatesByApplicationStatusCode(ApplicationStatusCode.AWAITING_INTERVIEW_ON_HOLD, pageableAtomicReference.get());
+                        break;
+                    }
+                    case "R":{
+                        sliceOfCandidates = sortingService.findCandidatesByApplicationStatusCode(ApplicationStatusCode.REJECTED, pageableAtomicReference.get());
+                        break;
+                    }
+                    case "C":{
+                        sliceOfCandidates = sortingService.findCandidatesByApplicationStatusCode(ApplicationStatusCode.CONDITIONAL_OFFER_MADE, pageableAtomicReference.get());
+                        break;
+                    }
+                    case "CF":{
+                        sliceOfCandidates = sortingService.findCandidatesByApplicationStatusCode(ApplicationStatusCode.CONDITIONAL_OFFER_FIRMED, pageableAtomicReference.get());
+                        break;
+                    }
+                    case "CI":{
+                        sliceOfCandidates = sortingService.findCandidatesByApplicationStatusCode(ApplicationStatusCode.CONDITIONAL_OFFER_INSURED, pageableAtomicReference.get());
+                        break;
+                    }
+                    case "CD":{
+                        sliceOfCandidates = sortingService.findCandidatesByApplicationStatusCode(ApplicationStatusCode.CONDITIONAL_OFFER_DECLINED, pageableAtomicReference.get());
+                        break;
+                    }
+                    case "U":{
+                        sliceOfCandidates = sortingService.findCandidatesByApplicationStatusCode(ApplicationStatusCode.UNCONDITIONAL_OFFER_MADE, pageableAtomicReference.get());
+                        break;
+                    }
+                    case "UF":{
+                        sliceOfCandidates = sortingService.findCandidatesByApplicationStatusCode(ApplicationStatusCode.UNCONDITIONAL_OFFER_FIRMED, pageableAtomicReference.get());
+                        break;
+                    }
+                    case "UI":{
+                        sliceOfCandidates = sortingService.findCandidatesByApplicationStatusCode(ApplicationStatusCode.UNCONDITIONAL_OFFER_INSURED, pageableAtomicReference.get());
+                        break;
+                    }
+                    case "UD":{
+                        sliceOfCandidates = sortingService.findCandidatesByApplicationStatusCode(ApplicationStatusCode.UNCONDITIONAL_OFFER_DECLINED, pageableAtomicReference.get());
+                        break;
+                    }
+                    case "W":{
+                        sliceOfCandidates = sortingService.findCandidatesByApplicationStatusCode(ApplicationStatusCode.WITHDRAWN, pageableAtomicReference.get());
+                        break;
+                    }
+                }
+                break;
+            }
+            default:{
+
+            }
+        }
+        return sliceOfCandidates;
     }
 
     @PostMapping("/candidates/update")
