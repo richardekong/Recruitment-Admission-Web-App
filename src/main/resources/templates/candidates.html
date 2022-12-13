@@ -204,10 +204,10 @@
                     <input id="sort-input" class="form-control" type="text">
                     <select id="sort-category" class="form-select" style="border-radius: 0;">
                         <option selected>choose...</option>
-                        <option value="StudentNumber">Student Number</option>
-                        <option value="Surname">Surname</option>
-                        <option value="ApplicationStatusCode">Application Status Code</option>
-                        <option value="OfferCondition">Offer Condition</option>
+                        <option value="studentNo">Student Number</option>
+                        <option value="surname">Surname</option>
+                        <option value="applicationStatusCode">Application Status Code</option>
+                        <option value="offerCondition">Offer Condition</option>
                     </select>
                     <img id="sort-order-icon" alt="sort_order" src="/static/images/sort_order.svg"
                          th:src="@{/images/sort_order.svg}" onclick="toggleSortOrderOnclick()" data-order="ASC"
@@ -678,16 +678,17 @@
     };
 
     const prepareSortRequestOnclick = () => {
+
         const sortOrderIcon = document.querySelector("#sort-order-icon");
         const sortAnchor = document.querySelector("#sort-link");
         const sortInput = document.querySelector("#sort-input");
         const sortDropDown = document.querySelector("#sort-category");
         if (sortInput.value && sortDropDown.value && sortOrderIcon.dataset.order) {
-            // sortAnchor.href = /*[[@{/settings}]]*/ 'settings';
-            console.log(sortAnchor.href);
-            console.log(sortInput.value);
-            console.log(sortDropDown.value);
-            console.log(sortOrderIcon.dataset.order);
+            let sortKey = sortDropDown.value;
+            let sortValue = sortInput.value;
+            let sortOrderKey = "order";
+            let sortOrderValue = sortOrderIcon.dataset.order;
+            sortAnchor.href = `candidates/sortBy?${sortKey}=${sortValue}&${sortOrderKey}=${sortOrderValue}`;
         }
     }
 </script>
