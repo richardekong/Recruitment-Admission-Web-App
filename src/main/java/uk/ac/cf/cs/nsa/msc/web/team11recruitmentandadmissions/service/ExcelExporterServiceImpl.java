@@ -14,19 +14,21 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
-public class ExcelExporterService {
+public class ExcelExporterServiceImpl implements ExcelExporterService {
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
 
     private List<Candidate> candidateList;
 
-    public ExcelExporterService(List<Candidate> candidateList) {
+
+
+    public  ExcelExporterServiceImpl(List<Candidate> candidateList) {
         this.candidateList = candidateList;
         workbook = new XSSFWorkbook();
         sheet = workbook.createSheet("Candidates");
     }
-
-    private void writeHeaderRow(){
+    @Override
+    public void writeHeaderRow(){
         // Header Row
         Row row = sheet.createRow(0);
 
@@ -204,8 +206,8 @@ public class ExcelExporterService {
         cell.setCellValue("enrolmentCriteriaComments");
 
     }
-
-    private void writeDataRows(){
+    @Override
+    public void writeDataRows(){
         // counter for rows
         int rowCount = 1;
 
@@ -395,7 +397,7 @@ public class ExcelExporterService {
 
 
     }
-
+    @Override
     public void export(HttpServletResponse response) throws IOException {
         writeHeaderRow();
         writeDataRows();
@@ -406,4 +408,5 @@ public class ExcelExporterService {
         outputStream.close();
 
     }
+
 }
