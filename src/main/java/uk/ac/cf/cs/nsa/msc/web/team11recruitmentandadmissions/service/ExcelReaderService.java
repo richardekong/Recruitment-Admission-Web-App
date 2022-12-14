@@ -45,8 +45,66 @@ public interface ExcelReaderService {
                 break;
             }
             case 6: {
-                if (cell.getStringCellValue().equals("A")) {
-                    candidate.setApplicationStatusCode(ApplicationStatusCode.APPLICATION);
+                switch (cell.getStringCellValue()) {
+                    case "A": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.APPLICATION);
+                        break;
+                    }
+                    case "GF": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.GATHERED_FIELD_ON_HOLD);
+                        break;
+                    }
+                    case "OR": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.OTHER_REASON_ON_HOLD);
+                        break;
+                    }
+                    case "OH": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.AWAITING_INTERVIEW_ON_HOLD);
+                        break;
+                    }
+                    case "R": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.REJECTED);
+                        break;
+                    }
+                    case "C": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.CONDITIONAL_OFFER_MADE);
+                        break;
+                    }
+                    case "CF": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.CONDITIONAL_OFFER_FIRMED);
+                        break;
+                    }
+                    case "CI": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.CONDITIONAL_OFFER_INSURED);
+                        break;
+                    }
+                    case "CD": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.CONDITIONAL_OFFER_DECLINED);
+                        break;
+                    }
+                    case "U":{
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.UNCONDITIONAL_OFFER_MADE);
+                        break;
+                    }
+                    case "UF":{
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.UNCONDITIONAL_OFFER_FIRMED);
+                        break;
+                    }
+                    case "UI":{
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.UNCONDITIONAL_OFFER_INSURED);
+                        break;
+                    }
+                    case "UD":{
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.UNCONDITIONAL_OFFER_DECLINED);
+                        break;
+                    }
+                    case "W":{
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.WITHDRAWN);
+                        break;
+                    }
+                    default:{
+                        break;
+                    }
                 }
                 break;
             }

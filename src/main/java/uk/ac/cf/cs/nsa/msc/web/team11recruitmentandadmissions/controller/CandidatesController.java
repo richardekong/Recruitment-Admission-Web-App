@@ -61,7 +61,7 @@ public class CandidatesController {
         return "candidates";
     }
 
-    @GetMapping("/candidates/sortBy")
+    @GetMapping("/sortBy")
     public String sortCandidates(@RequestParam Map<String, String> requestParameters, Model model) {
 
         AtomicReference<Pageable> pageableAtomicReference = new AtomicReference<>(PageRequest.of(0, 1));
