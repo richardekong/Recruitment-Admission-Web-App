@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.Candidate;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.HistoricalData;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.CustomException;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.Response;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.*;
@@ -29,6 +30,8 @@ public class SettingsController {
 
     private CandidateService candidateService;
 
+    private HistoricalDataExcelSheetService historicalDataExcelSheetService;
+
     @Autowired
     void setFileUploadService(FileUploadService service) {
         fileUploadService = service;
@@ -42,6 +45,11 @@ public class SettingsController {
     @Autowired
     void setCandidateService(CandidateService service){
         this.candidateService = service;
+    }
+
+    @Autowired
+    void setHistoricalDataExcelSheetService(HistoricalDataExcelSheetService service){
+        this.historicalDataExcelSheetService = service;
     }
 
     @GetMapping("/settings")
@@ -74,11 +82,11 @@ public class SettingsController {
         LinkedHashMap<String, InputStream> mapOfStreamsFromFiles = fileUploadService
                 .uploadFileInputStreams(filesFromForm);
 
-        Optional<LinkedList<Candidate>> unconfirmedHistoricalCandidates = mapOfStreamsFromFiles
+        Optional<LinkedList<HistoricalData>> unconfirmedHistoricalData = mapOfStreamsFromFiles
                 .entrySet()
                 .parallelStream()
                 .filter(streamEntry -> streamEntry.getKey().equals("historical-spread-sheet-file"))
-                .map(streamEntry -> excelReaderService.readCandidatesFromExcelSheet(streamEntry.getValue()))
+                .map(streamEntry -> excelReaderService.readHistroicalDataFromExcelSheet(streamEntry.getValue()))
                 .findFirst();
 
         Optional<LinkedList<Candidate>> unconfirmedCurrentCandidates = mapOfStreamsFromFiles
@@ -88,16 +96,21 @@ public class SettingsController {
                 .map(streamEntry -> excelReaderService.readCandidatesFromExcelSheet(streamEntry.getValue()))
                 .findFirst();
 
-        if (unconfirmedHistoricalCandidates.isPresent() && unconfirmedCurrentCandidates.isPresent()) {
+        if (unconfirmedHistoricalData.isPresent() && unconfirmedCurrentCandidates.isPresent()) {
             System.out.println("HISTORICAL CANDIDATE DATA");
-            System.out.println(unconfirmedHistoricalCandidates.get() + "\n\n\n\n");
+            System.out.println(unconfirmedHistoricalData.get() + "\n\n\n\n");
             System.out.println("CURRENT CANDIDATE DATA");
             System.out.println(unconfirmedCurrentCandidates.get() + "\n\n\n\n");
             model.addAttribute("success", new Response(HttpStatus.OK.value(), "Upload successful",
                     System.currentTimeMillis()));
+            // Here add all excel sheet information which is stored in LinkedList<HistoricalData> INTO Database #Done by Faisal this section
+            LinkedList<HistoricalData> historicalDataLinkedList = unconfirmedHistoricalData.get();
+            historicalDataExcelSheetService.saveAll(historicalDataLinkedList);
+
             // Here add all excel sheet information which is stored in LinkedList<Candidate> INTO Database #Done by Faisal this section
             LinkedList<Candidate> candidatesToSaveFromExcel = unconfirmedCurrentCandidates.get();
             candidateService.saveAll(candidatesToSaveFromExcel);
+
 
             return "redirect:/setting";
         }
