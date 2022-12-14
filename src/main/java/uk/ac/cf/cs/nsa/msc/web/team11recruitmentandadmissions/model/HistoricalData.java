@@ -1,23 +1,30 @@
 package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Data
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
 public class HistoricalData {
     @Id
-    private String academicYear;
+    private Integer academicYear;
     private Integer fundedPlaces;
     private Integer offersMade;
 
     private double ratio;
 
-    public double getRatio(){
-        return Double.valueOf(fundedPlaces)/Double.valueOf(offersMade);
+
+
+    public void setRatio(){
+         ratio = (getFundedPlaces())/Double.valueOf(getOffersMade());
     }
 
 
