@@ -21,17 +21,18 @@ public class SummaryController {
     }
 
     @GetMapping("/export")
-    public void exoprtDataIntoExcelSheet(HttpServletResponse resopnse) throws IOException {
-        resopnse.setContentType("application/octet-stream");
+    public void exportDataIntoExcelSheet(HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
         String headerKey = "Content-Disposition";
         String headerValue = "attachement; filename=candidates.xlsx";
 
-        resopnse.setHeader(headerKey, headerValue);
+        response.setHeader(headerKey, headerValue);
 
         List<Candidate> candidateList = candidateService.findAll();
         ExcelExporterServiceImpl excelExporterService = new ExcelExporterServiceImpl(candidateList);
-        excelExporterService.export(resopnse);
+        excelExporterService.export(response);
 
     }
+
 
 }

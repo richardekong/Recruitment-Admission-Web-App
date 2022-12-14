@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.HistoricalData;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.repository.HistoricalDataRepository;
 
+import java.util.List;
+
 @Service
 public class HistoricalDataServiceImpl implements HistoricalDataService {
 
@@ -18,5 +20,10 @@ public class HistoricalDataServiceImpl implements HistoricalDataService {
     @Override
     public HistoricalData save(HistoricalData historicalData) {
         return repository.save(historicalData);
+    }
+
+    @Override
+    public List<Double> selectRatiosFromHistoricalData() {
+        return repository.selectRatiosFromHistorical();
     }
 }
