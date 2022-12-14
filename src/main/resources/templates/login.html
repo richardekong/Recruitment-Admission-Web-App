@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -19,39 +20,59 @@
 </head>
 <style>
     .login {
-        color: #bd4850;
+        color: brown;
     }
-    #title{
-        color: #707070;
+
+    img {
+        height: 250px;
+        width: 250px;
+    }
+
+    body {
+        background-color: #f6f6f6;
+    }
+
+    .login-label {
+        color: red;
+    }
+
+    a{
+        text-decoration: none;
     }
 </style>
 <body class="p-3 m-0 border-0 bd-example bd-example-row">
 <div class="container w-50">
     <div>
-        <div class="unilogo">
-            <img class="w-25 h-25" alt="unilogo" src="https://logosave.com/images/large/11/Cardiff-University-logo.gif">
+        <div class="uni-logo">
+            <img alt="uni-logo" src="https://logosave.com/images/large/11/Cardiff-University-logo.gif">
         </div>
     </div>
     <div>
-        <div id="title"><h6 class="display-6">Cardiff Midwifery <br> Application manager</h6></div>
+        <div class="title"><h2 class="project">Cardiff Midwifery Application manager</h2></div>
     </div>
-    <form id="login-form" class="" action="">
+    <p th:if="${error}" class="error">Wrong username or password</p>
+    <form id="login-form" th:action="@{/login}" method="post">
+        <!--    <form id="login-form" accept-charset="utf-8"  action="/loginVerify" method="post" onSubmit="javascript:return check_login();">-->
         <div class="mb-3">
             <div class="login"><h2>Login</h2></div>
         </div>
         <div class="row input-group mb-3">
             <label class="col-xs-12 col-sm-12 col-md-12 col-lg-3" for="username">Username:</label>
-            <input id="username" type="text" class="form-control col-xs-12 col-sm-12 col-md-12 col-lg-9" aria-describedby="inputGroup-sizing-default" placeholder="Username" required aria-required="true">
+            <input id="username" type="text" name="username" class="form-control col-xs-12 col-sm-12 col-md-12 col-lg-9" aria-describedby="inputGroup-sizing-default" placeholder="Username" required aria-required="true">
         </div>
         <div class="row input-group mb-3">
             <label for="password" class="col-xs-12 col-sm-12 col-md-12 col-lg-3">Password:</label>
-            <input id="password" type="password" class="form-control col-xs-12 col-sm-12 col-md-12 col-lg-9" aria-describedby="inputGroup-sizing-default" placeholder="Password" required aria-required="true">
+            <input id="password" name="password" type="password" class="form-control col-xs-12 col-sm-12 col-md-12 col-lg-9" aria-describedby="inputGroup-sizing-default" placeholder="Password" required aria-required="true">
         </div>
         <div>
-            <button class="btn btn-primary" style="background-color: #214ea3">Log in</button>
+            <button class="btn btn-primary" style="background-color: #214ea3" type="submit">Log in</button>
         </div>
     </form>
-
+    <div>
+        <p class="login-label">No account? <a
+                href="/register">Create one!</a></p>
+        <a href="changepassword.html">Click here to change password!</a>
+    </div>
 </div>
 </div>
 </body>

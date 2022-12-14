@@ -40,7 +40,9 @@
                              <a th:href="@{/settings}" class="nav-link" style="color: #fff;">Settings</a>
                          </li>
                          <li class="nav-item" style="margin-left: 20px;">
-                             <a th:href="@{/login}" class="nav-link" style="color: #fff;">Log out</a>
+                             <form th:action="@{/logout}" method="post"style="padding-top: 0.5rem;">
+                                 <input style=" background-color: rgba(0,0,0,0);color: #fff;border-style: none;"type="submit" value="Log out"/>
+                             </form>
                          </li>
                      </ul>
                 </nav>
