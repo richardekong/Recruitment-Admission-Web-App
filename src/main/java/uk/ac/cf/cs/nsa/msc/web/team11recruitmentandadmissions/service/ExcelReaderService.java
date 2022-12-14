@@ -12,6 +12,8 @@ public interface ExcelReaderService {
 
     LinkedList<Candidate> readCandidatesFromExcelSheet(InputStream inputStream);
 
+    LinkedList<HistoricalData> readHistroicalDataFromExcelSheet(InputStream inputStream);
+
     default void readFromCurrentCell(
             int cellIndex,
             Candidate candidate,
