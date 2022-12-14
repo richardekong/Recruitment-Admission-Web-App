@@ -15,7 +15,11 @@ import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.Response;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.CandidateService;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.CandidateSortingService;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -82,16 +86,25 @@ public class CandidatesController {
                                 .getContent();
                     }
                     if (entry.getKey().equalsIgnoreCase("recordFirstCreated")) {
-                        return getSliceOfCandidates(pageableAtomicReference, isAscending, entry, Sort.by("recordFirstCreated"))
-                                .getContent();
+                        try{
+                            return getSliceOfCandidates(pageableAtomicReference, isAscending, entry, Sort.by("recordFirstCreated"))
+                                    .getContent();
+                        }catch (DateTimeParseException e){
+                            model.addAttribute("sortError", new Response(HttpStatus.BAD_REQUEST.value(), "Wrong Date format, please use YYYY-MM-DD", System.currentTimeMillis()));
+
+                        }
                     }
                     if (entry.getKey().equalsIgnoreCase("personalID")) {
                         return getSliceOfCandidates(pageableAtomicReference, isAscending, entry, Sort.by("personalID"))
                                 .getContent();
                     }
                     if (entry.getKey().equalsIgnoreCase("dateOfBirth")) {
-                        return getSliceOfCandidates(pageableAtomicReference, isAscending, entry, Sort.by("dateOfBirth"))
-                                .getContent();
+                        try{
+                            return getSliceOfCandidates(pageableAtomicReference, isAscending, entry, Sort.by("dateOfBirth"))
+                                    .getContent();
+                        }catch (DateTimeParseException e){
+                            model.addAttribute("sortError", new Response(HttpStatus.BAD_REQUEST.value(), "Wrong Date format, please use YYYY-MM-DD", System.currentTimeMillis()));
+                        }
                     }
                     if (entry.getKey().equalsIgnoreCase("totalPersonalStatementScore")) {
                         return getSliceOfCandidates(pageableAtomicReference, isAscending, entry, Sort.by("totalPersonalStatementScore"))
@@ -128,7 +141,6 @@ public class CandidatesController {
             boolean isAscending,
             Map.Entry<String, String> entry,
             Sort sort) {
-
         Slice<Candidate> sliceOfCandidates = null;
         pageableAtomicReference.set(PageRequest.of(0, 10, isAscending ? sort.ascending() : sort.descending()));
         switch (entry.getKey()){
@@ -153,6 +165,7 @@ public class CandidatesController {
                 break;
             }
             case "dateOfBirth":{
+
                 sliceOfCandidates = sortingService.findCandidatesByDateOfBirth(LocalDate.parse(entry.getValue()), pageableAtomicReference.get());
                 break;
             }
@@ -190,7 +203,7 @@ public class CandidatesController {
                 }
                 break;
             }
-            case "applicationCode":{
+            case "applicationStatusCode":{
                 switch (entry.getValue()){
                     case "A":{
                         sliceOfCandidates = sortingService.findCandidatesByApplicationStatusCode(ApplicationStatusCode.APPLICATION, pageableAtomicReference.get());
