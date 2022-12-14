@@ -12,10 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.Candidate;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.CustomException;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.Response;
-import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.CandidateService;
-import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.ExcelReaderService;
-import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.FileUploadService;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -107,6 +107,17 @@ public class SettingsController {
         return "redirect:/settings";
     }
 
+    @GetMapping("/createExcelSheet")
+    public void createExcelSheet(HttpServletResponse resopnse) throws IOException {
+        resopnse.setContentType("application/octet-stream");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachement; filename=historicalCandidatesSheet.xlsx";
 
+        resopnse.setHeader(headerKey, headerValue);
+
+        HistoricalDataExcelSheetServiceImpl createHistoricalDataExcelSheet = new HistoricalDataExcelSheetServiceImpl();
+        createHistoricalDataExcelSheet.createExcelSheet(resopnse);
+
+    }
 }
 
