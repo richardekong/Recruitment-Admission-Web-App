@@ -1,7 +1,5 @@
 package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model;
 
-//import javax.validation.constraints.NotEmpty;
-//import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 public class ManageUser implements Serializable {
     private Long uid;
