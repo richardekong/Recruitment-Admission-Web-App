@@ -2,13 +2,11 @@ package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -25,7 +23,7 @@ public class Candidate {
     private ApplicationStatusCode applicationStatusCode;
     private String latestDecisionCode;
     private String firstName;
-    private String Surname;
+    private String surname;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
     private Gender gender;
