@@ -29,7 +29,7 @@ public class RegisterController {
     @RequestMapping("/register-save")
     public String registerSave(@ModelAttribute ManageUser manageUser,
                                Model model) {
-        if (manageUser.getUsername() == null || manageUser.getPassword() == null || manageUser.getUserRole() == null) {
+        if (manageUser.getUsername() == null || manageUser.getPassword() == null) {
             model.addAttribute("error", true);
             return "register";
         }
