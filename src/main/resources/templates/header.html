@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
@@ -25,7 +26,7 @@
     <div class="container p-1">
         <div class="row">
             <div id="uni-logo" class="col-xs-12 col-sm-12 col-md-12 col-lg-1">
-                <img th:src="@{images/cardiff-uni-log.png}"  src="/static/images/cardiff-uni-log.png" style="margin-left:5px;" alt="uni-logo"/>
+                <img th:src="@{/images/cardiff-uni-log.png}"  src="/static/images/cardiff-uni-log.png" style="margin-left:5px;" alt="uni-logo"/>
             </div>
             <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-10">
                 <div class="row" id="header-title">
@@ -34,13 +35,18 @@
                 <nav class="navbar navbar-expand-lg">
                      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                          <li class="nav-item" style="margin-left: 20px;">
+                             <a th:href="@{/admin}" sec:authorize="hasRole('ADMIN')"class="nav-link active" style="color: #fff;">Admin</a>
+                         </li>
+                         <li class="nav-item" style="margin-left: 20px;">
                              <a th:href="@{/candidates}" class="nav-link active" style="color: #fff;">Candidates</a>
                          </li>
                          <li class="nav-item" style="margin-left: 20px;">
                              <a th:href="@{/settings}" class="nav-link" style="color: #fff;">Settings</a>
                          </li>
                          <li class="nav-item" style="margin-left: 20px;">
-                             <a th:href="@{/login}" class="nav-link" style="color: #fff;">Log out</a>
+                             <form th:action="@{/logout}" method="post"style="padding-top: 0.5rem;">
+                                 <input style=" background-color: rgba(0,0,0,0);color: #fff;border-style: none;"type="submit" value="Log out"/>
+                             </form>
                          </li>
                      </ul>
                 </nav>

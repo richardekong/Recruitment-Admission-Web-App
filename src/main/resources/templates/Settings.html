@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -32,62 +32,107 @@ the right has all the buttons-->
 <div class="row">
     <div class="main-content p-5">
         <div class="row">
-            <div class="row p-3">
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    Upload past Application data
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <button type="button" class="btn btn-primary browse" title="Browse Files">Browse</button>
-                </div>
-            </div>
-            <div class="row p-3">
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    Upload current Application data
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <button type="button" class="btn btn-primary browse" title="Browse Files">Browse</button>
-                </div>
-            </div>
-            <div class="row p-3">
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <label for = "places">Enter the number of places offered this year:</label>
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2">
-                    <input id = "places" type="number" class="form-control p-1">
-                </div>
-            </div>
+            <p class="message alert alert-success text-center col-xs-12 col-sm-12 col-md-12 col-lg-6" th:if="${success != null}">
+                <span th:text="${success.getMessage()}"></span>
+            </p>
+            <p class="message alert alert-danger text-center col-xs-12 col-sm-12 col-md-12 col-lg-6" th:if="${error != null}">
+                <span th:text="${error.getMessage()}"></span>
+            </p>
+            <br>
 
-            <div class="row p-5">
-                <div id="empty" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></div>
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2">
-                    <button class="btn btn-primary" title="Configure your settings">Configure</button>
+            <br>
+            <form th:action="@{/settings}" th:method="POST" enctype="multipart/form-data">
+                <div class="row p-3">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        Download Historical Data Template:
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <a th:href="@{/createExcelSheet}" style=""><img th:src="@{/images/Excel-icon.png}" src="/static/images/Excel-icon.png" alt="" style=" width: 80px; height: 50px;">
+                        </a>
+                    </div>
                 </div>
-            </div>
+                <div class="row p-3">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        Upload past Application data:
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <button id="browse1" type="button" class="btn btn-primary browse" title="Browse Files" style="width:80px;">Browse</button>
+                        <br>
+                        <span id="historical-spread-sheet-name"></span>
+                        <br>
+                        <input id="historical-spread-sheet-file" name="historical-spread-sheet-file" type="file" accept=".xls, .xlsx" required style="display: none;">
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        Upload current Application data:
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <button id="browse2" type="button" class="btn btn-primary browse" title="Browse Files" style="width:80px;">Browse</button>
+                        <br>
+                        <span id="current-spread-sheet-name"></span>
+                        <br>
+                        <input id="current-spread-sheet-file" name="current-spread-sheet-file" required type="file" accept=".xls, .xlsx" style="display: none;">
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label for = "places">Enter the number of places offered this year:</label>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2">
+                        <input id = "places" name="placesOffered" type="number" class="form-control p-1" required style="width:80px;">
+                    </div>
+                </div>
+
+                <div class="row p-5">
+                    <div id="empty" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2">
+                        <button class="btn btn-primary" type="submit" title="Configure your settings" style="width:80px;">Submit</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-    <aside class="col-lg-4" th:insert="summary_bar::summary_bar"></aside>
+    <aside class="col-lg-4" th:replace="summary_bar::summary_bar(offersRecommended = ${offersRecommended}, placesOffered=${placesOffered}, offersSent=${offersSent})"></aside>
 </div>
 
+<footer th:insert="footer :: footer"></footer>
 
+<!--The code searches for items in the 'upload' class. It then says that whenever
+one clicks one these items. The element 'input' with the type of input being a file.
+This is how one can browse files from their desktop, while also maintaining the
+website's aesthetic.-->
 <!--This javascript code below searches for all items in the class 'upload' and adds
 ensures that whenever a user clicks on the button, they can browse a file. By
 simply adding the 'input' tag above, the site would not look as nice as it would mess
 with the sizing and write "Browse...No File Selected".-->
 <script>
-    const browseButtons = document.querySelectorAll(".browse");
-    browseButtons.forEach(button => {
-        button.addEventListener("click", _evt => {
-            let invisibleInput = document.createElement("input");
-            invisibleInput.type = "file";
-            invisibleInput.click();
-        });
-    })
+    const historicalBrowseButton = document.querySelector("#browse1");
+    const currentBrowseButton = document.querySelector("#browse2");
+    const historicalStyleSheetName = document.querySelector("#historical-spread-sheet-name");
+    const currentStyleSheetName = document.querySelector("#current-spread-sheet-name");
+    const historicalFileInput = document.querySelector("#historical-spread-sheet-file");
+    const currentFileInput = document.querySelector("#current-spread-sheet-file");
+    const messageSpans = document.querySelectorAll(".message");
+
+    historicalBrowseButton.addEventListener("click", evt =>{
+        historicalFileInput.click();
+        historicalFileInput.onchange = () => historicalStyleSheetName.textContent = historicalFileInput.files[0].name;
+        evt.preventDefault();
+    });
+
+    currentBrowseButton.addEventListener("click", evt =>{
+        currentFileInput.click();
+        currentFileInput.onchange = () => currentStyleSheetName.textContent = currentFileInput.files[0].name;
+        evt.preventDefault();
+    });
+
+    messageSpans.forEach(span => {
+        span.style.cursor = "pointer";
+        span.addEventListener("click", evt => evt.target.style.display = "none")
+    });
+
 </script>
-<!--The code searches for items in the 'upload' class. It then says that whenever
-one clicks one these items. The element 'input' with the type of input being a file.
-This is how one can browse files from their desktop, while also maintaining the
-website's aesthetic.-->
-<footer th:insert="footer :: footer"></footer>
 </body>
 
 </html>
