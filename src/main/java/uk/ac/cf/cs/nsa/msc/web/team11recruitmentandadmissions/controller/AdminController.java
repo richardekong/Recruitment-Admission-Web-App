@@ -18,15 +18,17 @@ import java.util.List;
 
 @Controller
 public class AdminController implements SummaryFragmentModel {
-    @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     private CandidateService candidateService;
 
     private PredictionService predictionService;
 
     private PlacesOfferedService placesOfferedService;
-
+    @Autowired
+    public void setUserMapper(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
     @Autowired
     public void setCandidateService(CandidateService candidateService) {
