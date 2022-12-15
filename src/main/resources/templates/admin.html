@@ -181,7 +181,7 @@
                     <td th:text="${user.username}"></td>
                     <td th:text="${user.userRole}"></td>
                     <td style="width: 300px;">
-                        <a type="button" class="btn btn-info btn-xs" th:href="@{/delete}">Modify</a>&nbsp;
+                        <a type="button" class="btn btn-info btn-xs" th:href="@{/delete}" style="background-color:#27a844;color:white;">Modify</a>&nbsp;
                         <a type="button" class="btn btn-danger btn-xs" th:href="@{/admin/delete(uid=${user.uid})}">Delete</a>
                     </td>
                 </tr>
