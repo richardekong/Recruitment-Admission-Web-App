@@ -672,7 +672,7 @@
                 </div>
             </div>
         </div>
-        <aside class="col-lg-4" th:insert="summary_bar::summary_bar"></aside>
+        <aside class="col-lg-4" th:replace="summary_bar::summary_bar(offersRecommended = ${offersRecommended}, placesOffered=${placesOffered}, offersSent=${offersSent})"></aside>
     </div>
 </main>
 <!-- add a reusable footer -->

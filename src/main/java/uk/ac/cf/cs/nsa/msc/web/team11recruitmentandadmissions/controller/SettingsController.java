@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.Candidate;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.HistoricalData;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.PlacesOffered;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.SummaryFragmentModel;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.CustomException;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.Response;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.*;
@@ -23,12 +25,16 @@ import java.util.LinkedList;
 import java.util.Optional;
 
 @Controller
-public class SettingsController {
+public class SettingsController implements SummaryFragmentModel {
 
     private FileUploadService fileUploadService;
     private ExcelReaderService excelReaderService;
 
     private CandidateService candidateService;
+
+    private PlacesOfferedService placesOfferedService;
+
+    private PredictionService predictionService;
 
     private HistoricalDataExcelSheetService historicalDataExcelSheetService;
 
@@ -52,8 +58,20 @@ public class SettingsController {
         this.historicalDataExcelSheetService = service;
     }
 
+    @Autowired
+    void setPlacesOfferedService(PlacesOfferedService service){
+        placesOfferedService = service;
+    }
+
+    @Autowired
+    void setPredictionService(PredictionService service){
+        this.predictionService = service;
+    }
+
+
     @GetMapping("/settings")
-    public String showSettingsPage() {
+    public String showSettingsPage(Model model) {
+        setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService, candidateService);
         return "Settings";
     }
 
@@ -61,7 +79,9 @@ public class SettingsController {
     @PostMapping("/settings")
     public String handleFileUpload(
             @RequestParam
-            LinkedHashMap<String, MultipartFile> filesFromForm, Model model) {
+            LinkedHashMap<String, MultipartFile> filesFromForm,
+            @RequestParam Integer placesOffered,
+            Model model) {
 
         boolean anyFileIsEmpty = filesFromForm
                 .values()
@@ -77,6 +97,10 @@ public class SettingsController {
             throw new CustomException(
                     message,
                     HttpStatus.FORBIDDEN);
+        }
+
+        if (placesOffered != null){
+            placesOfferedService.savePlacesOffered(new PlacesOffered(placesOffered));
         }
 
         LinkedHashMap<String, InputStream> mapOfStreamsFromFiles = fileUploadService
@@ -111,12 +135,13 @@ public class SettingsController {
             LinkedList<Candidate> candidatesToSaveFromExcel = unconfirmedCurrentCandidates.get();
             candidateService.saveAll(candidatesToSaveFromExcel);
 
-
+            setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService, candidateService);
             return "redirect:/setting";
         }
 
         model.addAttribute("success", new Response(HttpStatus.OK.value(), "Upload successful",
                 System.currentTimeMillis()));
+        setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService, candidateService);
         return "redirect:/settings";
     }
 
@@ -132,5 +157,16 @@ public class SettingsController {
         createHistoricalDataExcelSheet.createExcelSheet(resopnse);
 
     }
+
+    @Override
+    public void setModelsAttributesForSummaryFragment(
+            Model model,
+            PredictionService predictionService,
+            PlacesOfferedService placesOfferedService,
+            CandidateService candidateService) {
+        SummaryFragmentModel.super.setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService,candidateService);
+    }
+
+
 }
 

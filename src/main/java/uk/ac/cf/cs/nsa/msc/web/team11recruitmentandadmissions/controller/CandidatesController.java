@@ -2,7 +2,10 @@ package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +17,10 @@ import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.CustomExc
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.Response;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.CandidateService;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.CandidateSortingService;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.PlacesOfferedService;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.PredictionService;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
@@ -26,11 +28,15 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Controller
-public class CandidatesController {
+public class CandidatesController implements SummaryFragmentModel {
 
     private CandidateService candidateService;
 
     private CandidateSortingService sortingService;
+
+    private PredictionService predictionService;
+
+    private PlacesOfferedService placesOfferedService;
 
     @Autowired
     public void setCandidateService(CandidateService service) {
@@ -40,6 +46,16 @@ public class CandidatesController {
     @Autowired
     public void setSortingService(CandidateSortingService service) {
         this.sortingService = service;
+    }
+
+    @Autowired
+    public void setPredictionService(PredictionService service){
+        this.predictionService = service;
+    }
+
+    @Autowired
+    void setPlacesOfferedService(PlacesOfferedService service){
+        this.placesOfferedService = service;
     }
 
     @GetMapping("/candidates")
@@ -58,6 +74,7 @@ public class CandidatesController {
                 new Response(HttpStatus.OK.value(), "Candidates Loaded Successfully!", System.currentTimeMillis())
         );
         model.addAttribute("candidates", unConfirmedCandidates.get());
+        setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService, candidateService);
         return "candidates";
     }
 
@@ -133,6 +150,7 @@ public class CandidatesController {
                 }, () -> {
                     throw new CustomException(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND);
                 });
+        setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService, candidateService);
         return "candidates";
     }
 
@@ -599,5 +617,18 @@ public class CandidatesController {
         }
     }
 
+//    private void setModelsAttributesForSummaryFragment(Model model) {
+//        model.addAttribute("offersRecommended", predictionService.offersRecommended());
+//    }
+
+
+    @Override
+    public void setModelsAttributesForSummaryFragment(
+            Model model,
+            PredictionService predictionService,
+            PlacesOfferedService placesOfferedService,
+            CandidateService candidateService) {
+        SummaryFragmentModel.super.setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService,candidateService);
+    }
 }
 
