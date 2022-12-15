@@ -19,5 +19,9 @@ public class PlacesOffered {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private Integer placesOffered;
+    private int placesOffered;
+
+    public PlacesOffered(int placesOffered){
+        this.placesOffered = placesOffered;
+    }
 }

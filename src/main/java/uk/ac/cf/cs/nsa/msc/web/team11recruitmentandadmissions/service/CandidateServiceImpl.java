@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.Candidate;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.YesOrNoOption;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.repository.CandidateRepository;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.CustomException;
 
@@ -58,6 +59,11 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     public  Candidate updateCandidate(Candidate candidateToUpdate) {
         return repository.save(candidateToUpdate);
+    }
+
+    @Override
+    public Integer countCandidatesByOfferEmailSent(YesOrNoOption option) {
+        return repository.countCandidatesByOfferEmailSent(YesOrNoOption.YES);
     }
 }
 

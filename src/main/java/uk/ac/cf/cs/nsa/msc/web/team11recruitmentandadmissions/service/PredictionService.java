@@ -5,5 +5,7 @@ import java.util.List;
 public interface PredictionService {
 
     double eliminateOutliers();
+
+    Integer offersRecommended();
 }
 

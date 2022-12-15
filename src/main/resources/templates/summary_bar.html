@@ -17,24 +17,31 @@
     <link rel="stylesheet" th:href="@{css/css.css}">
 </head>
 <body>
-<aside id="aside" th:fragment="summary_bar" class="w-25 p-3">
-    <p class="text-center">Place filled</p>
+<aside id="aside" th:fragment="summary_bar(offersRecommended, placesOffered, offersSent)" class="w-25 p-3">
+    <span class="text-center">Places offered</span>
     <div class="alert alert-success" role="alert"
-         style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white" ;>90/100
-    </div>
-    <p class="text-center">Offer recommended</p>
-    <div class="alert alert-success" role="alert"
-         style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white">100
-    </div>
-    <p class="text-center">Offer sent</p>
-    <div class="alert alert-success" role="alert"
-         style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white">90
+         style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white;" th:text="${placesOffered}">100
     </div>
     <br>
-    <p class="text-center">Download Data as Excel Sheet</p>
+    <br>
+    <span class="text-center">Offer recommended</span>
+    <div class="alert alert-success" role="alert"  th:text="${offersRecommended}"
+         style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white">206
+    </div>
+    <br>
+    <br>
+    <span class="text-center">Offers sent</span>
+    <div class="alert alert-success" role="alert" th:text="${offersSent}"
+         style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white">3
+    </div>
+    <br>
+    <br>
+    <span class="text-center">Download Data as Excel Sheet</span>
     <div class="alert alert-success" role="alert" style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white">
     <a th:href="@{/export}" style="color:white;">Click </a>
     </div>
+    <br>
+    <br>
 </aside>
 </body>
 </html>

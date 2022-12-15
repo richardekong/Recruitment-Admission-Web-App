@@ -2,31 +2,47 @@ package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.Candidate;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.SummaryFragmentModel;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.CustomException;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.Response;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.CandidateService;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.PlacesOfferedService;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.PredictionService;
 
 import java.util.Optional;
 
 @Controller
-public class CandidateProfileController {
+public class CandidateProfileController implements SummaryFragmentModel {
 
     private CandidateService candidateService;
+
+    private PredictionService predictionService;
+
+    private PlacesOfferedService placesOfferedService;
 
     @Autowired
     void setCandidateService(CandidateService service) {
         this.candidateService = service;
     }
 
+    @Autowired
+    void setPredictionService(PredictionService service){
+        this.predictionService = service;
+    }
+
+    @Autowired
+    void setPlacesOfferedService(PlacesOfferedService service){
+        this.placesOfferedService = service;
+    }
     @GetMapping("/profile")
-    public String showCandidateProfilePage(){
+    public String showCandidateProfilePage(Model model){
+        setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService, candidateService);
         return "candidate-profile";
     }
 
@@ -49,7 +65,18 @@ public class CandidateProfileController {
                     throw new CustomException(errorMessage, status);
                 });
         model.addAttribute("Candidate", unConfirmedCandidate.get());
+        setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService, candidateService);
         return "candidate-profile";
     }
 
+
+    @Override
+    public void setModelsAttributesForSummaryFragment(
+            Model model,
+            PredictionService predictionService,
+            PlacesOfferedService placesOfferedService,
+            CandidateService candidateService) {
+        SummaryFragmentModel.super.setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService,candidateService);
+    }
 }
+

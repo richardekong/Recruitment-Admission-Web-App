@@ -3,6 +3,7 @@ package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.repository.HistoricalDataRepository;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.repository.PlacesOfferedRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,11 +14,17 @@ public class PredictionServiceImpl implements PredictionService {
 
     private HistoricalDataRepository repository;
 
+    private PlacesOfferedService placesOfferedService;
+
     @Autowired
     public void setRepository(HistoricalDataRepository repository){
         this.repository = repository;
     }
 
+    @Autowired
+    public void setPlacesOfferedService(PlacesOfferedService service){
+        this.placesOfferedService = service;
+    }
     @Override
     public double eliminateOutliers() {
         //sort ratios from historical data repository
@@ -25,6 +32,11 @@ public class PredictionServiceImpl implements PredictionService {
         Collections.sort(ratios);
         List<Double> filteredRatios = eliminateOutliers(ratios);
         return getAverage(filteredRatios);
+    }
+
+    @Override
+    public Integer offersRecommended() {
+        return (int)(placesOfferedService.getMostRecentPlacesOffered()/eliminateOutliers());
     }
 
     private List<Double> eliminateOutliers(List<Double> ratios){
