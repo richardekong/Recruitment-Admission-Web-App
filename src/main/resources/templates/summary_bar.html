@@ -18,19 +18,19 @@
 </head>
 <body>
 <aside id="aside" th:fragment="summary_bar(offersRecommended, placesOffered, offersSent)" class="w-25 p-3">
-    <span class="text-center">Places offered</span>
+    <p class="text-center">Places offered</p>
     <div class="alert alert-success" role="alert"
          style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white;" th:text="${placesOffered}">100
     </div>
     <br>
     <br>
-    <span class="text-center">Offer recommended</span>
+    <p class="text-center">Offer recommended</p>
     <div class="alert alert-success" role="alert"  th:text="${offersRecommended}"
          style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white">206
     </div>
     <br>
     <br>
-    <span class="text-center">Offers sent</span>
+    <p class="text-center">Offers sent</p>
     <div class="alert alert-success" role="alert" th:text="${offersSent}"
          style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white">3
     </div>
