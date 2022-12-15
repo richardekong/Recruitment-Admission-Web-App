@@ -165,6 +165,11 @@
             box-shadow: 2px 2px 2px 2px #a0d6fd;
         }
 
+        #search-btn:hover{
+            border:0;
+            box-shadow: 0 1px 1px;
+        }
+
 
     </style>
 </head>
@@ -190,23 +195,23 @@
             <div class="container row">
                 <div id="search-bar" class="input-group mb-3">
                     <div class="input-group-prepend">
-                <span class="input-group-text" style="border-radius: 5px 0 0 5px; cursor: pointer;">
-                   <label for="search-input" style="cursor: pointer;">Search</label>
-                </span>
+                        <span class="input-group-text" style="border-radius: 5px 0 0 5px; cursor: pointer;">
+                            <label for="search-input" style="cursor: pointer;">Search:</label>
+                        </span>
                     </div>
-                    <input id="search-input" class="form-control" type="text" pattern="^[A-Za-z0-9\s]+$"
-                           style="border-radius: 0;">
+                    <input id="search-input" class="form-control" type="text" style="border-radius: 0;">
+                    <button id="search-btn" class="btn btn-primary" onclick="prepareSortRequestOnclick()" style="background:#27a844;border:1px solid #ccc;box-shadow: 1px 1px 1px #666;">
+                        <a id="search-link" style="text-decoration:none;">Search</a>
+                    </button>
                 </div>
                 <div id="sort-bar" class="input-group mb-3">
-                    <div class="input-group-prepend" onclick="prepareSortRequestOnclick()">
+                    <div class="input-group-prepend">
                         <span class="input-group-text" style="border-radius: 5px 0 0 5px; cursor: pointer;">
                             <label for="sort-category" style="cursor: pointer;">
-                                <a id="sort-link" style="text-decoration:none;">Sort by</a>
+                                Sort by:
                             </label>
                         </span>
                     </div>
-                    <label for="sort-input"></label>
-                    <input id="sort-input" class="form-control" type="text" pattern="^[A-Za-z0-9\s]+$">
                     <select id="sort-category" class="form-select" style="border-radius: 0;">
                         <option selected>choose...</option>
                         <option value="studentNo">Student Number</option>
@@ -338,13 +343,9 @@
                                                     th:text="${candidate.applicationStatusCode.REJECTED.code}"
                                                     title="Rejected">R
                                             </option>
-<!--                                            <option th:value="${candidate.applicationStatusCode.REJECTED.code}"-->
-<!--                                                    th:text="${candidate.applicationStatusCode.REJECTED.code}"-->
-<!--                                                    title="Conditional offer made">C-->
-<!--                                            </option>-->
                                             <option th:value="${candidate.applicationStatusCode.CONDITIONAL_OFFER_MADE.code}"
                                                     th:text="${candidate.applicationStatusCode.CONDITIONAL_OFFER_MADE.code}"
-                                                    title="Conditional offer firm">C
+                                                    title="Conditional offer made">C
                                             </option>
                                             <option th:value="${candidate.applicationStatusCode.CONDITIONAL_OFFER_FIRMED.code}"
                                                     th:text="${candidate.applicationStatusCode.CONDITIONAL_OFFER_FIRMED.code}"
@@ -352,7 +353,7 @@
                                             </option>
                                             <option th:value="${candidate.applicationStatusCode.CONDITIONAL_OFFER_INSURED.code}"
                                                     th:text="${candidate.applicationStatusCode.CONDITIONAL_OFFER_INSURED.code}"
-                                                    title="Conditional offer firm">CI
+                                                    title="Conditional offer insured">CI
                                             </option>
                                             <option th:value="${candidate.applicationStatusCode.CONDITIONAL_OFFER_DECLINED.code}"
                                                     th:text="${candidate.applicationStatusCode.CONDITIONAL_OFFER_DECLINED.code}"
@@ -376,7 +377,7 @@
                                             </option>
                                             <option th:value="${candidate.applicationStatusCode.WITHDRAWN.code}"
                                                     th:text="${candidate.applicationStatusCode.WITHDRAWN.code}"
-                                                    title="Withdrawal">W
+                                                    title="Withdrawn">W
                                             </option>
                                         </select>
                                     </td>
@@ -659,7 +660,8 @@
                                                pattern="^[A-Za-z0-9\s]+$">
                                     </td>
                                     <td style="width: 300px;">
-                                        <button class="vp" style="width: 100px;"><a th:href="@{/profile/{studentNo}(studentNo=${candidate.studentNo})}" >View
+                                        <button class="vp" style="width: 100px;"><a
+                                                th:href="@{/profile/{studentNo}(studentNo=${candidate.studentNo})}">View
                                             Profile</a>
                                         </button>
                                         <button class="vp" type="submit" style="width: 100px;">Submit</button>
@@ -680,7 +682,7 @@
 
 <script th:inline="javascript">
     const messageBoxes = document.querySelectorAll(".message");
-    messageBoxes.forEach(box => box.addEventListener("click", e => e.target.style.display = "none"))
+    messageBoxes.forEach(box => box.addEventListener("click", e => e.target.style.display = "none"));
 
     const toggleSortOrderOnclick = () => {
         let sortOrders = ["ACS", "DESC"];
@@ -690,16 +692,15 @@
 
     const prepareSortRequestOnclick = () => {
         const sortOrderIcon = document.querySelector("#sort-order-icon");
-        const sortAnchor = document.querySelector("#sort-link");
-        const sortInput = document.querySelector("#sort-input");
+        const searchAnchor = document.querySelector("#search-link");
+        const searchInput = document.querySelector("#search-input");
         const sortDropDown = document.querySelector("#sort-category");
-        sortAnchor.href = "";
-        if (sortInput.value && sortDropDown.value && sortOrderIcon.dataset.order) {
+        if (searchInput.value && sortDropDown.value && sortOrderIcon.dataset.order) {
             let sortKey = sortDropDown.value;
-            let sortValue = sortInput.value;
+            let searchValue = searchInput.value;
             let sortOrderKey = "order";
             let sortOrderValue = sortOrderIcon.dataset.order;
-            sortAnchor.href = `sortBy?${sortKey}=${sortValue}&${sortOrderKey}=${sortOrderValue}`;
+            searchAnchor.href = `sortBy?${sortKey}=${searchValue}&${sortOrderKey}=${sortOrderValue}`;
         }
 
 
