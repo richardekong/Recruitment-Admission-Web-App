@@ -54,4 +54,10 @@ public class CandidateServiceImpl implements CandidateService {
     public List<Candidate> findAll() {
         return repository.findAll();
     }
+
+    @Override
+    public  Candidate updateCandidate(Candidate candidateToUpdate) {
+        return repository.save(candidateToUpdate);
+    }
 }
+

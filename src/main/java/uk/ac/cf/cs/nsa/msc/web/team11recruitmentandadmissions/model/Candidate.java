@@ -2,10 +2,11 @@ package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -13,7 +14,8 @@ import java.util.Date;
 public class Candidate {
     private String UCASCardiffCourseCode;
     private String cardiffCourseCode;
-    private Date recordFirstCreated;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate recordFirstCreated;
     private String entryYear;
     @Id
     private String studentNo;
@@ -21,8 +23,9 @@ public class Candidate {
     private ApplicationStatusCode applicationStatusCode;
     private String latestDecisionCode;
     private String firstName;
-    private String Surname;
-    private Date dateOfBirth;
+    private String surname;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateOfBirth;
     private Gender gender;
     private FeeStatus feeStatus;
     private YesOrNoOption correspondenceLangWelsh;
@@ -40,7 +43,8 @@ public class Candidate {
     private YesOrNoOption keepingWarmEmailSent;
     private int totalPersonalStatementScore;
     private YesOrNoOption inviteInterview;
-    private Date interviewDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate interviewDate;
     private String interviewInviteComments;
     private int totalInterviewScore;
     private YesOrNoOption FTPChecked;
@@ -49,6 +53,7 @@ public class Candidate {
     private String gradesAchievedAfter; //Grades achieved after application sent
     private String confirmationComments;
     private YesOrNoOption offerEmailSent;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String issueDate;
     private String DBSCertNumber;
     private String FAStatus;

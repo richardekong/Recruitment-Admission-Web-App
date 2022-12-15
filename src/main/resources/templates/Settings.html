@@ -38,13 +38,25 @@ the right has all the buttons-->
             <p class="message alert alert-danger text-center col-xs-12 col-sm-12 col-md-12 col-lg-6" th:if="${error != null}">
                 <span th:text="${error.getMessage()}"></span>
             </p>
+            <br>
+
+            <br>
             <form th:action="@{/settings}" th:method="POST" enctype="multipart/form-data">
+                <div class="row p-3">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        Download Historical Data Template:
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <a th:href="@{/createExcelSheet}" style=""><img th:src="@{/images/Excel-icon.png}" src="/static/images/Excel-icon.png" alt="" style=" width: 80px; height: 50px;">
+                        </a>
+                    </div>
+                </div>
                 <div class="row p-3">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         Upload past Application data:
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <button id="browse1" type="button" class="btn btn-primary browse" title="Browse Files">Browse</button>
+                        <button id="browse1" type="button" class="btn btn-primary browse" title="Browse Files" style="width:80px;">Browse</button>
                         <br>
                         <span id="historical-spread-sheet-name"></span>
                         <br>
@@ -56,7 +68,7 @@ the right has all the buttons-->
                         Upload current Application data:
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <button id="browse2" type="button" class="btn btn-primary browse" title="Browse Files">Browse</button>
+                        <button id="browse2" type="button" class="btn btn-primary browse" title="Browse Files" style="width:80px;">Browse</button>
                         <br>
                         <span id="current-spread-sheet-name"></span>
                         <br>
@@ -68,14 +80,14 @@ the right has all the buttons-->
                         <label for = "places">Enter the number of places offered this year:</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2">
-                        <input id = "places" type="number" class="form-control p-1" required>
+                        <input id = "places" type="number" class="form-control p-1" required style="width:80px;">
                     </div>
                 </div>
 
                 <div class="row p-5">
                     <div id="empty" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2">
-                        <button class="btn btn-primary" type="submit" title="Configure your settings">Configure</button>
+                        <button class="btn btn-primary" type="submit" title="Configure your settings" style="width:80px;">Submit</button>
                     </div>
                 </div>
             </form>

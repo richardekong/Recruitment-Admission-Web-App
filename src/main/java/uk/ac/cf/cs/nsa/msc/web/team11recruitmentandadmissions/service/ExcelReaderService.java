@@ -2,21 +2,24 @@ package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.converter.DateConverter;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.*;
 
 import java.io.InputStream;
-import java.time.LocalDate;
 import java.util.LinkedList;
 
 public interface ExcelReaderService {
 
     LinkedList<Candidate> readCandidatesFromExcelSheet(InputStream inputStream);
 
+    LinkedList<HistoricalData> readHistroicalDataFromExcelSheet(InputStream inputStream);
+
     default void readFromCurrentCell(
             int cellIndex,
             Candidate candidate,
             Cell cell,
-            DataFormatter cellFormatter) {
+            DataFormatter cellFormatter,
+            DateConverter dateConverter) {
 
         switch (cellIndex) {
             case 0:
@@ -26,7 +29,7 @@ public interface ExcelReaderService {
                 candidate.setCardiffCourseCode(cellFormatter.formatCellValue(cell));
                 break;
             case 2: {
-                candidate.setRecordFirstCreated((cell.getDateCellValue()));
+                candidate.setRecordFirstCreated(dateConverter.convertToLocalDateViaInstant(cell.getDateCellValue()));
                 break;
             }
             case 3: {
@@ -42,8 +45,66 @@ public interface ExcelReaderService {
                 break;
             }
             case 6: {
-                if (cell.getStringCellValue().equals("A")) {
-                    candidate.setApplicationStatusCode(ApplicationStatusCode.APPLICATION);
+                switch (cell.getStringCellValue()) {
+                    case "A": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.APPLICATION);
+                        break;
+                    }
+                    case "GF": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.GATHERED_FIELD_ON_HOLD);
+                        break;
+                    }
+                    case "OR": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.OTHER_REASON_ON_HOLD);
+                        break;
+                    }
+                    case "OH": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.AWAITING_INTERVIEW_ON_HOLD);
+                        break;
+                    }
+                    case "R": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.REJECTED);
+                        break;
+                    }
+                    case "C": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.CONDITIONAL_OFFER_MADE);
+                        break;
+                    }
+                    case "CF": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.CONDITIONAL_OFFER_FIRMED);
+                        break;
+                    }
+                    case "CI": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.CONDITIONAL_OFFER_INSURED);
+                        break;
+                    }
+                    case "CD": {
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.CONDITIONAL_OFFER_DECLINED);
+                        break;
+                    }
+                    case "U":{
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.UNCONDITIONAL_OFFER_MADE);
+                        break;
+                    }
+                    case "UF":{
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.UNCONDITIONAL_OFFER_FIRMED);
+                        break;
+                    }
+                    case "UI":{
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.UNCONDITIONAL_OFFER_INSURED);
+                        break;
+                    }
+                    case "UD":{
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.UNCONDITIONAL_OFFER_DECLINED);
+                        break;
+                    }
+                    case "W":{
+                        candidate.setApplicationStatusCode(ApplicationStatusCode.WITHDRAWN);
+                        break;
+                    }
+                    default:{
+                        break;
+                    }
                 }
                 break;
             }
@@ -60,7 +121,7 @@ public interface ExcelReaderService {
                 break;
             }
             case 10: {
-                candidate.setDateOfBirth(cell.getDateCellValue());
+                candidate.setDateOfBirth(dateConverter.convertToLocalDateViaInstant(cell.getDateCellValue()));
                 break;
             }
             case 11: {
@@ -171,7 +232,7 @@ public interface ExcelReaderService {
                 break;
             }
             case 28: {
-                candidate.setInterviewDate(cell.getDateCellValue());
+                candidate.setInterviewDate(dateConverter.convertToLocalDateViaInstant(cell.getDateCellValue()));
                 break;
             }
             case 29: {
