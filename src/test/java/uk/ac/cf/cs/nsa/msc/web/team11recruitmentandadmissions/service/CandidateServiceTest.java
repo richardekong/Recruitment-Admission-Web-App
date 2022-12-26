@@ -146,7 +146,20 @@ class CandidateServiceTest {
     }
 
     @Test
+    @DisplayName("Unit test for updating a candidate's record")
     void updateCandidate() {
+        //change candidate's surname
+        candidate.setSurname("Goldberg");
+
+        given(repository.save(candidate)).willReturn(candidate);
+
+        Candidate theReturnedCandidate = candidateService.updateCandidate(candidate);
+
+        then(repository).should().save(candidate);
+
+        assertThat(theReturnedCandidate).isNotNull();
+
+        assertThat(theReturnedCandidate.getSurname()).isEqualTo(candidate.getSurname());
     }
 
     @Test
