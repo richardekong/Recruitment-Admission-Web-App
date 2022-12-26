@@ -10,12 +10,15 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.Candidate;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.repository.CandidateRepository;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.CustomException;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
@@ -123,7 +126,23 @@ class CandidateServiceTest {
     }
 
     @Test
+    @DisplayName("Unit test for retrieving a candidate by student Number")
     void findByStudentNo() {
+        String studentNo = candidate.getStudentNo();
+
+        given(repository.findById(studentNo))
+                .willReturn(Optional.ofNullable(candidate));
+
+        Candidate theCandidateReturned = candidateService.findByStudentNo(studentNo);
+
+        then(repository).should().findById(studentNo);
+
+        assertThrows(CustomException.class, () -> candidateService.findByStudentNo("NO_ID"));
+
+        assertThat(theCandidateReturned).isNotNull();
+
+        assertThat(theCandidateReturned).isEqualTo(candidate);
+
     }
 
     @Test
