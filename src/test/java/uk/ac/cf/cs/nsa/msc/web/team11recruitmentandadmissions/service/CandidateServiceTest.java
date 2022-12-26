@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.Candidate;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.YesOrNoOption;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.repository.CandidateRepository;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.CustomException;
 
@@ -163,8 +164,21 @@ class CandidateServiceTest {
     }
 
     @Test
+    @DisplayName("Unit test for counting candidates who received an email")
     void countCandidatesByOfferEmailSent() {
+
+        given(repository.countCandidatesByOfferEmailSent(YesOrNoOption.YES))
+                .willReturn(1);
+
+        int theNumberOfCandidateWhoReceivedOfferEmail = candidateService
+                .countCandidatesByOfferEmailSent(YesOrNoOption.YES);
+
+        then(repository).should().countCandidatesByOfferEmailSent(YesOrNoOption.YES);
+
+        assertThat(theNumberOfCandidateWhoReceivedOfferEmail).isEqualTo(1);
+
     }
+
 
 }
 
