@@ -26,15 +26,14 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     public Candidate save(Candidate candidate) {
-        Optional<Candidate> optionalCandidate = Optional.of(
-                repository.findCandidateByStudentNo(candidate.getStudentNo())
-        );
-        optionalCandidate.ifPresentOrElse(theCandidate -> repository.save(candidate),
-                () -> {
-                    throw new CustomException(
-                            "Candidate with " + candidate.getStudentNo() + " exists", HttpStatus.CONFLICT);
-                });
-        return candidate;
+        Candidate existingCandidate = repository.findCandidateByStudentNo(candidate.getStudentNo());
+        if (existingCandidate == null){
+            existingCandidate = repository.save(candidate);
+        }else {
+            throw new CustomException(
+                    "Candidate with " + existingCandidate.getStudentNo() + " exists", HttpStatus.CONFLICT);
+        }
+        return existingCandidate;
     }
 
     @Override
@@ -57,7 +56,7 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     @Override
-    public  Candidate updateCandidate(Candidate candidateToUpdate) {
+    public Candidate updateCandidate(Candidate candidateToUpdate) {
         return repository.save(candidateToUpdate);
     }
 
