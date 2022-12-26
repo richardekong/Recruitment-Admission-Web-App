@@ -10,6 +10,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.Candidate;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.repository.CandidateRepository;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -25,12 +29,15 @@ class CandidateServiceTest {
     @InjectMocks // Injects a mock of the real candidate service implementation
     CandidateServiceImpl candidateService;
 
-    Candidate candidate;
+    private Candidate candidate;
+
+    private LinkedList<Candidate> candidates;
 
 
     @BeforeEach
     void setUp() {
         candidate = TestData.createCandidate();
+        candidates = new LinkedList<>();
     }
 
     @AfterEach
@@ -61,6 +68,31 @@ class CandidateServiceTest {
 
     @Test
     void saveAll() {
+
+        var candidatesTobeAdded = List.of(new Candidate(), new Candidate());
+
+        candidates.addAll(candidatesTobeAdded);
+
+        //satisfy a precondition requiring that none of the candidates to be saved exists in the database
+        given(repository.saveAll(
+                candidates
+                        .stream()
+                        .filter(c -> !repository.existsById(c.getStudentNo()))
+                        .collect(Collectors.toList()))
+        ).willReturn(candidates);
+
+        //save the candidates and maintain their references in a list
+        var theReturnedCandidates = candidateService.saveAll(candidates);
+
+        //then spy method saveAll(...) to verify if the repository was delegated to invoke its saveAll(...) methods
+        then(repository).should().saveAll(candidates);
+
+        assertThat(theReturnedCandidates).isNotNull();
+
+        assertThat(theReturnedCandidates).asList().isNotEmpty();
+
+        assertThat(theReturnedCandidates).asList().size().isEqualTo(candidatesTobeAdded.size());
+
     }
 
     @Test
