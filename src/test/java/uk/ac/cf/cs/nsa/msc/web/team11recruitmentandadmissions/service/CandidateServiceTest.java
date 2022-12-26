@@ -2,6 +2,7 @@ package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -42,6 +43,7 @@ class CandidateServiceTest {
 
     @AfterEach
     void tearDown() {
+
     }
 
     /**
@@ -50,7 +52,10 @@ class CandidateServiceTest {
      * Here Behavior Driven Development technique is applied.
      **/
     @Test
+    @DisplayName("Unit test for saving a candidate")
     void save() {
+        var candidateToBeSaved = candidate;
+        candidateToBeSaved.setStudentNo("0000000");
         //precondition to ensure that the candidate to be saved doesn't exist in the database
         given(repository.findCandidateByStudentNo(candidate.getStudentNo())).willReturn(null);
 
@@ -67,6 +72,7 @@ class CandidateServiceTest {
     }
 
     @Test
+    @DisplayName("Unit test for saving candidates")
     void saveAll() {
 
         var candidatesTobeAdded = List.of(new Candidate(), new Candidate());
@@ -96,7 +102,24 @@ class CandidateServiceTest {
     }
 
     @Test
+    @DisplayName("Unit test for retrieving all candidates")
     void findAll() {
+
+        //The findAll(..) method is expected to return all candidates from the database after being invoked
+        given(repository.findAll()).willReturn(List.of(candidate));
+
+        //retrieve the candidates from the database and maintain a reference to the retrieved candidates
+        var allCandidatesFromDB = candidateService.findAll();
+
+        //The repository should be delegated to invoke its findAll(..) method
+        then(repository).should().findAll();
+
+        assertThat(allCandidatesFromDB).isNotNull();
+
+        assertThat(allCandidatesFromDB).asList().isNotEmpty();
+
+        assertThat(allCandidatesFromDB.size()).isGreaterThan(0);
+
     }
 
     @Test
@@ -110,4 +133,6 @@ class CandidateServiceTest {
     @Test
     void countCandidatesByOfferEmailSent() {
     }
+
 }
+
