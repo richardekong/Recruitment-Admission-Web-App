@@ -69,12 +69,19 @@ class CandidateServiceTest {
         //Save the candidate and maintain a reference to the saved candidate
         Candidate theReturnedCandidate = candidateService.save(candidate);
 
-        //The candidateService's save(..) method should delegate the repository to save the new candidate's record to the database
+        //The candidateService's save(..) method should delegate the repository
+        //to save the new candidate's record to the database
         then(repository).should().save(candidate);
 
         assertThat(theReturnedCandidate).isNotNull();
     }
 
+
+    /**
+     * A unit test that verifies  the candidate service's
+     * ability to save a list of new Candidates' record to the database.
+     * Here Behavior Driven Development technique is applied.
+     **/
     @Test
     @DisplayName("Unit test for saving candidates")
     void saveAll() {
@@ -83,7 +90,8 @@ class CandidateServiceTest {
 
         candidates.addAll(candidatesTobeAdded);
 
-        //satisfy a precondition requiring that none of the candidates to be saved exists in the database
+        //satisfy a precondition requiring that none of the
+        // candidates to be saved exists in the database
         given(repository.saveAll(
                 candidates
                         .stream()
@@ -94,38 +102,54 @@ class CandidateServiceTest {
         //save the candidates and maintain their references in a list
         var theReturnedCandidates = candidateService.saveAll(candidates);
 
-        //then spy method saveAll(...) to verify if the repository was delegated to invoke its saveAll(...) methods
+        //then spy method saveAll(...) to verify if the repository was
+        // delegated to invoke its saveAll(...) methods
         then(repository).should().saveAll(candidates);
 
         assertThat(theReturnedCandidates).isNotNull();
 
-        assertThat(theReturnedCandidates).asList().isNotEmpty();
+        assertThat(theReturnedCandidates.isEmpty()).isFalse();
 
-        assertThat(theReturnedCandidates).asList().size().isEqualTo(candidatesTobeAdded.size());
+        assertThat(theReturnedCandidates.size()).isEqualTo(candidatesTobeAdded.size());
 
     }
 
+    /**
+     * A unit test that verifies  the candidate service's
+     * ability to retrieve all Candidates' record from the database.
+     * Here Behavior Driven Development technique is applied.
+     **/
     @Test
     @DisplayName("Unit test for retrieving all candidates")
     void findAll() {
 
-        //The findAll(..) method is expected to return all candidates from the database after being invoked
+        //The findAll(..) method is expected to return all
+        // candidates from the database after being invoked
         given(repository.findAll()).willReturn(List.of(candidate));
 
-        //retrieve the candidates from the database and maintain a reference to the retrieved candidates
+        //retrieve the candidates from the database and
+        //maintain a reference to the retrieved candidates
         var allCandidatesFromDB = candidateService.findAll();
 
-        //The repository should be delegated to invoke its findAll(..) method
+        //The repository should be delegated
+        //to invoke its findAll(..) method
         then(repository).should().findAll();
 
         assertThat(allCandidatesFromDB).isNotNull();
 
-        assertThat(allCandidatesFromDB).asList().isNotEmpty();
+        assertThat(allCandidatesFromDB.isEmpty()).isFalse();
 
         assertThat(allCandidatesFromDB.size()).isGreaterThan(0);
 
     }
 
+
+    /**
+     * A unit test that verifies  the candidate service's
+     * ability to retrieve a Candidate's record from the database,
+     * via the candidate's student number.
+     * Here Behavior Driven Development technique is applied.
+     **/
     @Test
     @DisplayName("Unit test for retrieving a candidate by student Number")
     void findByStudentNo() {
@@ -146,6 +170,12 @@ class CandidateServiceTest {
 
     }
 
+
+    /**
+     * A unit test that verifies  the candidate service's
+     * ability to update a Candidates' record in the database.
+     * Here Behavior Driven Development technique is applied.
+     **/
     @Test
     @DisplayName("Unit test for updating a candidate's record")
     void updateCandidate() {
@@ -163,6 +193,11 @@ class CandidateServiceTest {
         assertThat(theReturnedCandidate.getSurname()).isEqualTo(candidate.getSurname());
     }
 
+    /**
+     * A unit test that verifies  the candidate service's
+     * ability to retrieve the number of Candidates to whom offer emails have been sent.
+     * Here Behavior Driven Development technique is applied.
+     **/
     @Test
     @DisplayName("Unit test for counting candidates who received an email")
     void countCandidatesByOfferEmailSent() {
@@ -178,7 +213,5 @@ class CandidateServiceTest {
         assertThat(theNumberOfCandidateWhoReceivedOfferEmail).isEqualTo(1);
 
     }
-
-
 }
 
