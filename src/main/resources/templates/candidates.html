@@ -225,6 +225,9 @@
                         <option value="totalInterviewScore">Total Interview Score</option>
                         <option value="inviteInterview">Interview Invitation</option>
                     </select>
+                    <button id="sort-btn" class="btn btn-primary" onclick="" style="background:#27a844;border:1px solid #ccc;box-shadow: 1px 1px 1px #666;">
+                        <a id="sort-link" style="text-decoration:none;">Sort</a>
+                    </button>
                     <img id="sort-order-icon" alt="sort_order" src="/static/images/sort_order.svg"
                          th:src="@{/images/sort_order.svg}" onclick="toggleSortOrderOnclick()" data-order="ASC"
                          style="border:1px solid #ccc;padding:0;width: 20px;height: 38px;cursor:pointer;">
@@ -623,9 +626,9 @@
                                         <label for="offer-email-sent-select"></label>
                                         <select id="offer-email-sent-select" name="offerEmailSent"
                                                 class="table-select">
-                                            <option value="Y">Y</option>
-                                            <option value="val1" title="Yes">Y</option>
-                                            <option value="val2" title="No">N</option>
+                                            <option th:value="${candidate.offerEmailSent.getOption()}" th:text="${candidate.offerEmailSent.getOption()}"></option>
+                                            <option th:value="${candidate.offerEmailSent.YES.getOption()}" th:text="${candidate.offerEmailSent.YES.getOption()}" title="Yes">Y</option>
+                                            <option th:value="${candidate.offerEmailSent.NO.getOption()}" th:text="${candidate.offerEmailSent.NO.getOption()}" title="No">N</option>
                                         </select>
                                     </td>
                                     <td id="issue-date-column">
