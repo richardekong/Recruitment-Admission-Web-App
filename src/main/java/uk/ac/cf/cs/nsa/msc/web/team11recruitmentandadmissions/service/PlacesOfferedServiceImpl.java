@@ -21,7 +21,9 @@ public class PlacesOfferedServiceImpl implements PlacesOfferedService {
     @Override
     public Integer getMostRecentPlacesOffered() {
         return repository.findAllPlacesOfferedDescendingOrder()
-                .get(0)
+                .stream()
+                .findFirst()
+                .orElse(new PlacesOffered())
                 .getPlacesOffered();
     }
 
