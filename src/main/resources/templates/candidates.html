@@ -719,7 +719,6 @@
 
 <script th:inline="javascript">
     const messageBoxes = document.querySelectorAll(".message");
-    // const sortOrderIcon = document.querySelector("#sort-order-icon");
     const searchAnchor = document.querySelector("#search-link");
     const sortAnchor = document.querySelector("#sort-link");
     const searchInput = document.querySelector("#search-input");
@@ -727,7 +726,7 @@
     const sortOrderDropDown = document.querySelector("#sort-order-category");
 
     messageBoxes.forEach(box => box.addEventListener("click", (_e) => box.style.display = "none"));
-n
+
     const toggleSortOrderOnclick = () => {
         let sortOrders = ["ACS", "DESC"];
         const sortOrderIcon = document.querySelector("#sort-order-icon");
