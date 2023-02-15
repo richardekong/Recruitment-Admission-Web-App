@@ -26,6 +26,10 @@ public interface CandidateService {
 
     Integer countCandidatesByOfferEmailSent(YesOrNoOption option);
 
+    Slice<Candidate> findCandidatesByFirstNameAndSurname(String firstName, String surname, Pageable pageable);
+
+    Slice<Candidate> findCandidatesByFirstName(String firstName, Pageable pageable);
+
     Slice<Candidate> findCandidateByStudentNo(String studentNo, Pageable pageable);
 
     Slice<Candidate> findCandidateBySurname(String surname, Pageable pageable);

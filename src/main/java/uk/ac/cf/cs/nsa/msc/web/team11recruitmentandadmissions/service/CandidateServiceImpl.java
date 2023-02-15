@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.ApplicationStatusCode;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.Candidate;
@@ -13,10 +14,12 @@ import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.repository.Candida
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.CustomException;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class CandidateServiceImpl implements CandidateService {
@@ -76,8 +79,22 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     @Override
+    public Slice<Candidate> findCandidatesByFirstName(String firstName, Pageable pageable) {
+        return repository.findCandidatesByFirstName(firstName, pageable);
+    }
+    @Override
     public Slice<Candidate> findCandidateBySurname(String surname, Pageable pageable) {
         return repository.findCandidateBySurname(surname, pageable);
+    }
+
+    @Override
+    public Slice<Candidate> findCandidatesByFirstNameAndSurname(String firstName, String surname, Pageable pageable) {
+        boolean namesAreValid = Stream.of(firstName, surname)
+                .allMatch(name -> name.matches("^[a-zA-z\\d]+$"));
+        if (!namesAreValid) {
+            throw new  CustomException("Invalid names", HttpStatus.BAD_REQUEST);
+        }
+        return repository.findCandidatesByFirstNameAndSurnameContainingIgnoreCase(firstName, surname, pageable);
     }
 
     @Override

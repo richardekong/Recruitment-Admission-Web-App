@@ -20,6 +20,9 @@ public interface CandidateRepository extends JpaRepository<Candidate,String> {
 
         Slice<Candidate> findCandidateByStudentNo(String studentNo, Pageable pageable);
 
+        Slice<Candidate> findCandidatesByFirstNameAndSurnameContainingIgnoreCase(String firstName,String surname, Pageable pageable);
+
+        Slice<Candidate> findCandidatesByFirstName(String firstName, Pageable pageable);
         Slice<Candidate> findCandidateBySurname(String surname, Pageable pageable);
 
         Slice<Candidate> findCandidatesByApplicationStatusCode(ApplicationStatusCode code, Pageable pageable);
