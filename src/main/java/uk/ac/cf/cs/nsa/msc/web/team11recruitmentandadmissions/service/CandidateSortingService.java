@@ -2,35 +2,36 @@ package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.ApplicationStatusCode;
+import org.springframework.data.domain.SliceImpl;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.Candidate;
-import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.YesOrNoOption;
 
-import java.time.LocalDate;
+import java.util.List;
 
 public interface CandidateSortingService {
 
-    Slice<Candidate> findCandidateByStudentNo(String studentNo, Pageable pageable);
+    Slice<Candidate> sortNothing();
+    Slice<Candidate> sort(Pageable pageable);
+    Slice<Candidate> sortByApplicationStatusCode(Pageable pageable);
 
-    Slice<Candidate> findCandidateBySurname(String surname, Pageable pageable);
+    Slice<Candidate> sortByGender(Pageable pageable);
 
-    Slice<Candidate> findCandidatesByApplicationStatusCode(ApplicationStatusCode code, Pageable pageable);
+    Slice<Candidate> sortByFeeStatus(Pageable pageable);
 
-    Slice<Candidate> findCandidatesByOfferConditions(String offerCondition, Pageable pageable);
+    Slice<Candidate> sortByCorrespondenceLangWelsh(Pageable pageable);
 
-    Slice<Candidate> findCandidatesByRecordFirstCreated(LocalDate createdOn, Pageable pageable);
+    Slice<Candidate> sortByWelshSpeaker(Pageable pageable);
 
-    Slice<Candidate> findCandidatesByPersonalID(String personalID, Pageable pageable);
+    Slice<Candidate> sortByContextualFlag(Pageable pageable);
 
-    Slice<Candidate> findCandidatesByDateOfBirth(LocalDate dateOfBirth, Pageable pageable);
+    Slice<Candidate> sortByKeepingWarmEmailSent(Pageable pageable);
 
-    Slice<Candidate> findCandidatesByTotalPersonalStatementScore(int score, Pageable pageable);
+    Slice<Candidate> sortByInviteInterview(Pageable pageable);
 
-    Slice<Candidate> findCandidatesByTotalInterviewScore(int score, Pageable pageable);
+    Slice<Candidate> sortByFTPChecked(Pageable pageable);
 
-    Slice<Candidate> findCandidatesByInviteInterview(YesOrNoOption option, Pageable pageable);
+    Slice<Candidate> sortByNonStandardQualificationsChaserEmail(Pageable pageable);
 
-    Slice<Candidate> findCandidatesByOfferEmailSent(YesOrNoOption option, Pageable pageable);
+    Slice<Candidate> sortByOfferEmailSent(Pageable pageable);
 
 }
 
