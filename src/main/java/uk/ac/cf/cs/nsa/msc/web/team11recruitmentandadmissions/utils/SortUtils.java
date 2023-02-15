@@ -28,6 +28,12 @@ public class SortUtils {
             case "names":
                 sortedCandidates = sortingService.sort(createPageAndSortRequest(direction, "firstName", "surname")).getContent();
                 break;
+            case "surname":
+                sortedCandidates = sortingService.sort(createPageAndSortRequest(direction,"surname")).getContent();
+                break;
+            case "firstName":
+                sortedCandidates = sortingService.sort(createPageAndSortRequest(direction, "firstName")).getContent();
+                break;
             case "applicationStatusCode":
                 sortedCandidates = sortingService.sortByApplicationStatusCode(createPageAndSortRequest(direction, "applicationStatusCode")).getContent();
                 break;

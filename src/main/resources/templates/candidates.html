@@ -178,7 +178,7 @@
 <header th:insert="header::header"></header>
 <main class="main-content">
     <!-- Success and Error display components        -->
-    <p class="message container alert alert-success text-center col-xs-12 col-sm-12 col-md-12 col-lg-2"
+    <p class="message container alert alert-danger text-center col-xs-12 col-sm-12 col-md-12 col-lg-2"
        th:if="${candidateLoadErrorDisplay != null}">
         <span th:text="${candidateLoadErrorDisplay.getMessage()}"></span>
     </p>
@@ -217,6 +217,8 @@
                         <option selected>choose...</option>
                         <option value="studentNo">Student Number</option>
                         <option value="names">Names</option>
+                        <option value="surname">Surname</option>
+                        <option value="firstName">First name</option>
                         <option value="applicationStatusCode">Application Status Code</option>
                         <option value="offerCondition">Offer Condition</option>
                         <option value="offerEmailSent">Offer Email Sent</option>
@@ -724,14 +726,14 @@
     const sortDropDown = document.querySelector("#sort-category");
     const sortOrderDropDown = document.querySelector("#sort-order-category");
 
-    messageBoxes.forEach(box => box.addEventListener("click", e => e.target.style.display = "none"));
+    messageBoxes.forEach(box => box.addEventListener("click", (_e) => box.style.display = "none"));
+
     const toggleSortOrderOnclick = () => {
         let sortOrders = ["ACS", "DESC"];
         const sortOrderIcon = document.querySelector("#sort-order-icon");
         sortOrderIcon.dataset.order = sortOrderIcon.dataset.order === sortOrders[0] ? sortOrders[1] : sortOrders[0];
 
     };
-
 
     const prepareSearchRequestOnClick = () => {
         if (searchInput.value && sortDropDown.value && sortOrderDropDown.value) {
@@ -742,16 +744,6 @@
             searchAnchor.href = `q?${term}=${searchValue}&${sortOrderKey}=${sortOrderValue}`;
         }
     };
-
-    // const prepareSortRequestOnclick = () => {
-    //     if (searchInput.value && sortDropDown.value && sortOrderDropDown.value) {
-    //         let sortKey = sortDropDown.value;
-    //         let searchValue = searchInput.value;
-    //         let sortOrderKey = "order";
-    //         let sortOrderValue = sortOrderDropDown.value;
-    //         searchAnchor.href = `sortBy?${sortKey}=${searchValue}&${sortOrderKey}=${sortOrderValue}`;
-    //     }
-    // }
 
     const prepareSortRequestOnclick = () => {
         if (sortDropDown.value && sortOrderDropDown.value) {

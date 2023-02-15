@@ -2,6 +2,8 @@ package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -9,19 +11,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.utils.SortUtils;
-import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.*;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.Candidate;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.SummaryFragmentModel;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.CustomException;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.Response;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.CandidateService;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.CandidateSortingService;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.PlacesOfferedService;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.PredictionService;
-import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.utils.UpdateUtils;
 
-import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
+import static uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.utils.SearchUtils.search;
 import static uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.utils.SortUtils.sort;
 import static uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.utils.UpdateUtils.validateRequestThenUpdate;
 
@@ -92,7 +96,27 @@ public class CandidatesController implements SummaryFragmentModel {
     }
 
     @GetMapping("/q")
-    public String queryCandidates(@RequestParam Map<String, String> params, Model model){
+    public String queryCandidates(@RequestParam Map<String, String> params, Model model) {
+        AtomicReference<Pageable> pageableAtomicReference = new AtomicReference<>(PageRequest.of(0, 1));
+        String sortOrder = params.getOrDefault("order", "ASC");
+        boolean isAscending = sortOrder.equalsIgnoreCase("ASC");
+        params.entrySet().parallelStream()
+                .map(entry -> search(model, candidateService, pageableAtomicReference, isAscending, entry))
+                .findFirst()
+                .ifPresentOrElse(candidates -> {
+                    if (candidates.isEmpty()) {
+                        HttpStatus status = HttpStatus.NOT_FOUND;
+                        model.addAttribute("candidateLoadErrorDisplay",
+                                new Response(status.value(), status.getReasonPhrase(), System.currentTimeMillis())
+                        );
+                    }
+                    System.out.println(candidates);
+                    model.addAttribute("candidates", candidates);
+                }, () -> {
+                    HttpStatus status = HttpStatus.NOT_FOUND;
+                    model.addAttribute("candidateLoadErrorDisplay", new Response(status.value(), status.getReasonPhrase(), System.currentTimeMillis()));
+                });
+        setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService, candidateService);
         return "candidates";
     }
 
