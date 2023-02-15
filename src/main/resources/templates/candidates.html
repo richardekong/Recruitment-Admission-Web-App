@@ -200,7 +200,7 @@
                         </span>
                     </div>
                     <input id="search-input" class="form-control" type="text" style="border-radius: 0;">
-                    <button id="search-btn" class="btn btn-primary" onclick="prepareSortRequestOnclick()" style="background:#27a844;border:1px solid #ccc;box-shadow: 1px 1px 1px #666;">
+                    <button id="search-btn" class="btn btn-primary" onclick="prepareSearchRequestOnClick()" style="background:#27a844;border:1px solid #ccc;box-shadow: 1px 1px 1px #666;">
                         <a id="search-link" style="text-decoration:none;">Search</a>
                     </button>
                 </div>
@@ -215,22 +215,45 @@
                     <select id="sort-category" class="form-select" style="border-radius: 0;">
                         <option selected>choose...</option>
                         <option value="studentNo">Student Number</option>
-                        <option value="surname">Surname</option>
+                        <option value="names">Names</option>
                         <option value="applicationStatusCode">Application Status Code</option>
                         <option value="offerCondition">Offer Condition</option>
+                        <option value="offerEmailSent">Offer Email Sent</option>
                         <option value="recordFirstCreated">Record First Created</option>
                         <option value="personalID">Personal ID</option>
                         <option value="dateOfBirth">Date of Birth</option>
                         <option value="totalPersonalStatementScore">Total Personal Statement Score</option>
                         <option value="totalInterviewScore">Total Interview Score</option>
                         <option value="inviteInterview">Interview Invitation</option>
+                        <option value="interviewDate">Interview Date</option>
+                        <option value="nationality">Nationality</option>
+                        <option value="gender">Gender</option>
+                        <option value="feeStatus">Fee Status</option>
+                        <option value="correspondenceLangWelsh">Correspondence Lang Welsh</option>
+                        <option value="welshSpeaker">Welsh Speaker</option>
+                        <option value="contextualFlag">Contextual Flag</option>
+                        <option value="keepingWarmEmailSent">Keeping Warm Email Sent</option>
+                        <option value="FTPChecked">FTP Checked</option>
+                        <option value="nonStandardQualificationsChaserEmail">Non Standard Qualifications Chaser Email</option>
+                        <option value="entryYear">Entry Year</option>
+                        <option value="latestDecisionCode">Latest Decision Code</option>
+                        <option value="countryOfDomicile">Country of Domicile</option>
+                        <option value="homeEmail">Home Email</option>
+                        <option value="applicationStatusHCare">Application Status HCare</option>
+
                     </select>
-                    <button id="sort-btn" class="btn btn-primary" onclick="" style="background:#27a844;border:1px solid #ccc;box-shadow: 1px 1px 1px #666;">
+                    <button id="sort-btn" class="btn btn-primary" onclick="prepareSortRequestOnclick()" style="background:#27a844;border:1px solid #ccc;box-shadow: 1px 1px 1px #666;">
                         <a id="sort-link" style="text-decoration:none;">Sort</a>
                     </button>
                     <img id="sort-order-icon" alt="sort_order" src="/static/images/sort_order.svg"
                          th:src="@{/images/sort_order.svg}" onclick="toggleSortOrderOnclick()" data-order="ASC"
                          style="border:1px solid #ccc;padding:0;width: 20px;height: 38px;cursor:pointer;">
+                    <label for="sort-order-category"></label>
+                    <select id="sort-order-category" class="form-select" style="border-radius: 0;">
+                        <option value="order">Order</option>
+                        <option value="ASC">Ascending</option>
+                        <option value="DESC">Descending</option>
+                    </select>
                 </div>
             </div>
             <div class="container tbl-container">
@@ -685,28 +708,39 @@
 
 <script th:inline="javascript">
     const messageBoxes = document.querySelectorAll(".message");
-    messageBoxes.forEach(box => box.addEventListener("click", e => e.target.style.display = "none"));
+    // const sortOrderIcon = document.querySelector("#sort-order-icon");
+    const searchAnchor = document.querySelector("#search-link");
+    const sortAnchor = document.querySelector("#sort-link");
+    const searchInput = document.querySelector("#search-input");
+    const sortDropDown = document.querySelector("#sort-category");
+    const sortOrderDropDown = document.querySelector("#sort-order-category");
 
+    messageBoxes.forEach(box => box.addEventListener("click", e => e.target.style.display = "none"));
     const toggleSortOrderOnclick = () => {
         let sortOrders = ["ACS", "DESC"];
         const sortOrderIcon = document.querySelector("#sort-order-icon");
         sortOrderIcon.dataset.order = sortOrderIcon.dataset.order === sortOrders[0] ? sortOrders[1] : sortOrders[0];
+
     };
 
+    const prepareSearchRequestOnClick = () =>{};
+
+    // const prepareSortRequestOnclick = () => {
+    //     if (searchInput.value && sortDropDown.value && sortOrderDropDown.value) {
+    //         let sortKey = sortDropDown.value;
+    //         let searchValue = searchInput.value;
+    //         let sortOrderKey = "order";
+    //         let sortOrderValue = sortOrderDropDown.value;
+    //         searchAnchor.href = `sortBy?${sortKey}=${searchValue}&${sortOrderKey}=${sortOrderValue}`;
+    //     }
+    // }
     const prepareSortRequestOnclick = () => {
-        const sortOrderIcon = document.querySelector("#sort-order-icon");
-        const searchAnchor = document.querySelector("#search-link");
-        const searchInput = document.querySelector("#search-input");
-        const sortDropDown = document.querySelector("#sort-category");
-        if (searchInput.value && sortDropDown.value && sortOrderIcon.dataset.order) {
-            let sortKey = sortDropDown.value;
-            let searchValue = searchInput.value;
+        if (sortDropDown.value && sortOrderDropDown.value) {
+            let sortValue = sortDropDown.value;
+            let sortOrderValue = sortOrderDropDown.value;
             let sortOrderKey = "order";
-            let sortOrderValue = sortOrderIcon.dataset.order;
-            searchAnchor.href = `sortBy?${sortKey}=${searchValue}&${sortOrderKey}=${sortOrderValue}`;
+            sortAnchor.href = `sortBy?attr=${sortValue}&${sortOrderKey}=${sortOrderValue}`;
         }
-
-
     }
 </script>
 </body>
