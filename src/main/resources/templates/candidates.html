@@ -165,8 +165,8 @@
             box-shadow: 2px 2px 2px 2px #a0d6fd;
         }
 
-        #search-btn:hover{
-            border:0;
+        #search-btn:hover {
+            border: 0;
             box-shadow: 0 1px 1px;
         }
 
@@ -200,7 +200,8 @@
                         </span>
                     </div>
                     <input id="search-input" class="form-control" type="text" style="border-radius: 0;">
-                    <button id="search-btn" class="btn btn-primary" onclick="prepareSearchRequestOnClick()" style="background:#27a844;border:1px solid #ccc;box-shadow: 1px 1px 1px #666;">
+                    <button id="search-btn" class="btn btn-primary" onclick="prepareSearchRequestOnClick()"
+                            style="background:#27a844;border:1px solid #ccc;box-shadow: 1px 1px 1px #666;">
                         <a id="search-link" style="text-decoration:none;">Search</a>
                     </button>
                 </div>
@@ -234,7 +235,8 @@
                         <option value="contextualFlag">Contextual Flag</option>
                         <option value="keepingWarmEmailSent">Keeping Warm Email Sent</option>
                         <option value="FTPChecked">FTP Checked</option>
-                        <option value="nonStandardQualificationsChaserEmail">Non Standard Qualifications Chaser Email</option>
+                        <option value="nonStandardQualificationsChaserEmail">Non Standard Qualifications Chaser Email
+                        </option>
                         <option value="entryYear">Entry Year</option>
                         <option value="latestDecisionCode">Latest Decision Code</option>
                         <option value="countryOfDomicile">Country of Domicile</option>
@@ -242,7 +244,8 @@
                         <option value="applicationStatusHCare">Application Status HCare</option>
 
                     </select>
-                    <button id="sort-btn" class="btn btn-primary" onclick="prepareSortRequestOnclick()" style="background:#27a844;border:1px solid #ccc;box-shadow: 1px 1px 1px #666;">
+                    <button id="sort-btn" class="btn btn-primary" onclick="prepareSortRequestOnclick()"
+                            style="background:#27a844;border:1px solid #ccc;box-shadow: 1px 1px 1px #666;">
                         <a id="sort-link" style="text-decoration:none;">Sort</a>
                     </button>
                     <img id="sort-order-icon" alt="sort_order" src="/static/images/sort_order.svg"
@@ -649,9 +652,14 @@
                                         <label for="offer-email-sent-select"></label>
                                         <select id="offer-email-sent-select" name="offerEmailSent"
                                                 class="table-select">
-                                            <option th:value="${candidate.offerEmailSent.getOption()}" th:text="${candidate.offerEmailSent.getOption()}"></option>
-                                            <option th:value="${candidate.offerEmailSent.YES.getOption()}" th:text="${candidate.offerEmailSent.YES.getOption()}" title="Yes">Y</option>
-                                            <option th:value="${candidate.offerEmailSent.NO.getOption()}" th:text="${candidate.offerEmailSent.NO.getOption()}" title="No">N</option>
+                                            <option th:value="${candidate.offerEmailSent.getOption()}"
+                                                    th:text="${candidate.offerEmailSent.getOption()}"></option>
+                                            <option th:value="${candidate.offerEmailSent.YES.getOption()}"
+                                                    th:text="${candidate.offerEmailSent.YES.getOption()}" title="Yes">Y
+                                            </option>
+                                            <option th:value="${candidate.offerEmailSent.NO.getOption()}"
+                                                    th:text="${candidate.offerEmailSent.NO.getOption()}" title="No">N
+                                            </option>
                                         </select>
                                     </td>
                                     <td id="issue-date-column">
@@ -700,7 +708,8 @@
                 </div>
             </div>
         </div>
-        <aside class="col-lg-4" th:replace="summary_bar::summary_bar(offersRecommended = ${offersRecommended}, placesOffered=${placesOffered}, offersSent=${offersSent})"></aside>
+        <aside class="col-lg-4"
+               th:replace="summary_bar::summary_bar(offersRecommended = ${offersRecommended}, placesOffered=${placesOffered}, offersSent=${offersSent})"></aside>
     </div>
 </main>
 <!-- add a reusable footer -->
@@ -723,7 +732,16 @@
 
     };
 
-    const prepareSearchRequestOnClick = () =>{};
+
+    const prepareSearchRequestOnClick = () => {
+        if (searchInput.value && sortDropDown.value && sortOrderDropDown.value) {
+            let term = sortDropDown.value;
+            let searchValue = searchInput.value;
+            let sortOrderKey = "order";
+            let sortOrderValue = sortOrderDropDown.value;
+            searchAnchor.href = `q?${term}=${searchValue}&${sortOrderKey}=${sortOrderValue}`;
+        }
+    };
 
     // const prepareSortRequestOnclick = () => {
     //     if (searchInput.value && sortDropDown.value && sortOrderDropDown.value) {
@@ -734,6 +752,7 @@
     //         searchAnchor.href = `sortBy?${sortKey}=${searchValue}&${sortOrderKey}=${sortOrderValue}`;
     //     }
     // }
+
     const prepareSortRequestOnclick = () => {
         if (sortDropDown.value && sortOrderDropDown.value) {
             let sortValue = sortDropDown.value;

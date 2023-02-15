@@ -76,19 +76,6 @@ public class CandidatesController implements SummaryFragmentModel {
         return "candidates";
     }
 
-    @GetMapping("/sortBy")
-    public String sortCandidates(@RequestParam Map<String, String> requestParameters, Model model) {
-        List<Candidate> sortedCandidates;
-        String sortAttribute = requestParameters.get("attr");
-        String sortOrder = requestParameters.getOrDefault("order", "ASC");
-        boolean isAscending = sortOrder.equalsIgnoreCase("ASC");
-        Sort.Direction direction = isAscending ? Sort.Direction.ASC : Sort.Direction.DESC;
-        sortedCandidates = sort(model, sortingService, sortAttribute, direction);
-        model.addAttribute("candidates", sortedCandidates);
-        setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService, candidateService);
-        return "candidates";
-    }
-
     @PostMapping("/candidates/update")
     public String editCandidateRecord(@RequestParam Map<String, Object> candidateMap, Model model) {
         String studentNo = String.valueOf(candidateMap.get("studentNo"));
@@ -102,6 +89,24 @@ public class CandidatesController implements SummaryFragmentModel {
         });
         model.addAttribute("updateSuccess", new Response(HttpStatus.ACCEPTED.value(), "Update accepted", System.currentTimeMillis()));
         return "redirect:/candidates";
+    }
+
+    @GetMapping("/q")
+    public String queryCandidates(@RequestParam Map<String, String> params, Model model){
+        return "candidates";
+    }
+
+    @GetMapping("/sortBy")
+    public String sortCandidates(@RequestParam Map<String, String> requestParameters, Model model) {
+        List<Candidate> sortedCandidates;
+        String sortAttribute = requestParameters.get("attr");
+        String sortOrder = requestParameters.getOrDefault("order", "ASC");
+        boolean isAscending = sortOrder.equalsIgnoreCase("ASC");
+        Sort.Direction direction = isAscending ? Sort.Direction.ASC : Sort.Direction.DESC;
+        sortedCandidates = sort(model, sortingService, sortAttribute, direction);
+        model.addAttribute("candidates", sortedCandidates);
+        setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService, candidateService);
+        return "candidates";
     }
 
     @Override
