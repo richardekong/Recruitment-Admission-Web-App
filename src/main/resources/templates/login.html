@@ -36,6 +36,10 @@
         color: red;
     }
 
+    .error{
+        cursor:pointer;
+    }
+
     a{
         text-decoration: none;
     }
@@ -50,7 +54,8 @@
     <div>
         <div class="title"><h2 class="project">Cardiff Midwifery Application manager</h2></div>
     </div>
-    <p th:if="${error}" class="error">Wrong username or password</p>
+    <p th:if="${error}" class="alert alert-danger error" th:text="${error.getMessage()}">Wrong username or password</p>
+    <!-- Success and Error display components        -->
     <form id="login-form" th:action="@{/login}" method="post">
         <!--    <form id="login-form" accept-charset="utf-8"  action="/loginVerify" method="post" onSubmit="javascript:return check_login();">-->
         <div class="mb-3">
@@ -75,5 +80,9 @@
     </div>
 </div>
 </div>
+<script>
+    const errorMessages = document.querySelectorAll(".error");
+    errorMessages.forEach(message => message.addEventListener("click", _e => message.style.display = "none"));
+</script>
 </body>
 </html>

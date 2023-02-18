@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.ManageUser ;
-import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.mapper.UserMapper ;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.annotation.Resource;
@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 public class RegisterController {
 
     @Resource
-    private UserMapper UserMapper;
+    private UserService UserMapper;
 
     @RequestMapping("/register")
     public String register() {

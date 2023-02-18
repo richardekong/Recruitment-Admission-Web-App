@@ -1,13 +1,19 @@
 package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
+
+
+@Entity(name = "user")
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"uid","username"}))
 public class ManageUser implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long uid;
 
     private String username;
 
     private String password;
-
     private String userRole;
 
 

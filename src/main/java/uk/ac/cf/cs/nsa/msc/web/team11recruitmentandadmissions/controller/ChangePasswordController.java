@@ -5,7 +5,7 @@
 //import org.springframework.web.bind.annotation.ModelAttribute;
 //import org.springframework.web.bind.annotation.RequestMapping;
 //import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.ManageUser ;
-//import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.mapper.UserMapper ;
+//import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.UserMapper ;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //
 //import javax.annotation.Resource;

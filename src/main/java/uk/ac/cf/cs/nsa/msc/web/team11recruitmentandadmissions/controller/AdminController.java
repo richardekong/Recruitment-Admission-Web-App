@@ -5,20 +5,18 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.mapper.UserMapper;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.UserService;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.ManageUser;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.SummaryFragmentModel;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.CandidateService;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.PlacesOfferedService;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.PredictionService;
 
-import javax.annotation.Resource;
-import java.util.Collection;
 import java.util.List;
 
 @Controller
 public class AdminController implements SummaryFragmentModel {
-    private UserMapper userMapper;
+    private UserService userService;
 
     private CandidateService candidateService;
 
@@ -26,8 +24,8 @@ public class AdminController implements SummaryFragmentModel {
 
     private PlacesOfferedService placesOfferedService;
     @Autowired
-    public void setUserMapper(UserMapper userMapper) {
-        this.userMapper = userMapper;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @Autowired
@@ -48,7 +46,7 @@ public class AdminController implements SummaryFragmentModel {
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping("/admin")
     public String userMapper(Model m) {
-        List<ManageUser> users = userMapper.findAll();
+        List<ManageUser> users = userService.findAllManagedUsers();
         m.addAttribute("user", users);
         setModelsAttributesForSummaryFragment(m, predictionService, placesOfferedService, candidateService);
         return "admin";
@@ -56,7 +54,7 @@ public class AdminController implements SummaryFragmentModel {
 
     @RequestMapping("/admin/delete")
     public String deleteUser(Long uid, Model m) {
-        userMapper.delete(uid);
+        userService.delete(uid);
         setModelsAttributesForSummaryFragment(m, predictionService, placesOfferedService, candidateService);
         return "redirect:/admin";
     }
