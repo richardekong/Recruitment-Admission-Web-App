@@ -40,11 +40,6 @@ public class CandidateProfileController implements SummaryFragmentModel {
     void setPlacesOfferedService(PlacesOfferedService service){
         this.placesOfferedService = service;
     }
-    @GetMapping("/profile")
-    public String showCandidateProfilePage(Model model){
-        setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService, candidateService);
-        return "candidate-profile";
-    }
 
     @GetMapping("/profile/{studentNo}")
     public String showCandidateProfilePage(@PathVariable String studentNo, Model model) {

@@ -1,5 +1,5 @@
 
-insert into candidate
+insert into `candidate`
 (student_no,
  dbscert_number,
  fastatus,
@@ -87,3 +87,16 @@ values
      60,
      '',
      0);
+
+insert into `user`(username, password, user_role) values ('Richard','password','USER');
+
+insert into `user`(username, password, user_role) values ('Faisal','password','USER');
+
+insert into `user`(username, password, user_role) values ('Bhatt','password','USER');
+
+insert into `user`(username, password, user_role) values ('Yinzou','password','USER');
+
+insert into `user`(username, password, user_role) values ('Yibo','password','USER');
+
+insert into `user`(username, password, user_role) values ('Admin','password','ADMIN');
+

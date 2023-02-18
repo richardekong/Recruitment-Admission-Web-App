@@ -1,4 +1,4 @@
-package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service;
+package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.stub;
 
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.*;
 
@@ -35,6 +35,7 @@ public interface TestData {
         candidate.setGradesAchieved("Pending");
         candidate.setKeepingWarmEmailSent(YesOrNoOption.YES);
         candidate.setTotalPersonalStatementScore(59);
+        candidate.setInviteInterview(YesOrNoOption.NO);
         candidate.setInterviewDate(LocalDate.of(2018, 2, 14));
         candidate.setInterviewInviteComments("None");
         candidate.setTotalInterviewScore(46);
