@@ -69,8 +69,7 @@ public interface TestData {
 
     static MultiValueMap<String, String> createCandidateMap(Candidate candidate) {
 
-        MultiValueMap<String, String> candidateMap = new LinkedMultiValueMap<>();
-        LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         for (Field field : candidate.getClass().getDeclaredFields()) {
             field.setAccessible(true);
             String typeName = field.getType().getTypeName();

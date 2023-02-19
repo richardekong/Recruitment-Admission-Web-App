@@ -36,7 +36,9 @@ public class SettingsController implements SummaryFragmentModel {
 
     private PredictionService predictionService;
 
-    private HistoricalDataExcelSheetService historicalDataExcelSheetService;
+    private ExcelWriterService excelWriterService;
+
+    private HistoricalDataService historicalDataService;
 
     @Autowired
     void setFileUploadService(FileUploadService service) {
@@ -44,27 +46,30 @@ public class SettingsController implements SummaryFragmentModel {
     }
 
     @Autowired
-    void setExcelReaderService(ExcelReaderService service) {
-        excelReaderService = service;
+    public void setExcelReaderService(ExcelReaderService excelReaderService) {
+        this.excelReaderService = excelReaderService;
+    }
+    @Autowired
+    public void setExcelWriterService(ExcelWriterService excelWriterService) {
+        this.excelWriterService = excelWriterService;
+    }
+    @Autowired
+    public void setHistoricalDataService(HistoricalDataService historicalDataService) {
+        this.historicalDataService = historicalDataService;
     }
 
     @Autowired
-    void setCandidateService(CandidateService service){
+    void setCandidateService(CandidateService service) {
         this.candidateService = service;
     }
 
     @Autowired
-    void setHistoricalDataExcelSheetService(HistoricalDataExcelSheetService service){
-        this.historicalDataExcelSheetService = service;
-    }
-
-    @Autowired
-    void setPlacesOfferedService(PlacesOfferedService service){
+    void setPlacesOfferedService(PlacesOfferedService service) {
         placesOfferedService = service;
     }
 
     @Autowired
-    void setPredictionService(PredictionService service){
+    void setPredictionService(PredictionService service) {
         this.predictionService = service;
     }
 
@@ -99,7 +104,7 @@ public class SettingsController implements SummaryFragmentModel {
                     HttpStatus.FORBIDDEN);
         }
 
-        if (placesOffered != null){
+        if (placesOffered != null) {
             placesOfferedService.savePlacesOffered(new PlacesOffered(placesOffered));
         }
 
@@ -110,7 +115,7 @@ public class SettingsController implements SummaryFragmentModel {
                 .entrySet()
                 .parallelStream()
                 .filter(streamEntry -> streamEntry.getKey().equals("historical-spread-sheet-file"))
-                .map(streamEntry -> excelReaderService.readHistroicalDataFromExcelSheet(streamEntry.getValue()))
+                .map(streamEntry -> excelReaderService.readHistoricalDataFromExcelSheet(streamEntry.getValue()))
                 .findFirst();
 
         Optional<LinkedList<Candidate>> unconfirmedCurrentCandidates = mapOfStreamsFromFiles
@@ -121,22 +126,19 @@ public class SettingsController implements SummaryFragmentModel {
                 .findFirst();
 
         if (unconfirmedHistoricalData.isPresent() && unconfirmedCurrentCandidates.isPresent()) {
-            System.out.println("HISTORICAL CANDIDATE DATA");
-            System.out.println(unconfirmedHistoricalData.get() + "\n\n\n\n");
-            System.out.println("CURRENT CANDIDATE DATA");
-            System.out.println(unconfirmedCurrentCandidates.get() + "\n\n\n\n");
             model.addAttribute("success", new Response(HttpStatus.OK.value(), "Upload successful",
                     System.currentTimeMillis()));
-            // Here add all excel sheet information which is stored in LinkedList<HistoricalData> INTO Database #Done by Faisal this section
-            LinkedList<HistoricalData> historicalDataLinkedList = unconfirmedHistoricalData.get();
-            historicalDataExcelSheetService.saveAll(historicalDataLinkedList);
-
-            // Here add all excel sheet information which is stored in LinkedList<Candidate> INTO Database #Done by Faisal this section
-            LinkedList<Candidate> candidatesToSaveFromExcel = unconfirmedCurrentCandidates.get();
-            candidateService.saveAll(candidatesToSaveFromExcel);
-
-            setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService, candidateService);
-            return "redirect:/setting";
+            // Here add all excel sheet information which is stored in LinkedList<HistoricalData>
+            // INTO Database #Done by Faisal this section
+            historicalDataService.saveAll(unconfirmedHistoricalData.get());
+            // Here add all excel sheet information which is stored in LinkedList<Candidate>
+            // INTO Database #Done by Faisal this section
+            candidateService.saveAll(unconfirmedCurrentCandidates.get());
+        } else {
+            model.addAttribute("error", new Response(
+                    HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                    "Upload Failure",
+                    System.currentTimeMillis()));
         }
 
         model.addAttribute("success", new Response(HttpStatus.OK.value(), "Upload successful",
@@ -146,16 +148,12 @@ public class SettingsController implements SummaryFragmentModel {
     }
 
     @GetMapping("/createExcelSheet")
-    public void createExcelSheet(HttpServletResponse resopnse) throws IOException {
-        resopnse.setContentType("application/octet-stream");
+    public void createExcelSheet(HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
         String headerKey = "Content-Disposition";
-        String headerValue = "attachement; filename=historicalCandidatesSheet.xlsx";
-
-        resopnse.setHeader(headerKey, headerValue);
-
-        HistoricalDataExcelSheetServiceImpl createHistoricalDataExcelSheet = new HistoricalDataExcelSheetServiceImpl();
-        createHistoricalDataExcelSheet.createExcelSheet(resopnse);
-
+        String headerValue = "attachment; filename=historicalCandidatesSheet.xlsx";
+        response.setHeader(headerKey, headerValue);
+        excelWriterService.createExcelSheet(response);
     }
 
     @Override
@@ -164,7 +162,7 @@ public class SettingsController implements SummaryFragmentModel {
             PredictionService predictionService,
             PlacesOfferedService placesOfferedService,
             CandidateService candidateService) {
-        SummaryFragmentModel.super.setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService,candidateService);
+        SummaryFragmentModel.super.setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService, candidateService);
     }
 
 
