@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.response.Response;
 
-import static uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.security.Constant.AUTHENTICATION_ERROR_MESSAGE;
+import static uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.Constant.AUTHENTICATION_ERROR_MESSAGE;
 
 
 @Controller

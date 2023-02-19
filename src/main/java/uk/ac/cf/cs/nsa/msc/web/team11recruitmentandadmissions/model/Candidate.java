@@ -6,12 +6,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
 @Entity
-public class Candidate {
+public class Candidate implements Serializable {
     private String UCASCardiffCourseCode;
     private String cardiffCourseCode;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

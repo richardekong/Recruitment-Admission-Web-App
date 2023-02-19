@@ -88,10 +88,12 @@ public class CandidatesController implements SummaryFragmentModel {
             validateRequestThenUpdate(candidateMap, candidateTobeUpdated);
             candidateService.updateCandidate(candidateTobeUpdated);
         }, () -> {
-            model.addAttribute("updateError", new Response(HttpStatus.BAD_REQUEST.value(), "Failed to update this candidate", System.currentTimeMillis()));
+            model.addAttribute("updateError", new Response(HttpStatus.BAD_REQUEST.value(),
+                    "Failed to update this candidate", System.currentTimeMillis()));
             throw new CustomException(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND);
         });
-        model.addAttribute("updateSuccess", new Response(HttpStatus.ACCEPTED.value(), "Update accepted", System.currentTimeMillis()));
+        model.addAttribute("updateSuccess", new Response(HttpStatus.ACCEPTED.value(),
+                "Update accepted", System.currentTimeMillis()));
         return "redirect:/candidates";
     }
 

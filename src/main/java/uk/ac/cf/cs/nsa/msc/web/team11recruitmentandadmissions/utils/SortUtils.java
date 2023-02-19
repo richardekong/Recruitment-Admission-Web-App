@@ -11,6 +11,9 @@ import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.CandidateS
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
+import static uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.Constant.PAGE_SIZE;
+import static uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.Constant.START_PAGE;
+
 public class SortUtils {
 
     public static List<Candidate> sort(Model model, CandidateSortingService sortingService, String sortAttribute, Sort.Direction direction) {
@@ -115,6 +118,6 @@ public class SortUtils {
     }
 
     private static PageRequest createPageAndSortRequest(Sort.Direction direction, String... properties) {
-        return PageRequest.of(0, 100, Sort.by(direction, properties));
+        return PageRequest.of(START_PAGE, PAGE_SIZE, Sort.by(direction, properties));
     }
 }

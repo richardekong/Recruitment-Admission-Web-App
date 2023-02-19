@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.UserService;
 
-import static uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.security.Constant.AUTHENTICATION_ERROR_MESSAGE;
+import static uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.Constant.AUTHENTICATION_ERROR_MESSAGE;
 
 @Component
 public class WebAppAuthenticationProvider implements AuthenticationProvider {

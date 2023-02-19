@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.Constant.PAGE_SIZE;
+import static uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.Constant.START_PAGE;
+
 public class SearchUtils {
 
     public static List<Candidate> search(
@@ -98,7 +101,7 @@ public class SearchUtils {
             Sort sort) {
         Slice<Candidate> sliceOfCandidates = new SliceImpl<>(List.of());
         pageableAtomicReference.set(
-                PageRequest.of(0, 10, isAscending ? sort.ascending() : sort.descending())
+                PageRequest.of(START_PAGE, PAGE_SIZE, isAscending ? sort.ascending() : sort.descending())
         );
         switch (entry.getKey()) {
             case "studentNo":
