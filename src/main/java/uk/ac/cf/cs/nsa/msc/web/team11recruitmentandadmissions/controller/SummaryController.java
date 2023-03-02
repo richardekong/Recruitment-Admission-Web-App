@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.Candidate;
 import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.model.PlacesOffered;
-import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.CandidateService;
-import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.ExcelExporterServiceImpl;
-import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.PlacesOfferedService;
-import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.PredictionService;
+import uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions.service.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -19,27 +16,25 @@ import java.util.List;
 public class SummaryController {
     private CandidateService candidateService;
 
+    private ExcelWriterService excelWriterService;
+
 
     @Autowired
     void setCandidateService(CandidateService service) {
         this.candidateService = service;
     }
+    @Autowired
+    public void setExcelWriterService(ExcelWriterService excelWriterService) {
+        this.excelWriterService = excelWriterService;
+    }
 
-    @GetMapping("/export")
+    @GetMapping("/summary/download_excel")
     public void exportDataIntoExcelSheet(HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
         String headerKey = "Content-Disposition";
-        String headerValue = "attachement; filename=candidates.xlsx";
-
+        String headerValue = "attachment; filename=candidates.xlsx";
         response.setHeader(headerKey, headerValue);
-
-        List<Candidate> candidateList = candidateService.findAll();
-        ExcelExporterServiceImpl excelExporterService = new ExcelExporterServiceImpl(candidateList);
-        excelExporterService.export(response);
-
+        excelWriterService.createExcelSheet(response, candidateService.findAll());
     }
-
-
-
 
 }

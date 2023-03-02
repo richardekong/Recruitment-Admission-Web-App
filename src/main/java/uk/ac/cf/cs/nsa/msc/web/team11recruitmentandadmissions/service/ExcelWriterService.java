@@ -8,5 +8,5 @@ import java.util.LinkedList;
 import java.util.List;
 
 public interface ExcelWriterService {
-    boolean createExcelSheet(HttpServletResponse response) throws IOException;
+    <T> boolean createExcelSheet(HttpServletResponse response, List<T> data) throws IOException;
 }

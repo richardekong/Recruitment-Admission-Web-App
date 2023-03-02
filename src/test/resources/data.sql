@@ -178,15 +178,15 @@ values
      '',
      0);
 
-insert into `user`(username, password, user_role) values ('Richard','password','USER');
+insert into `managed_user`(username, password, user_role) values ('Richard','password','USER');
 
-insert into `user`(username, password, user_role) values ('Faisal','password','USER');
+insert into `managed_user`(username, password, user_role) values ('Faisal','password','USER');
 
-insert into `user`(username, password, user_role) values ('Bhatt','password','USER');
+insert into `managed_user`(username, password, user_role) values ('Bhatt','password','USER');
 
-insert into `user`(username, password, user_role) values ('Yinzou','password','USER');
+insert into `managed_user`(username, password, user_role) values ('Yinzou','password','USER');
 
-insert into `user`(username, password, user_role) values ('Yibo','password','USER');
+insert into `managed_user`(username, password, user_role) values ('Yibo','password','USER');
 
-insert into `user`(username, password, user_role) values ('Admin','password','ADMIN');
+insert into `managed_user`(username, password, user_role) values ('Admin','password','ADMIN');
 

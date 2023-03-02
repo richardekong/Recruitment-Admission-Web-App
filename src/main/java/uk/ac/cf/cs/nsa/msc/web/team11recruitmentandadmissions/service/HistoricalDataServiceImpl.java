@@ -38,4 +38,8 @@ public class HistoricalDataServiceImpl implements HistoricalDataService {
         return repository.saveAll(unsavedHistoricalData);
     }
 
+    @Override
+    public List<HistoricalData> findAll() {
+        return repository.findAll();
+    }
 }

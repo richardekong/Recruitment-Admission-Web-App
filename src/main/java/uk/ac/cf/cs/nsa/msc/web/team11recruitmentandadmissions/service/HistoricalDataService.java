@@ -13,4 +13,6 @@ public interface HistoricalDataService {
 
     List<HistoricalData> saveAll(LinkedList<HistoricalData> historicalData);
 
+    List<HistoricalData> findAll();
+
 }

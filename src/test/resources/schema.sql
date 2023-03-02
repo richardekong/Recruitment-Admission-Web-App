@@ -1,7 +1,7 @@
 drop table if exists `candidate`;
 drop table if exists `historical_data`;
 drop table if exists `places_offered`;
-drop table if exists `user`;
+drop table if exists `managed_user`;
 
 create table `candidate`(
                             student_no varchar(255) primary key,
@@ -62,7 +62,7 @@ create table `places_offered` (
                                   places_offered int
 );
 
-create table `user` (
+create table `managed_user` (
                         uid int AUTO_INCREMENT primary key,
                         username varchar(30) unique,
                         password varchar(255),

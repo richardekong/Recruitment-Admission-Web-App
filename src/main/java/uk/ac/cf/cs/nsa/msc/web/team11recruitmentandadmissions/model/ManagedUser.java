@@ -4,25 +4,23 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 
-@Entity(name = "user")
+@Entity(name = "managed_user")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"uid","username"}))
-public class ManageUser implements Serializable {
+public class ManagedUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long uid;
-
     private String username;
 
     private String password;
     private String userRole;
 
 
-    public ManageUser() {
+    public ManagedUser() {
 
     }
 
-    public ManageUser(Long uid, String username, String password, String userRole) {
-        this.uid = uid;
+    public ManagedUser(String username, String password, String userRole) {
         this.username = username;
         this.password = password;
         this.userRole = userRole;

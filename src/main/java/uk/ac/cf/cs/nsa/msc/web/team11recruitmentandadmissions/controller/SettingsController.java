@@ -147,13 +147,13 @@ public class SettingsController implements SummaryFragmentModel {
         return "redirect:/settings";
     }
 
-    @GetMapping("/createExcelSheet")
+    @GetMapping("/download_excel")
     public void createExcelSheet(HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=historicalCandidatesSheet.xlsx";
         response.setHeader(headerKey, headerValue);
-        excelWriterService.createExcelSheet(response);
+        excelWriterService.createExcelSheet(response, historicalDataService.findAll());
     }
 
     @Override

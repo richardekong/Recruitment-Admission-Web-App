@@ -26,7 +26,6 @@ public class LoginController {
         }
     }
 
-
     @RequestMapping("/login-error")
     public String loginError(Model model) {
         // login failed
