@@ -2,12 +2,12 @@ package uk.ac.cf.cs.nsa.msc.web.team11recruitmentandadmissions;
 
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -46,6 +46,7 @@ class FullContainerTest {
     @Autowired
     UserRepository userRepository;
 
+    @Order(1)
     @DisplayName("Verify that a request get the register page will succeed with 200 (ok) response")
     @Test
     public void verifyRequestForRegisterPage() throws Exception {
@@ -55,6 +56,19 @@ class FullContainerTest {
                 .andExpect(status().isOk());
     }
 
+    @Order(2)
+    @DisplayName("Verify that a request to register a new user will succeed with 200 (ok) response")
+    @Test
+    public void verifyRequestToRegisterNewUser() throws Exception {
+        mockMvc.perform(post("/register-save")
+                        .contentType(MediaType.TEXT_HTML)
+                        .with(csrf())
+                        .param("username", "Scotty560")
+                        .param("password", "password"))
+                .andExpect(status().isOk());
+    }
+
+    @Order(3)
     @DisplayName("Verify that a request get the error-register " +
             "page will redirect user to register page")
     @Test
@@ -68,17 +82,7 @@ class FullContainerTest {
     }
 
 
-    @DisplayName("Verify that a request to register a new user will succeed with 200 (ok) response")
-    @Test
-    public void verifyRequestToRegisterNewUser() throws Exception {
-        mockMvc.perform(post("/register-save")
-                        .contentType(MediaType.TEXT_HTML)
-                        .with(csrf())
-                        .param("username", "Scotty")
-                        .param("password", "Password"))
-                .andExpect(status().isOk());
-    }
-
+    @Order(4)
     @DisplayName("Verify that a request to register a new user with complete" +
             "credentials will fail with 400 (error) response")
     @Test
@@ -94,6 +98,7 @@ class FullContainerTest {
         actions2.andExpect(status().is4xxClientError());
     }
 
+    @Order(5)
     @DisplayName("Verify that a request to the login page contain Login text")
     @Test
     public void verifyRequestForLoginPage() throws Exception {
@@ -105,6 +110,9 @@ class FullContainerTest {
                 .andExpect(content().string(containsStringIgnoringCase("password")));
     }
 
+
+
+    @Order(6)
     @WithMockUser(username = "Admin", password = "password", roles = "ADMIN")
     @DisplayName("Verify that request to view admin page is successful")
     @Test
@@ -122,67 +130,8 @@ class FullContainerTest {
                 .andExpect(content().string(stringContainsInOrder(expectedUsers)));
     }
 
-    @WithMockUser(username = "Admin", password = "password", roles = "ADMIN")
-    @DisplayName("Verify that request to update user is successful")
-    @Test
-    public void verifyThatRequestToUpdateUserIsSuccessful() throws Exception {
-        mockMvc.perform(post("/admin").with(csrf())
-                        .contentType(MediaType.TEXT_HTML)
-                        .param("uid", "1")
-                        .param("username", "dave")
-                        .param("roles", "ADMIN")
-                        .param("action", "update"))
-                .andExpect(status().is3xxRedirection());
-        ManagedUser user = userRepository.findById(1L).orElse(new ManagedUser());
-        assertEquals(user.getUserRole(), "ADMIN");
-        assertEquals(user.getUsername(), "dave");
-    }
 
-    @DisplayName("Verify that an unauthorized request to update a user will respond with 302 redirect status")
-    @Test
-    public void verifyThatUnAuthorizedRequestToUpdateUserWillReturnError404() throws Exception {
-        mockMvc.perform(post("/admin")
-                        .with(csrf())
-                        .contentType(MediaType.TEXT_HTML)
-                        .param("uid", "1")
-                        .param("username", "Richard")
-                        .param("roles", "USER")
-                        .param("action", "update"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(content().string(blankString()));
-    }
-
-    @WithMockUser(username = "Admin", password = "password", roles = "ADMIN")
-    @DisplayName("Verify that request to delete user is successful")
-    @Test
-    public void verifyThatRequestToDeleteUserIsSuccessful() throws Exception {
-        mockMvc.perform(post("/admin").with(csrf())
-                        .contentType(MediaType.TEXT_HTML)
-                        .param("uid", "1")
-                        .param("username", "Richard")
-                        .param("roles", "USER")
-                        .param("action", "delete"))
-                .andExpect(status().is3xxRedirection());
-        ManagedUser user = userRepository.findById(1L)
-                .orElse(new ManagedUser());
-        assertNull(user.getUserRole());
-        assertNull(user.getUsername());
-    }
-
-    @DisplayName("Verify that an unauthorized request to delete a user will respond with 302 redirect status")
-    @Test
-    public void verifyThatUnAuthorizedRequestToDeleteUserWillReturnError404() throws Exception {
-        mockMvc.perform(post("/admin")
-                        .with(csrf())
-                        .contentType(MediaType.TEXT_HTML)
-                        .param("uid", "1")
-                        .param("username", "Richard")
-                        .param("roles", "USER")
-                        .param("action", "delete"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(content().string(blankString()));
-    }
-
+    @Order(7)
     @DisplayName("Verify that an unauthorized user is redirected to the login page")
     @Test
     public void verifyUnAuthorizedRequestIsRedirectedToLoginPage() throws Exception {
@@ -196,6 +145,7 @@ class FullContainerTest {
         assertEquals(redirectedUrl, "http://localhost/login");
     }
 
+    @Order(8)
     @DisplayName("Verify that a request to update a candidate is successful")
     @WithMockUser(username = "Richard", password = "password", roles = "USER")
     @Test
@@ -218,6 +168,7 @@ class FullContainerTest {
                 .andExpect(content().string(containsString("60")));
     }
 
+    @Order(9)
     @WithMockUser(username = "Yibo", password = "password", roles = "USER")
     @DisplayName("Verify that a request to search a candidate is successful")
     @Test
@@ -233,6 +184,7 @@ class FullContainerTest {
     }
 
 
+    @Order(10)
     @WithMockUser(username = "Richard", password = "password", roles = "USER")
     @DisplayName("Verify that a request to sort candidates is successful")
     @Test
@@ -251,6 +203,7 @@ class FullContainerTest {
                 .andExpect(content().string(stringContainsInOrder(expectedSurnames)));
     }
 
+    @Order(11)
     @DisplayName("Verify that a request to the settings page will produce" +
             "response 200 (ok) with a template containing specific texts")
     @WithMockUser(username = "Faisal", password = "password", roles = "USER")
@@ -265,6 +218,8 @@ class FullContainerTest {
                 .andExpect(content().string(containsString("Submit")));
     }
 
+
+    @Order(12)
     @DisplayName("Verify a request to the candidate page will have response 200 (ok) with" +
             "a template containing 'Richard'")
     @WithMockUser(username = "Faisal", password = "password", roles = "USER")
@@ -277,6 +232,7 @@ class FullContainerTest {
                 .andExpect(content().string(containsString("Richard")));
     }
 
+    @Order(13)
     @DisplayName("Verify that a request to view a candidate's profile page " +
             "produces a 200 (ok) response with a template containing specific candidate properties")
     @WithMockUser(username = "Bhatt", password = "password", roles = "USER")
@@ -289,6 +245,73 @@ class FullContainerTest {
                 .andExpect(content().string(containsStringIgnoringCase("Richard")))
                 .andExpect(content().string(containsStringIgnoringCase("Ekong")))
                 .andExpect(content().string(containsString("B720")));
+    }
+
+
+    @Order(14)
+    @WithMockUser(username = "Admin", password = "password", roles = "ADMIN")
+    @DisplayName("Verify that request to update user is successful")
+    @Test
+    public void verifyThatRequestToUpdateUserIsSuccessful() throws Exception {
+        mockMvc.perform(post("/admin").with(csrf())
+                        .contentType(MediaType.TEXT_HTML)
+                        .param("uid", "1")
+                        .param("username", "dave")
+                        .param("roles", "USER")
+                        .param("action", "update"))
+                .andExpect(status().is3xxRedirection());
+        ManagedUser user = userRepository.findById(1L).orElse(new ManagedUser());
+        assertEquals(user.getUserRole(), "USER");
+        assertEquals(user.getUsername(), "dave");
+    }
+
+    @Order(15)
+    @DisplayName("Verify that an unauthorized request to update a user will respond with 302 redirect status")
+    @Test
+    public void verifyThatUnAuthorizedRequestToUpdateUserWillReturnError404() throws Exception {
+        mockMvc.perform(post("/admin")
+                        .with(csrf())
+                        .contentType(MediaType.TEXT_HTML)
+                        .param("uid", "1")
+                        .param("username", "Richard")
+                        .param("roles", "USER")
+                        .param("action", "update"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(content().string(blankString()));
+    }
+
+
+    @Order(16)
+    @DisplayName("Verify that an unauthorized request to delete a user will respond with 302 redirect status")
+    @Test
+    public void verifyThatUnAuthorizedRequestToDeleteUserWillReturnError404() throws Exception {
+        mockMvc.perform(post("/admin")
+                        .with(csrf())
+                        .contentType(MediaType.TEXT_HTML)
+                        .param("uid", "1")
+                        .param("username", "Richard")
+                        .param("roles", "USER")
+                        .param("action", "delete"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(content().string(blankString()));
+    }
+
+    @Order(17)
+    @WithMockUser(username = "Admin", password = "password", roles = "ADMIN")
+    @DisplayName("Verify that request to delete user is successful")
+    @Test
+    public void verifyThatRequestToDeleteUserIsSuccessful() throws Exception {
+        mockMvc.perform(post("/admin").with(csrf())
+                        .contentType(MediaType.TEXT_HTML)
+                        .param("uid", "1")
+                        .param("username", "Richard")
+                        .param("roles", "USER")
+                        .param("action", "delete"))
+                .andExpect(status().is3xxRedirection());
+        ManagedUser user = userRepository.findById(1L)
+                .orElse(new ManagedUser());
+        assertNull(user.getUserRole());
+        assertNull(user.getUsername());
     }
 
 
