@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
+    <link rel="icon" th:href="@{/favicon/favicon.png}" sizes="16x16" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
@@ -19,7 +20,7 @@
             crossorigin="anonymous"></script>
     <!--The links above are needed to make bootstrap work-->
 
-    <link rel="stylesheet" th:href="@{css/css.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 
 </head>
 
@@ -32,7 +33,7 @@ the right has all the buttons-->
 <br>
 <div class="row">
     <div class="main-content p-5">
-        <div class="row">
+        <div id="main-content-left" class="row">
             <p class="message alert alert-success text-center col-xs-12 col-sm-12 col-md-12 col-lg-6" th:if="${success != null}">
                 <span th:text="${success.getMessage()}"></span>
             </p>
@@ -40,7 +41,6 @@ the right has all the buttons-->
                 <span th:text="${error.getMessage()}"></span>
             </p>
             <br>
-
             <br>
             <form th:action="@{/settings}" th:method="POST" enctype="multipart/form-data">
                 <div class="row p-3">
@@ -98,42 +98,7 @@ the right has all the buttons-->
 </div>
 
 <footer th:insert="footer :: footer"></footer>
-
-<!--The code searches for items in the 'upload' class. It then says that whenever
-one clicks one these items. The element 'input' with the type of input being a file.
-This is how one can browse files from their desktop, while also maintaining the
-website's aesthetic.-->
-<!--This javascript code below searches for all items in the class 'upload' and adds
-ensures that whenever a user clicks on the button, they can browse a file. By
-simply adding the 'input' tag above, the site would not look as nice as it would mess
-with the sizing and write "Browse...No File Selected".-->
-<script>
-    const historicalBrowseButton = document.querySelector("#browse1");
-    const currentBrowseButton = document.querySelector("#browse2");
-    const historicalStyleSheetName = document.querySelector("#historical-spread-sheet-name");
-    const currentStyleSheetName = document.querySelector("#current-spread-sheet-name");
-    const historicalFileInput = document.querySelector("#historical-spread-sheet-file");
-    const currentFileInput = document.querySelector("#current-spread-sheet-file");
-    const messageSpans = document.querySelectorAll(".message");
-
-    historicalBrowseButton.addEventListener("click", evt =>{
-        historicalFileInput.click();
-        historicalFileInput.onchange = () => historicalStyleSheetName.textContent = historicalFileInput.files[0].name;
-        evt.preventDefault();
-    });
-
-    currentBrowseButton.addEventListener("click", evt =>{
-        currentFileInput.click();
-        currentFileInput.onchange = () => currentStyleSheetName.textContent = currentFileInput.files[0].name;
-        evt.preventDefault();
-    });
-
-    messageSpans.forEach(span => {
-        span.style.cursor = "pointer";
-        span.addEventListener("click", evt => evt.target.style.display = "none")
-    });
-
-</script>
+<script th:src="@{/script/script.js}"></script>
 </body>
 
 </html>

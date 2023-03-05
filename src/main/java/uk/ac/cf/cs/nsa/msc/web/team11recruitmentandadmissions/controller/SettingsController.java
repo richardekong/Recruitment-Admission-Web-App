@@ -77,7 +77,7 @@ public class SettingsController implements SummaryFragmentModel {
     @GetMapping("/settings")
     public String showSettingsPage(Model model) {
         setModelsAttributesForSummaryFragment(model, predictionService, placesOfferedService, candidateService);
-        return "Settings";
+        return "settings";
     }
 
     @ModelAttribute("Response")

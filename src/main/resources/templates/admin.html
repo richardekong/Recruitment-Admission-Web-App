@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" th:href="@{/favicon/favicon.png}" sizes="16x16" type="image/png">
     <!-- Bootstrap libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -18,7 +19,7 @@
             crossorigin="anonymous"></script>
 
     <title>Admin</title>
-    <link rel="stylesheet" th:href="@{css/css.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <style>
 
         :root {
@@ -174,9 +175,6 @@
             cursor: pointer;
         }
 
-        input:required:invalid, input:focus:invalid {
-
-        }
     </style>
 </head>
 <body>
@@ -200,7 +198,7 @@
        th:if="${deleteSuccess != null}">
         <span th:text="${deleteSuccess.getMessage()}"></span>
     </p>
-    <div class="row">
+    <div class="row" id="main-content-left">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9  p-5">
             <div class="container tbl-container">
                 <form>
@@ -264,29 +262,13 @@
             </div>
         </div>
     </div>
-    <aside class="col-lg-4"
+    <aside class="col-lg-4 xs-mobile-mode"
            th:replace="summary_bar::summary_bar(offersRecommended = ${offersRecommended}, placesOffered=${placesOffered}, offersSent=${offersSent})"></aside>
     </div>
 </main>
 
 <!-- add a reusable footer -->
 <footer th:insert="footer :: footer"></footer>
-<script th:inline="javascript">
-    const users = /*[[${users}]]*/ 'default users'
-    const buttons = document.querySelectorAll(".action-btn");
-    const selectBoxes = document.querySelectorAll(".action-select");
-    const messageBoxes = document.querySelectorAll(".message");
-
-    messageBoxes.forEach(box => box.addEventListener("click", (_e) => box.style.display = "none"));
-    selectBoxes.forEach(box => {
-        box.addEventListener("change", _evt => {
-            let index = [...selectBoxes].indexOf(box);
-            let actionBtn = [...buttons][index]
-            let selectValue = box.value;
-            actionBtn.style.background = (selectValue === "delete") ? "#f00" : "#214ea3";
-        });
-    });
-
-</script>
+<script th:src="@{/script/script.js}"></script>
 </body>
 </html>

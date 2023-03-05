@@ -1,0 +1,178 @@
+/*header style rules*/
+#header {
+    background-color: #2b364c;
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: fit-content;
+}
+
+#header-text{
+    color:#fff;
+    font-weight: bolder;
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+#summary-display-toggle {
+    width: 10%;
+    position: absolute;
+    right: -6%;
+    top: 90%;
+    margin: 1px;
+    display: none;
+}
+
+#logout-form {
+    margin-top: 7px;
+}
+
+/*main content style rules*/
+.main-content {
+    background-color: #f6f6f6;
+    border: 1px solid #fff;
+    margin-top: 80px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100vh;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/*aside style rule*/
+#aside {
+    background-color: #f6f6f6;
+    border: 1px solid #fff;
+    position: absolute;
+    right: 0;
+    top: 20%;
+    width: 100vw;
+    height: 100vh;
+}
+
+
+/*footer style rules*/
+#footer {
+    color: #fff;
+    background-color: #2b364c;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    height: 10%;
+}
+
+.message {
+    cursor: pointer;
+}
+
+/*for smaller screens or devices */
+@media only screen and (max-width: 600px) {
+
+    #header-text{
+        color:#fff;font-size: 12px;
+        font-weight: bolder;
+        margin-left: 10px;
+    }
+
+    #summary-display-toggle {
+        display: block;
+    }
+
+    #header, table, select, input, button, #aside {
+        font-size: xx-small;
+    }
+
+    .sx-mobile-aside{
+        background-color: #f6f6f6;
+        position:static;
+        width: 100vw !important;
+        height: 100vh;
+        display: none;
+    }
+
+    #aside {
+        display: none;
+    }
+
+}
+
+@media only screen and (orientation: landscape) and (max-width: 1024px) and (max-height: 600px ) {
+    #header {
+        height: fit-content;
+    }
+
+    #header-text{
+        color:#fff;font-size: 12px;
+        margin-left: 10px;
+    }
+
+    #logout-form {
+        margin-left: -5px;
+    }
+
+    .main-content {
+        margin-top: 230px;
+        max-width: 100vw;
+        margin-bottom: 0;
+        overflow: auto;
+    }
+
+    #main-content-left {
+        width: 80%;
+    }
+
+    #summary-display-toggle {
+        display: none;
+    }
+
+    #aside {
+        margin-top: 159px;
+        display: block !important;
+    }
+
+    #header, table, select, input, button,
+    #aside, #footer {
+        font-size: x-small;
+    }
+
+    .summary-info-view{
+        width: 20%;
+    }
+
+    #excel-icon{
+        width: 10%;
+    }
+
+    #excel-icon-holder{
+        width: 100%;
+        padding: 20px;
+        height: fit-content;
+    }
+}
+
+
+@media only screen and (orientation: portrait) {
+    #header {
+        height: fit-content;
+    }
+
+    header #logout-form{
+        margin-left: -5px;
+    }
+
+    .main-content {
+        margin-top: 210px;
+        max-width: 100vh;
+        margin-bottom: 0;
+        overflow: auto;
+    }
+
+    #aside {
+        background-color: #f6f6f6;
+        position:static;
+        width: 100vw !important;
+        height: 100vh;
+        display: none;
+    }
+
+}
