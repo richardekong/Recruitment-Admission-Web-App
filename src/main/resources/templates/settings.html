@@ -21,6 +21,11 @@
     <!--The links above are needed to make bootstrap work-->
 
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        .row{
+            margin: 0;
+        }
+    </style>
 
 </head>
 
@@ -54,7 +59,7 @@ the right has all the buttons-->
                 </div>
                 <div class="row p-3">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        Upload past Application data:
+                        Upload Previous Admission Records:
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <button id="browse1" type="button" class="btn btn-primary browse" title="Browse Files" style="width:80px;">Browse</button>
@@ -66,7 +71,7 @@ the right has all the buttons-->
                 </div>
                 <div class="row p-3">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        Upload current Application data:
+                        Upload current UCAS Admission Record:
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <button id="browse2" type="button" class="btn btn-primary browse" title="Browse Files" style="width:80px;">Browse</button>

@@ -60,12 +60,13 @@ class FullContainerTest {
     @DisplayName("Verify that a request to register a new user will succeed with 200 (ok) response")
     @Test
     public void verifyRequestToRegisterNewUser() throws Exception {
+
         mockMvc.perform(post("/register-save")
                         .contentType(MediaType.TEXT_HTML)
                         .with(csrf())
-                        .param("username", "Scotty560")
+                        .param("username", "fakeUser")
                         .param("password", "password"))
-                .andExpect(status().isOk());
+                .andExpect(status().is3xxRedirection());
     }
 
     @Order(3)
@@ -105,7 +106,7 @@ class FullContainerTest {
         mockMvc.perform(get("/login")
                         .contentType(MediaType.TEXT_HTML))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Log in")))
+                .andExpect(content().string(containsString("Login")))
                 .andExpect(content().string(containsStringIgnoringCase("username")))
                 .andExpect(content().string(containsStringIgnoringCase("password")));
     }
@@ -312,6 +313,24 @@ class FullContainerTest {
                 .orElse(new ManagedUser());
         assertNull(user.getUserRole());
         assertNull(user.getUsername());
+    }
+
+    @Order(18)
+    @WithMockUser(username = "Richard", password = "password",roles = "USER")
+    @DisplayName("Verify that a request to logout will redirect the user to the login page with a 3xx status code")
+    @Test
+    public void verifyThatRequestToLogoutIsSuccessful() throws Exception{
+
+        String redirectedURL = mockMvc.perform(post("/logout")
+                .contentType(MediaType.TEXT_HTML)
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andReturn()
+                .getResponse()
+                .getRedirectedUrl();
+        assertEquals(redirectedURL, "/login");
+
+
     }
 
 
