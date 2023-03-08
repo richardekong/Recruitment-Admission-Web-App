@@ -5,7 +5,6 @@ import java.io.Serializable;
 
 
 @Entity(name = "managed_user")
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"uid","username"}))
 public class ManagedUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
