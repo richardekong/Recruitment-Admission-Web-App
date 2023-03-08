@@ -40,8 +40,7 @@
                 <label for="username">Username:</label>
                 <input id="username" type="text" name="username"
                        pattern="^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$"
-                       title="Username must contain between 8 and 20 characters
-                       , with '_' or '.' at the beginning or end"
+                       title="Username must contain between 8 and 20 characters, with '_' or '.' at the beginning or end"
                        class="form-control col-xs-12 col-sm-12 col-md-12 col-lg-12"
                        aria-describedby="inputGroup-sizing-default" placeholder="Username"
                        required aria-required="true">
@@ -53,7 +52,7 @@
                        aria-describedby="inputGroup-sizing-default" placeholder="Password"
                        required aria-required="true">
             </div>
-            <button class="btn btn-primary reg-login-btn" type="submit">Sign Up</button>
+            <button id="signup-btn" class="btn btn-primary reg-login-btn" type="submit">Sign Up</button>
             <p class="register-label">
                 <span>Already have an account?</span>
                 <a href="/login">Back to login!</a>

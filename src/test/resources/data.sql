@@ -1,4 +1,5 @@
 
+
 insert into `candidate`
 (student_no,
  dbscert_number,

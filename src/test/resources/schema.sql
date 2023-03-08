@@ -63,7 +63,7 @@ create table `places_offered` (
 );
 
 create table `managed_user` (
-                        uid int AUTO_INCREMENT primary key,
+                        uid int auto_increment primary key,
                         username varchar(30) unique,
                         password varchar(255),
                         user_role varchar(10)

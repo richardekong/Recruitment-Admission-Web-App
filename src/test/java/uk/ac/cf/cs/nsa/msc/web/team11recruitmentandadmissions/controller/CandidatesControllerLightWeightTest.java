@@ -104,6 +104,7 @@ public class CandidatesControllerLightWeightTest {
                 //then: expect 302 redirection request back to candidate page
                 .andExpect(status().is3xxRedirection());
         //then: verify that the most recent changes were made
+        given(candidateService.findAll()).willReturn(List.of(candidateToUpdate));
         mockMvc.perform(get("/candidates")
                         .with(csrf()))
                 .andExpect(content().string(containsString("40")))
