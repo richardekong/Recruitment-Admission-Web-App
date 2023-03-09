@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="icon" th:href="@{/favicon/favicon.png}" sizes="16x16" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+            crossorigin="anonymous"></script>
+    <!--The links above are needed to make bootstrap work-->
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        .row{
+            margin: 0;
+        }
+    </style>
+
+</head>
+
+<!--Using bootstrap the page has been divided into 3 rows and each row has
+2 columns. The column on the left contains the text we need. While the column on
+the right has all the buttons-->
+<body>
+<!-- Add header to the top of this page -->
+<header th:insert="header::header"></header>
+<br>
+<div class="row">
+    <div class="main-content p-5">
+        <div id="main-content-left" class="row">
+            <p class="message alert alert-success text-center col-xs-12 col-sm-12 col-md-12 col-lg-6" th:if="${success != null}">
+                <span th:text="${success.getMessage()}"></span>
+            </p>
+            <p class="message alert alert-danger text-center col-xs-12 col-sm-12 col-md-12 col-lg-6" th:if="${error != null}">
+                <span th:text="${error.getMessage()}"></span>
+            </p>
+            <br>
+            <br>
+            <form th:action="@{/settings}" th:method="POST" enctype="multipart/form-data">
+                <div class="row p-3">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        Download Historical Data Template:
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <a th:href="@{/download_excel}" style=""><img th:src="@{/images/Excel-icon.png}" src="/static/images/Excel-icon.png" alt="" style=" width: 80px; height: 50px;">
+                        </a>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        Upload Previous Admission Records:
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <button id="browse1" type="button" class="btn btn-primary browse" title="Browse Files" style="width:80px;">Browse</button>
+                        <br>
+                        <span id="historical-spread-sheet-name"></span>
+                        <br>
+                        <input id="historical-spread-sheet-file" name="historical-spread-sheet-file" type="file" accept=".xls, .xlsx" required style="display: none;">
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        Upload current UCAS Admission Record:
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <button id="browse2" type="button" class="btn btn-primary browse" title="Browse Files" style="width:80px;">Browse</button>
+                        <br>
+                        <span id="current-spread-sheet-name"></span>
+                        <br>
+                        <input id="current-spread-sheet-file" name="current-spread-sheet-file" required type="file" accept=".xls, .xlsx" style="display: none;">
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label for = "places">Enter the number of places offered this year:</label>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2">
+                        <input id = "places" name="placesOffered" type="number" class="form-control p-1" required style="width:80px;">
+                    </div>
+                </div>
+
+                <div class="row p-5">
+                    <div id="empty" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2">
+                        <button class="btn btn-primary" type="submit" title="Configure your settings" style="width:80px;">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <aside class="col-lg-4" th:replace="summary_bar::summary_bar(offersRecommended = ${offersRecommended}, placesOffered=${placesOffered}, offersSent=${offersSent})"></aside>
+</div>
+
+<footer th:insert="footer :: footer"></footer>
+<script th:src="@{/script/script.js}"></script>
+</body>
+
+</html>
