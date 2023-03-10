@@ -43,7 +43,7 @@ on your terminal from the project root directory
 - run the project by typing  **gradle bootrun**
 on your terminal from the project root directory
 
-##How to set up this application for use
+## How to set up this application for use
 - After building and running this application
 - Go to your chrome browser and type 'http://localhost:8080' on your browser's
 address input text
