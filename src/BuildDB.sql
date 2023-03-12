@@ -1,14 +1,14 @@
 
-CREATE DATABASE `c22106964_recruitment_admission_db` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE c22106964_recruitment_admission_db /*!40100 DEFAULT CHARACTER SET latin1 */;
 
-USE `c22106964_recruitment_admission_db`;
+USE c22106964_recruitment_admission_db;
 
 DROP TABLE IF EXISTS `candidate`;
 DROP TABLE IF EXISTS `historical_data`;
 DROP TABLE IF EXISTS `places_offered`;
 DROP TABLE IF EXISTS `managed_user`;
 
-CREATE TABLE `candidate`(
+CREATE TABLE candidate(
                             student_no varchar(255) primary key,
                             dbscert_number varchar(255),
                             fastatus varchar(255),
@@ -54,7 +54,7 @@ CREATE TABLE `candidate`(
                             welsh_speaker int
 );
 
-CREATE TABLE `historical_data` (
+CREATE TABLE historical_data (
                                    academic_year int primary key,
                                    funded_places int,
                                    offers_made int,
@@ -62,19 +62,19 @@ CREATE TABLE `historical_data` (
 );
 
 
-CREATE TABLE `places_offered` (
+CREATE TABLE places_offered (
                                   id int primary key,
                                   places_offered int
 );
 
-CREATE TABLE `managed_user` (
+CREATE TABLE managed_user (
                                 uid int auto_increment primary key,
                                 username varchar(30) unique,
                                 password varchar(255),
                                 user_role varchar(10)
 );
 
-INSERT INTO `candidate`
+INSERT INTO candidate
 (student_no,
  dbscert_number,
  fastatus,
@@ -164,7 +164,7 @@ VALUES
      0);
 
 
-INSERT INTO `candidate`
+INSERT INTO candidate
 (student_no,
  dbscert_number,
  fastatus,
@@ -253,17 +253,17 @@ VALUES
      '',
      0);
 
-INSERT INTO `managed_user`(username, password, user_role) values ('Richard','password','USER');
+INSERT INTO managed_user(username, password, user_role) values ('Richard','password','USER');
 
-INSERT INTO `managed_user`(username, password, user_role) values ('Faisal','password','USER');
+INSERT INTO managed_user(username, password, user_role) values ('Faisal','password','USER');
 
-INSERT INTO `managed_user`(username, password, user_role) values ('Bhatt','password','USER');
+INSERT INTO managed_user(username, password, user_role) values ('Bhatt','password','USER');
 
-INSERT INTO `managed_user`(username, password, user_role) values ('Yinzou','password','USER');
+INSERT INTO managed_user(username, password, user_role) values ('Yinzou','password','USER');
 
-INSERT INTO `managed_user`(username, password, user_role) values ('Yibo','password','USER');
+INSERT INTO managed_user(username, password, user_role) values ('Yibo','password','USER');
 
-INSERT INTO `managed_user`(username, password, user_role) values ('Admin','password','ADMIN');
+INSERT INTO managed_user(username, password, user_role) values ('Admin','password','ADMIN');
 
 
 
