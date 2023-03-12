@@ -3,10 +3,10 @@ CREATE DATABASE c22106964_recruitment_admission_db /*!40100 DEFAULT CHARACTER SE
 
 USE c22106964_recruitment_admission_db;
 
-DROP TABLE IF EXISTS `candidate`;
-DROP TABLE IF EXISTS `historical_data`;
-DROP TABLE IF EXISTS `places_offered`;
-DROP TABLE IF EXISTS `managed_user`;
+DROP TABLE IF EXISTS candidate;
+DROP TABLE IF EXISTS historical_data;
+DROP TABLE IF EXISTS places_offered;
+DROP TABLE IF EXISTS managed_user;
 
 CREATE TABLE candidate(
                             student_no varchar(255) primary key,
