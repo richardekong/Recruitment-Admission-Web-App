@@ -16,7 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ActiveProfiles("chrometest")
+@ActiveProfiles("browsertest")
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ChromeDriverTest {

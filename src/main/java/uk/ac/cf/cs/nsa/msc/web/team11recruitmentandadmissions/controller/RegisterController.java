@@ -52,6 +52,7 @@ public class RegisterController {
             userToSave.setUsername(username);
             userToSave.setUserRole("USER");
             userToSave.setPassword(bcrypt.encode(password));
+            System.out.println(userToSave);
             userService.insert(userToSave);
             return "redirect:/login";
         } catch (Exception e) {
