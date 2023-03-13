@@ -1,5 +1,5 @@
 
-CREATE DATABASE c22106964_recruitment_admission_db;
+CREATE DATABASE IF NOT EXISTS c22106964_recruitment_admission_db;
 
 USE c22106964_recruitment_admission_db;
 
@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS historical_data;
 DROP TABLE IF EXISTS places_offered;
 DROP TABLE IF EXISTS managed_user;
 
-CREATE TABLE candidate(
+CREATE TABLE IF NOT EXISTS candidate(
                             student_no varchar(255) primary key,
                             dbscert_number varchar(255),
                             fastatus varchar(255),
@@ -54,7 +54,7 @@ CREATE TABLE candidate(
                             welsh_speaker int
 );
 
-CREATE TABLE historical_data (
+CREATE TABLE IF NOT EXISTS historical_data (
                                    academic_year int primary key,
                                    funded_places int,
                                    offers_made int,
@@ -62,12 +62,12 @@ CREATE TABLE historical_data (
 );
 
 
-CREATE TABLE places_offered (
+CREATE TABLE IF NOT EXISTS places_offered (
                                   id int primary key,
                                   places_offered int
 );
 
-CREATE TABLE managed_user (
+CREATE TABLE IF NOT EXISTS managed_user (
                                 uid int auto_increment primary key,
                                 username varchar(30) unique,
                                 password varchar(255),
