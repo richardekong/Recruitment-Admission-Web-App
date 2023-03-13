@@ -3,13 +3,6 @@ CREATE DATABASE c22106964_recruitment_admission_db /*!40100 DEFAULT CHARACTER SE
 
 USE c22106964_recruitment_admission_db;
 
-# CREATE USER IF NOT EXISTS 'c22106964'@localhost IDENTIFIED BY 'P@55w07d4cmt655';
-#
-# GRANT ALL PRIVILEGES ON *.* TO 'c22106964'@localhost IDENTIFIED BY 'P@55w07d4cmt655';
-#
-# FLUSH PRIVILEGES;
-
-
 DROP TABLE IF EXISTS candidate;
 DROP TABLE IF EXISTS historical_data;
 DROP TABLE IF EXISTS places_offered;
