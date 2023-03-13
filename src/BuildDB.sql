@@ -1,5 +1,5 @@
 
-CREATE DATABASE c22106964_recruitment_admission_db /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE c22106964_recruitment_admission_db;
 
 USE c22106964_recruitment_admission_db;
 
