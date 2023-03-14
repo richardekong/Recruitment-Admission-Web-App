@@ -34,7 +34,7 @@ public class ChromeDriverTest {
     @BeforeEach
     void setupTest() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-debugging-port=42227");
+        options.addArguments("--remote-allow-origins=*");
         options.addArguments("--headless");
         webDriver = new ChromeDriver(options);
     }
