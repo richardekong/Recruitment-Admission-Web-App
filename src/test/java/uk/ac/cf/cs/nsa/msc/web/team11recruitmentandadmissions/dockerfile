@@ -1,0 +1,4 @@
+FROM openjdk:11
+EXPOSE 8080
+ADD target/Team11-RecruitmentAndAdmissions.jar Team11-RecruitmentAndAdmissions.jar
+ENTRYPOINT ["java","-jar","/Team11-RecruitmentAndAdmissions.jar"]
