@@ -53,3 +53,14 @@ tasks.named('test') {
 bootJar {
     enabled = true
 }
+
+bootBuildImage{
+    imageName = "richydave/recruitmentwebapp2022:v01"
+    publish = true
+    docker{
+        publishRegistry{
+            username=username
+            password=password
+        }
+    }
+}
