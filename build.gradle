@@ -55,15 +55,23 @@ bootJar {
 }
 
 jib {
+/**
+ * Pass all required values as properties through the commandline, using:
+ * gradle -PdockerTagName=tagName \
+ * -PdockerImage=your-docker-repository \
+ * -PdockerUsername=your-username
+ * -PdockerPassword=your-password \
+ * jib
+ */
     from {
         image = "azul/zulu-openjdk:17-jre"
     }
     to {
-        image = "richydave/recruitmentwebapp2022:v01"
+        image = "${dockerImage}:${dockerTagName}"
 
         auth {
-            username = uname
-            password = pass
+            username = dockerUsername
+            password = dockerPassword
         }
     }
 }
