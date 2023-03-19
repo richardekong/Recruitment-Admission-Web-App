@@ -44,7 +44,6 @@ dependencies {
     testImplementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.8.1'
 
 
-
 }
 
 tasks.named('test') {
@@ -55,18 +54,17 @@ bootJar {
     enabled = true
 }
 
-bootBuildImage{
-    jib{
-        from{
-            image="azul/zulu-openjdk:17-jre"
-        }
-        to{
-            image="richydave/recruitmentwebapp2022:v01"
+jib {
+    from {
+        image = "azul/zulu-openjdk:17-jre"
+    }
+    to {
+        image = "richydave/recruitmentwebapp2022:v01"
 
-            auth{
-                username=uname
-                password=pass
-            }
+        auth {
+            username = uname
+            password = pass
         }
     }
 }
+
