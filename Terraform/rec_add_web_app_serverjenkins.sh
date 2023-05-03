@@ -1,6 +1,6 @@
 #!/usr/bin/bash
-cd /home/rocky
-echo in directory $PWD
+cd /home/rocky || exit
+echo in directory "$PWD"
 
 echo "updating system package"
 sudo dnf update -y
@@ -94,7 +94,7 @@ export PATH=$PATH:/opt/gradle/gradle-7.6/bin
 echo gradle -v
 
 echo "Installing terraform..."
-cd /home/rocky
+cd /home/rocky || exit
 wget https://releases.hashicorp.com/terraform/1.1.5/terraform_1.1.5_linux_amd64.zip
 unzip terraform_1.1.5_linux_amd64.zip
 sudo mv terraform /usr/local/bin/
