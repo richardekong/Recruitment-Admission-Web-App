@@ -27,12 +27,6 @@ required_version = ">= 0.14.0"
     ip_protocol = "tcp"
     cidr        = "0.0.0.0/0"
     }
-    rule {
-    from_port   = 8081
-    to_port     = 8081
-    ip_protocol = "tcp"
-    cidr        = "0.0.0.0/0"
-    }
   }
   resource "openstack_compute_instance_v2" "instance_1" {
     name            = var.name1
