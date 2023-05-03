@@ -17,7 +17,8 @@ cat << `EOF` >> mysql_secure_installation.txt
 n
 Y
 c22106964
-$dbpassY
+P@55w07d4cmt655
+Y
 Y
 Y
 Y
@@ -81,7 +82,7 @@ ssh-agent bash -c 'ssh-add gitlab_recruitment_web_app_keypair.key; git clone git
 
 cd 'team-11-recruitment-and-admissions-copy-c22106964'
 
-mysql -uroot -p$dbpass < src/BuildDB.sql
+mysql -uroot -pP@55w07d4cmt655 < src/BuildDB.sql
 
 sudo yum install java-17-openjdk -y
 
