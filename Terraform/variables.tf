@@ -1,6 +1,6 @@
 variable "flavor" { default = "m1.medium" }
 variable "image" { default = "Rocky Linux 9 20220830" }
-variable "name1" { default = "Recruitment Admissions Web Application Test" }
+variable "name1" { default = "Recruitment Admissions Web Application Test version" }
 
 variable "keypair" { default = "Recruitment_Web_App_keypair" } # you may need to change this
 variable "network" { default = "temp_network" }   # you need to change this
