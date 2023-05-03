@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#! usr/bin/bash
 
 
 #INSTALLING A PROTOTYPE OF CARDIFF UNIVERSITY'S MIDWIFERY RECRUITMENT AND ADMISSION WEB APPLICATION
@@ -100,7 +100,7 @@ sudo unzip -d /opt/gradle gradle-7.6-bin.zip
 
 #make rockylinux aware of the gradle directory by exporting the path to the environment variable
 export PATH=$PATH:/opt/gradle/gradle-7.6/bin
-gradle -v
+
 #build the (recruitment and admissions) web application project
 gradle build
 
