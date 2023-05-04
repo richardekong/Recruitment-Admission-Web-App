@@ -76,7 +76,7 @@ public class FullAdminContainerTest {
     @Order(3)
     @DisplayName("Verify that an unauthorized request to update a user will respond with 302 redirect status")
     @Test
-    public void verifyThatUnAuthorizedRequestToUpdateUserWillReturnError404() throws Exception {
+    public void verifyThatUnAuthorizedRequestToUpdateUserWillReturnResponse302() throws Exception {
         mockMvc.perform(post("/admin")
                         .with(csrf())
                         .contentType(MediaType.TEXT_HTML)
@@ -91,7 +91,7 @@ public class FullAdminContainerTest {
     @Order(4)
     @DisplayName("Verify that an unauthorized request to delete a user will respond with 302 redirect status")
     @Test
-    public void verifyThatUnAuthorizedRequestToDeleteUserWillReturnError404() throws Exception {
+    public void verifyThatUnAuthorizedRequestToDeleteUserWillReturnResponse404() throws Exception {
         mockMvc.perform(post("/admin")
                         .with(csrf())
                         .contentType(MediaType.TEXT_HTML)

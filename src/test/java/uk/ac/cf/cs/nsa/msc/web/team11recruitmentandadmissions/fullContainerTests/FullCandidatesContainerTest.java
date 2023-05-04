@@ -132,6 +132,4 @@ public class FullCandidatesContainerTest {
                 .andExpect(content().string(stringContainsInOrder(expectedSurnames)));
     }
 
-
-
 }
