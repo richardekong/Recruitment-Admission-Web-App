@@ -1,4 +1,4 @@
-variable "flavor" { default = "m1.medium" }
+variable "flavor" { default = "m1.large" }
 variable "image" { default = "Rocky Linux 9 20220830" }
 variable "name1" { default = "Recruitment Admissions Web Application Test version" }
 
