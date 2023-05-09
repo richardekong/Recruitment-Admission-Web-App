@@ -66,7 +66,7 @@ public class FullRegistrationContainerTest {
 
 
     @Order(4)
-    @DisplayName("Verify that a request to register a new user with complete" +
+    @DisplayName("Verify that a request to register a new user with incomplete" +
             "credentials will fail with 400 (error) response")
     @Test
     public void verifyRequestToRegisterNewUserInCompleteCredentials() throws Exception {
@@ -76,7 +76,7 @@ public class FullRegistrationContainerTest {
                 .param("username", "fake_user"));
         ResultActions actions2 = mockMvc.perform(post("/register-save")
                 .with(csrf())
-                .param("password", "fake_password"));
+                .param("password", ""));
         actions1.andExpect(status().is4xxClientError());
         actions2.andExpect(status().is4xxClientError());
     }
