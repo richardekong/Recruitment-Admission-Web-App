@@ -52,10 +52,3 @@ cd Terraform
 
 /usr/local/bin/terraform apply -auto-approve
 
-
-
-
-
-
-
-
