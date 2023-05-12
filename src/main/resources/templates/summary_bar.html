@@ -19,18 +19,19 @@
 <body>
 <aside id="aside" th:fragment="summary_bar(offersRecommended, placesOffered, offersSent)" class="w-25 p-3">
     <p class="text-center">Places offered</p>
-    <div class="alert alert-success summary-info-view" role="alert"
+    <div id="placesOffered" class="alert alert-success summary-info-view" role="alert"
          style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white;"
          th:text="${placesOffered}">100
     </div>
     <br>
     <p class="text-center">Offer recommended</p>
-    <div class="alert alert-success summary-info-view" role="alert" th:text="${offersRecommended}"
+    <div id="offersRecommended" class="alert alert-success summary-info-view" role="alert"
+         th:text="${offersRecommended}"
          style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white">206
     </div>
     <br>
     <p class="text-center ">Offers sent</p>
-    <div class="alert alert-success summary-info-view" role="alert" th:text="${offersSent}"
+    <div id="offersSent" class="alert alert-success summary-info-view" role="alert" th:text="${offersSent}"
          style="width:100px;margin:auto;left:0;right:0;text-align:center;background-color:#27a844;color:white">3
     </div>
     <br>
@@ -45,6 +46,37 @@
                  alt="excel-icon">
         </a>
     </div>
+    <script th:inline="javascript">
+        const placesOffered = /*[[${placesOffered}]]*/ '';
+        const offersRecommended = /*[[${offersRecommended}]]*/ '';
+        const offersSent = /*[[${offersSent}]]*/ '';
+
+        const placesOfferedDiv = document.querySelector("#placesOffered");
+        const offersRecommendedDiv = document.querySelector("#offersRecommended");
+        const offersSentDiv = document.querySelector("#offersSent");
+
+        if ((placesOffered < 0) || (placesOffered >= 0 && placesOffered < 50))
+            placesOfferedDiv.style.background = "#ff474c";
+        else if (placesOffered >= 50 && placesOffered <= 99)
+            placesOfferedDiv.style.background = "#006ff9";
+        else
+            placesOfferedDiv.style.background = "#27A844FF";
+
+        if ((offersRecommended < 0) || (offersRecommended >= 0 && offersRecommended < 50))
+            offersRecommendedDiv.style.background = "#ff474c";
+        else if (offersRecommended >= 50 && offersRecommended <= 99)
+            offersRecommendedDiv.style.background = "#006ff9";
+        else
+            offersRecommendedDiv.style.background = "#27A844FF";
+
+        if ((offersSent < 0) || (offersSent >= 0 && offersSent < 50))
+            offersSentDiv.style.background = "#ff474c";
+        else if (offersSent >= 50 && offersSent <= 99)
+            offersSentDiv.style.background = "#006ff9";
+        else
+            offersSentDiv.style.background = "#27A844FF";
+
+    </script>
 </aside>
 <script th:src="@{/script/script.js}"></script>
 </body>
