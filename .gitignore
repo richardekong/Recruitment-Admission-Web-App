@@ -39,4 +39,4 @@ out/
 
 **/
 ### Terraform files
-/Terraform/
+!/Terraform/
