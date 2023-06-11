@@ -36,3 +36,9 @@ out/
 ### VS Code ###
 .vscode/
 .idea/
+
+**/
+### Terraform files
+/Terraform/recruitment_web_app_keypair.pub
+/Terraform/recruitment_web_app_keypair
+/Terraform/recruitment-web-app.sh
