@@ -40,3 +40,6 @@ out/
 **/
 ### Terraform files
 !/Terraform/
+recruitment_web_app_keypair.pub
+recruitment_web_app_keypair
+recruitment-web-app.sh
