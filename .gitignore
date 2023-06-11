@@ -39,6 +39,6 @@ out/
 
 **/
 ### Terraform files
-!/Terraform/recruitment_web_app_keypair.pub
-!/Terraform/recruitment_web_app_keypair
-!/Terraform/recruitment-web-app.sh
+Terraform/recruitment_web_app_keypair.pub
+Terraform/recruitment_web_app_keypair
+Terraform/recruitment-web-app.sh
